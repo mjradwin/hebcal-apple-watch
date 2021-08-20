@@ -3,10 +3,11 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 50;
+	objectVersion = 52;
 	objects = {
 
 /* Begin PBXBuildFile section */
+		9D3F0F6D26D03C8E002B41F2 /* Hebcal in Frameworks */ = {isa = PBXBuildFile; productRef = 9D3F0F6C26D03C8E002B41F2 /* Hebcal */; };
 		9D9A027226CC6A420055160C /* HebcalHDate WatchKit App.app in Embed Watch Content */ = {isa = PBXBuildFile; fileRef = 9D9A027126CC6A420055160C /* HebcalHDate WatchKit App.app */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 		9D9A027726CC6A460055160C /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 9D9A027626CC6A460055160C /* Assets.xcassets */; };
 		9D9A027E26CC6A460055160C /* HebcalHDate WatchKit Extension.appex in Embed App Extensions */ = {isa = PBXBuildFile; fileRef = 9D9A027D26CC6A460055160C /* HebcalHDate WatchKit Extension.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
@@ -78,6 +79,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				9D3F0F6D26D03C8E002B41F2 /* Hebcal in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -183,6 +185,9 @@
 			dependencies = (
 			);
 			name = "HebcalHDate WatchKit Extension";
+			packageProductDependencies = (
+				9D3F0F6C26D03C8E002B41F2 /* Hebcal */,
+			);
 			productName = "HebcalHDate WatchKit Extension";
 			productReference = 9D9A027D26CC6A460055160C /* HebcalHDate WatchKit Extension.appex */;
 			productType = "com.apple.product-type.watchkit2-extension";
@@ -216,6 +221,9 @@
 				Base,
 			);
 			mainGroup = 9D9A026626CC6A410055160C;
+			packageReferences = (
+				9D3F0F6B26D03C8E002B41F2 /* XCRemoteSwiftPackageReference "hebcal-swift" */,
+			);
 			productRefGroup = 9D9A026E26CC6A410055160C /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
@@ -543,6 +551,25 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		9D3F0F6B26D03C8E002B41F2 /* XCRemoteSwiftPackageReference "hebcal-swift" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/hebcal/hebcal-swift.git";
+			requirement = {
+				branch = main;
+				kind = branch;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		9D3F0F6C26D03C8E002B41F2 /* Hebcal */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 9D3F0F6B26D03C8E002B41F2 /* XCRemoteSwiftPackageReference "hebcal-swift" */;
+			productName = Hebcal;
+		};
+/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = 9D9A026726CC6A410055160C /* Project object */;
 }

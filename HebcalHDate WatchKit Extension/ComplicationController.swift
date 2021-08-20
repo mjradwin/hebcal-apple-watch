@@ -7,6 +7,8 @@
 
 import ClockKit
 
+import Hebcal
+
 class ComplicationController: NSObject, CLKComplicationDataSource {
     
     // MARK: - Complication Configuration
@@ -62,7 +64,14 @@ class ComplicationController: NSObject, CLKComplicationDataSource {
     
     func getLocalizableSampleTemplate(for complication: CLKComplication, withHandler handler: @escaping (CLKComplicationTemplate?) -> Void) {
         // This method will be called once per supported complication, and the results will be cached
-        handler(nil)
+        switch complication.family {
+        case .modularSmall, .utilitarianSmall, .utilitarianSmallFlat, .utilitarianLarge, .circularSmall, .graphicCorner, .graphicCircular:
+            handler(createTemplate(forComplication: complication, date: Date()))
+        case .modularLarge, .extraLarge, .graphicRectangular, .graphicBezel, .graphicExtraLarge:
+            handler(nil)
+        @unknown default:
+            fatalError("*** Unknown Complication Family ***")
+        }
     }
 
     var cal2 = Calendar(identifier: Calendar.Identifier.hebrew)
@@ -114,6 +123,11 @@ class ComplicationController: NSObject, CLKComplicationDataSource {
         dateFormatter.timeStyle = .none
         dateFormatter.calendar = hebrewCalendar
         return dateFormatter.string(from: date)
+    }
+    
+    private func foo() -> Void {
+        let bar = Sedra(year: 5780, il: false)
+        let foo = SimpleDate(yy: 2020, mm: 2, dd: 15)
     }
     
     // Return a modular small template.
