@@ -6,20 +6,13 @@
 //
 
 import SwiftUI
+import os
 
 struct ContentView: View {
+
+    let logger = Logger(subsystem: "com.hebcal.HebcalHDate.watchkitapp.watchkitextension.ContentView", category: "Root View")
+
     var body: some View {
-        /*
-        let cal2 = Calendar(identifier: Calendar.Identifier.hebrew)
-
-        let now: Date = Date()
-
-        let dateFormatter2 = DateFormatter()
-        dateFormatter2.dateStyle = .medium
-        dateFormatter2.timeStyle = .none
-        dateFormatter2.calendar = cal2
-        let dateString2 = dateFormatter2.string(from: now)
- */
         VStack {
             Text("Hebcal")
                 .font(.title)

@@ -37,10 +37,11 @@ class ComplicationController: NSObject, CLKComplicationDataSource {
     }
 
     // MARK: - Timeline Configuration
-    
+
+    // Define how far into the future the app can provide data.
     func getTimelineEndDate(for complication: CLKComplication, withHandler handler: @escaping (Date?) -> Void) {
-        // Call the handler with the last entry date you can currently provide or nil if you can't support future timelines
-        handler(nil)
+        // Indicate that the app can provide timeline entries for the next 24 hours.
+        handler(Date().addingTimeInterval(365.0 * 24.0 * 60.0 * 60.0))
     }
     
     func getPrivacyBehavior(for complication: CLKComplication, withHandler handler: @escaping (CLKComplicationPrivacyBehavior) -> Void) {
@@ -55,9 +56,27 @@ class ComplicationController: NSObject, CLKComplicationDataSource {
         handler(createTimelineEntry(forComplication: complication, date: Date()))
     }
     
-    func getTimelineEntries(for complication: CLKComplication, after date: Date, limit: Int, withHandler handler: @escaping ([CLKComplicationTimelineEntry]?) -> Void) {
-        // Call the handler with the timeline entries after the given date
-        handler(nil)
+    // Return future timeline entries.
+    func getTimelineEntries(for complication: CLKComplication,
+                            after date: Date,
+                            limit: Int,
+                            withHandler handler: @escaping ([CLKComplicationTimelineEntry]?) -> Void) {
+        let twentyFourHours = 24.0 * 60.0 * 60.0
+        
+        // Create an array to hold the timeline entries.
+        var entries = [CLKComplicationTimelineEntry]()
+        
+        // Calculate the start and end dates.
+        var current = date.addingTimeInterval(twentyFourHours)
+        let endDate = date.addingTimeInterval(twentyFourHours)
+        
+        // Create a timeline entry for every five minutes from the starting time.
+        // Stop once you reach the limit or the end date.
+        while (current.compare(endDate) == .orderedAscending) && (entries.count < limit) {
+            entries.append(createTimelineEntry(forComplication: complication, date: current))
+            current = current.addingTimeInterval(twentyFourHours)
+        }
+        handler(entries)
     }
 
     // MARK: - Sample Templates

@@ -16,6 +16,7 @@
 		9D9A028726CC6A460055160C /* ComplicationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D9A028626CC6A460055160C /* ComplicationController.swift */; };
 		9D9A028926CC6A480055160C /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 9D9A028826CC6A480055160C /* Assets.xcassets */; };
 		9D9A028C26CC6A480055160C /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 9D9A028B26CC6A480055160C /* Preview Assets.xcassets */; };
+		9DC2BBE426D421A300A248EB /* ModelData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9DC2BBE326D421A300A248EB /* ModelData.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -72,6 +73,7 @@
 		9D9A028826CC6A480055160C /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		9D9A028B26CC6A480055160C /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
 		9D9A028D26CC6A480055160C /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		9DC2BBE326D421A300A248EB /* ModelData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ModelData.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -118,6 +120,7 @@
 			isa = PBXGroup;
 			children = (
 				9D9A028226CC6A460055160C /* ContentView.swift */,
+				9DC2BBE326D421A300A248EB /* ModelData.swift */,
 				9D9A028426CC6A460055160C /* HebcalHDateApp.swift */,
 				9D9A028626CC6A460055160C /* ComplicationController.swift */,
 				9D9A028826CC6A480055160C /* Assets.xcassets */,
@@ -268,6 +271,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				9D9A028326CC6A460055160C /* ContentView.swift in Sources */,
+				9DC2BBE426D421A300A248EB /* ModelData.swift in Sources */,
 				9D9A028526CC6A460055160C /* HebcalHDateApp.swift in Sources */,
 				9D9A028726CC6A460055160C /* ComplicationController.swift in Sources */,
 			);
