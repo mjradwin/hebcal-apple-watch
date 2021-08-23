@@ -10,7 +10,8 @@ import ClockKit
 import Hebcal
 
 class ComplicationController: NSObject, CLKComplicationDataSource {
-    
+    let modelData = ModelData.shared
+
     // MARK: - Complication Configuration
 
     func getComplicationDescriptors(handler: @escaping ([CLKComplicationDescriptor]) -> Void) {
@@ -244,7 +245,7 @@ class ComplicationController: NSObject, CLKComplicationDataSource {
     // Return a modular small template.
     private func createParshaModularSmallTemplate(forDate date: Date) -> CLKComplicationTemplate {
         let hdate = HDate(date: date)
-        let sedra = Sedra(year: hdate.yy, il: false)
+        let sedra = Sedra(year: hdate.yy, il: modelData.il)
         let parsha0 = sedra.lookup(hdate: hdate)
         let parsha = parsha0 == nil ? "Holiday" : parsha0
         // Create the data providers.
@@ -259,7 +260,7 @@ class ComplicationController: NSObject, CLKComplicationDataSource {
     // Return a utilitarian small flat template.
     private func createParshaUtilitarianSmallFlatTemplate(forDate date: Date) -> CLKComplicationTemplate {
         let hdate = HDate(date: date)
-        let sedra = Sedra(year: hdate.yy, il: false)
+        let sedra = Sedra(year: hdate.yy, il: modelData.il)
         let parsha0 = sedra.lookup(hdate: hdate)
         let parsha = parsha0 == nil ? "Holiday" : parsha0
         // Create the data providers.
@@ -272,7 +273,7 @@ class ComplicationController: NSObject, CLKComplicationDataSource {
     private func createParshaUtilitarianLargeTemplate(forDate date: Date) -> CLKComplicationTemplate {
         // Create the data providers.
         let hdate = HDate(date: date)
-        let sedra = Sedra(year: hdate.yy, il: false)
+        let sedra = Sedra(year: hdate.yy, il: modelData.il)
         let parsha0 = sedra.lookup(hdate: hdate)
         let parsha = parsha0 == nil ? "Holiday" : parsha0
         let parshaNameProvider = CLKSimpleTextProvider(text: parsha!)
@@ -285,7 +286,7 @@ class ComplicationController: NSObject, CLKComplicationDataSource {
     private func createParshaCircularSmallTemplate(forDate date: Date) -> CLKComplicationTemplate {
         // Create the data providers.
         let hdate = HDate(date: date)
-        let sedra = Sedra(year: hdate.yy, il: false)
+        let sedra = Sedra(year: hdate.yy, il: modelData.il)
         let parsha0 = sedra.lookup(hdate: hdate)
         let parsha = parsha0 == nil ? "Holiday" : parsha0
         // Create the data providers.
@@ -301,7 +302,7 @@ class ComplicationController: NSObject, CLKComplicationDataSource {
     private func createParshaGraphicCornerTemplate(forDate date: Date) -> CLKComplicationTemplate {
         // Create the data providers.
         let hdate = HDate(date: date)
-        let sedra = Sedra(year: hdate.yy, il: false)
+        let sedra = Sedra(year: hdate.yy, il: modelData.il)
         let parsha0 = sedra.lookup(hdate: hdate)
         let parsha = parsha0 == nil ? "Holiday" : parsha0
         let parshaNameProvider = CLKSimpleTextProvider(text: parsha!)
@@ -315,7 +316,7 @@ class ComplicationController: NSObject, CLKComplicationDataSource {
     private func createParshaGraphicCircleTemplate(forDate date: Date) -> CLKComplicationTemplate {
         // Create the data providers.
         let hdate = HDate(date: date)
-        let sedra = Sedra(year: hdate.yy, il: false)
+        let sedra = Sedra(year: hdate.yy, il: modelData.il)
         let parsha0 = sedra.lookup(hdate: hdate)
         let parsha = parsha0 == nil ? "Holiday" : parsha0
         // Create the data providers.

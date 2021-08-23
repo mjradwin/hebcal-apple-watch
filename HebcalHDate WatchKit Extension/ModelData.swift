@@ -48,17 +48,18 @@ class ModelData: ObservableObject {
     // The model's initializer. Do not call this method.
     // Use the shared instance instead.
     private init() {
+        logger.debug("ModelData init")
         // Begin loading the data from disk.
         load()
     }
-    
+
     // Begin saving the drink data to disk.
     private func save() {
         logger.debug("Saving defaults")
         defaults.set(il, forKey: "israel")
         defaults.set(locale, forKey: "locale")
     }
-    
+
     // Begin loading the data from disk.
     private func load() {
         logger.debug("Loading defaults")

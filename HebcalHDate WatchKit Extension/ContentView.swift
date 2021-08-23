@@ -12,7 +12,7 @@ struct ContentView: View {
 
     let logger = Logger(subsystem: "com.hebcal.HebcalHDate.watchkitapp.watchkitextension.ContentView", category: "Root View")
 
-    @EnvironmentObject var modelData:ModelData = ModelData.shared
+    @StateObject var settings = ModelData.shared
 
     let hebDateStr = getHebDateString(forDate: Date())
     let parshaStr = getParshaString(date: Date())
@@ -24,18 +24,17 @@ struct ContentView: View {
                     .fontWeight(.thin)
                     .multilineTextAlignment(.center)
                     .padding()
-
                 Text(parshaStr)
                     .fontWeight(.thin)
                     .multilineTextAlignment(.center)
                     .padding()
-
-                Toggle(isOn: $modelData.il) {
+                Toggle(isOn: $settings.il) {
                     Text("Israel")
                 }
             }
             .navigationTitle("Hebcal")
         }
+        .environmentObject(settings)
     }
 }
 
