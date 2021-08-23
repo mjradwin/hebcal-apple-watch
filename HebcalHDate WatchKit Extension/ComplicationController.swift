@@ -40,8 +40,8 @@ class ComplicationController: NSObject, CLKComplicationDataSource {
 
     // Define how far into the future the app can provide data.
     func getTimelineEndDate(for complication: CLKComplication, withHandler handler: @escaping (Date?) -> Void) {
-        // Indicate that the app can provide timeline entries for the next 24 hours.
-        handler(Date().addingTimeInterval(365.0 * 24.0 * 60.0 * 60.0))
+        // Indicate that the app can provide timeline entries for the next 30 days
+        handler(Date().addingTimeInterval(30.0 * 24.0 * 60.0 * 60.0))
     }
     
     func getPrivacyBehavior(for complication: CLKComplication, withHandler handler: @escaping (CLKComplicationPrivacyBehavior) -> Void) {
@@ -167,15 +167,6 @@ class ComplicationController: NSObject, CLKComplicationDataSource {
         @unknown default:
             fatalError("*** Unknown Complication Family ***")
         }
-    }
-
-    private func getHebDateString(forDate date: Date) -> String {
-        let hebrewCalendar = Calendar(identifier: Calendar.Identifier.hebrew)
-        let dateFormatter = DateFormatter()
-        dateFormatter.dateStyle = .medium
-        dateFormatter.timeStyle = .none
-        dateFormatter.calendar = hebrewCalendar
-        return dateFormatter.string(from: date)
     }
 
     // Return a modular small template.

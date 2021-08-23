@@ -12,16 +12,29 @@ struct ContentView: View {
 
     let logger = Logger(subsystem: "com.hebcal.HebcalHDate.watchkitapp.watchkitextension.ContentView", category: "Root View")
 
+    @EnvironmentObject var modelData:ModelData = ModelData.shared
+
+    let hebDateStr = getHebDateString(forDate: Date())
+    let parshaStr = getParshaString(date: Date())
+
     var body: some View {
-        VStack {
-            Text("Hebcal")
-                .font(.title)
-                .fontWeight(.thin)
-                .padding()
-            Text("Jewish holiday calendars & Hebrew date converter")
-                .fontWeight(.thin)
-                .multilineTextAlignment(.center)
-                .padding()
+        NavigationView {
+            VStack {
+                Text(hebDateStr)
+                    .fontWeight(.thin)
+                    .multilineTextAlignment(.center)
+                    .padding()
+
+                Text(parshaStr)
+                    .fontWeight(.thin)
+                    .multilineTextAlignment(.center)
+                    .padding()
+
+                Toggle(isOn: $modelData.il) {
+                    Text("Israel")
+                }
+            }
+            .navigationTitle("Hebcal")
         }
     }
 }
