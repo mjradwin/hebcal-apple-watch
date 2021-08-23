@@ -8,8 +8,6 @@
 import Foundation
 import Hebcal
 
-let modelData = ModelData.shared
-
 func getHebDateString(forDate date: Date) -> String {
     let hebrewCalendar = Calendar(identifier: Calendar.Identifier.hebrew)
     let dateFormatter = DateFormatter()
@@ -19,9 +17,9 @@ func getHebDateString(forDate date: Date) -> String {
     return dateFormatter.string(from: date)
 }
 
-func getParshaString(date: Date) -> String {
+func getParshaString(date: Date, il: Bool) -> String {
     let hdate = HDate(date: date)
-    let sedra = Sedra(year: hdate.yy, il: modelData.il)
+    let sedra = Sedra(year: hdate.yy, il: il)
     let parsha0 = sedra.lookup(hdate: hdate)
     return parsha0 == nil ? "Holiday" : parsha0!
 }

@@ -9,13 +9,12 @@ import SwiftUI
 import os
 
 struct ContentView: View {
-
     let logger = Logger(subsystem: "com.hebcal.HebcalHDate.watchkitapp.watchkitextension.ContentView", category: "Root View")
 
     @StateObject var settings = ModelData.shared
 
     let hebDateStr = getHebDateString(forDate: Date())
-    let parshaStr = getParshaString(date: Date())
+    let parshaStr = getParshaString(date: Date(), il: false)
 
     var body: some View {
         NavigationView {
@@ -24,13 +23,17 @@ struct ContentView: View {
                     .fontWeight(.thin)
                     .multilineTextAlignment(.center)
                     .padding()
-                Text(parshaStr)
-                    .fontWeight(.thin)
-                    .multilineTextAlignment(.center)
-                    .padding()
+                HStack {
+                    Image("torah-orange-png")
+                    Text(parshaStr)
+                        .fontWeight(.thin)
+                        .multilineTextAlignment(.center)
+                        .padding()
+                }
                 Toggle(isOn: $settings.il) {
                     Text("Israel")
                 }
+                .padding()
             }
             .navigationTitle("Hebcal")
         }
