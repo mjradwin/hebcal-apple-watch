@@ -1,21 +1,25 @@
 {
   "images" : [
     {
+      "filename" : "luach-32.png",
       "idiom" : "watch",
       "scale" : "2x",
       "screen-width" : "<=145"
     },
     {
+      "filename" : "luach-37.png",
       "idiom" : "watch",
       "scale" : "2x",
       "screen-width" : ">161"
     },
     {
+      "filename" : "luach-36.png",
       "idiom" : "watch",
       "scale" : "2x",
       "screen-width" : ">145"
     },
     {
+      "filename" : "luach-40.png",
       "idiom" : "watch",
       "scale" : "2x",
       "screen-width" : ">183"
