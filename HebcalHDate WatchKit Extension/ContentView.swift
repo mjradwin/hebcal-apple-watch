@@ -20,7 +20,7 @@ struct ContentView: View {
         NavigationView {
             VStack {
                 Text(hebDateStr)
-                    .fontWeight(.thin)
+                    .fontWeight(.regular)
                     .multilineTextAlignment(.center)
                     .padding()
                 HStack {
@@ -28,7 +28,6 @@ struct ContentView: View {
                     Text(parshaStr)
                         .fontWeight(.thin)
                         .multilineTextAlignment(.center)
-                        .padding()
                 }
                 Toggle(isOn: $settings.il) {
                     Text("Israel")

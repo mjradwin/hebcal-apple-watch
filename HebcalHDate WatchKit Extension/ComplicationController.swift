@@ -38,6 +38,7 @@ class ComplicationController: NSObject, CLKComplicationDataSource {
         // Do any necessary work to support these newly shared complication descriptors
     }
 
+    let thirtyMinutes = 30 * 60.0
     let twentyFourHours = 24.0 * 60.0 * 60.0
     let oneWeek = 7.0 * 24.0 * 60.0 * 60.0
 
@@ -74,7 +75,7 @@ class ComplicationController: NSObject, CLKComplicationDataSource {
         var entries = [CLKComplicationTimelineEntry]()
         
         // Calculate the start and end dates.
-        var current = date.addingTimeInterval(twentyFourHours)
+        var current = date.addingTimeInterval(thirtyMinutes)
         let endDate = date.addingTimeInterval(oneWeek)
     
         // Create a timeline entry for every 24h from the starting time.
@@ -268,6 +269,7 @@ class ComplicationController: NSObject, CLKComplicationDataSource {
     // Return a utilitarian small flat template.
     private func createParshaUtilitarianSmallFlatTemplate(forDate date: Date) -> CLKComplicationTemplate {
         let flatUtilitarianImageProvider = CLKImageProvider(onePieceImage: #imageLiteral(resourceName: "Torah_964497"))
+        flatUtilitarianImageProvider.accessibilityLabel = "Parsha"
         let parsha = getParshaString(date: date, il: settings.il)
         // Create the data providers.
         let parshaNameProvider = CLKSimpleTextProvider(text: parsha)
@@ -279,13 +281,14 @@ class ComplicationController: NSObject, CLKComplicationDataSource {
     // Return a utilitarian large template.
     private func createParshaUtilitarianLargeTemplate(forDate date: Date) -> CLKComplicationTemplate {
         // Create the data providers.
-        let flatUtilitarianImageProvider = CLKImageProvider(onePieceImage: #imageLiteral(resourceName: "Torah_964497"))
+        let imageProvider = CLKImageProvider(onePieceImage: #imageLiteral(resourceName: "Torah_964497"))
+        imageProvider.tintColor = .red
+        imageProvider.accessibilityLabel = "Parsha"
         let parsha = getParshaString(date: date, il: settings.il)
-        let parshaNameProvider = CLKSimpleTextProvider(text: parsha)
-        let parshaStrProvider = CLKTextProvider(format: "Parashat %@", parshaNameProvider)
+        let parshaStrProvider = CLKSimpleTextProvider(text: parsha)
         // Create the template using the providers.
         return CLKComplicationTemplateUtilitarianLargeFlat(textProvider: parshaStrProvider,
-                                                           imageProvider: flatUtilitarianImageProvider)
+                                                           imageProvider: imageProvider)
     }
 
     // Return a circular small template.
@@ -307,6 +310,7 @@ class ComplicationController: NSObject, CLKComplicationDataSource {
         let parsha = getParshaString(date: date, il: settings.il)
         let parshaNameProvider = CLKSimpleTextProvider(text: parsha)
         let imageProvider = CLKFullColorImageProvider(fullColorImage: #imageLiteral(resourceName: "torah-orange"))
+        imageProvider.accessibilityLabel = "Parsha"
         // Create the template using the providers.
         return CLKComplicationTemplateGraphicCornerTextImage(textProvider: parshaNameProvider,
                                                              imageProvider: imageProvider)
@@ -317,10 +321,10 @@ class ComplicationController: NSObject, CLKComplicationDataSource {
         // Create the data providers.
         let parsha = getParshaString(date: date, il: settings.il)
         // Create the data providers.
-        let labelProvider = CLKSimpleTextProvider(text: "Parashat")
+        let imageProvider = CLKFullColorImageProvider(fullColorImage: #imageLiteral(resourceName: "torah-orange-png"))
+        imageProvider.accessibilityLabel = "Parsha"
         let parshaNameProvider = CLKSimpleTextProvider(text: parsha)
         // Create the template using the providers.
-        return CLKComplicationTemplateGraphicCircularStackText(line1TextProvider: labelProvider,
-                                                               line2TextProvider: parshaNameProvider)
+        return CLKComplicationTemplateGraphicCircularStackImage(line1ImageProvider: imageProvider, line2TextProvider: parshaNameProvider)
     }
 }
