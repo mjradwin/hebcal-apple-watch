@@ -28,7 +28,7 @@ struct HebcalView: View {
                         .fontWeight(.thin)
                         .multilineTextAlignment(.center)
                 }
-                Divider()
+                Spacer()
                 Form {
                     Picker("Language", selection: $modelData.lang) {
                         Text("Sephardic").tag(TranslationLang.en.rawValue)

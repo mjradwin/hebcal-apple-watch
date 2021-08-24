@@ -32,9 +32,22 @@ class ModelData: ObservableObject {
     }
 
     public var currentHebDateStr: String {
-        getHebDateString(forDate: Date())
+        self.getHebDateString(date: Date())
     }
 
+    public func getHebDateString(date: Date) -> String {
+        let hdate = HDate(date: date)
+        let monthName = hdate.monthName()
+        let lang = TranslationLang(rawValue: lang) ?? TranslationLang.en
+        if lang == .he {
+            return hebnumToString(number: hdate.dd) + " " +
+                lookupTranslation(str: monthName, lang: lang) + " " +
+                hebnumToString(number: hdate.yy)
+        } else {
+            return String(hdate.dd) + " " + monthName + " " + String(hdate.yy)
+        }
+    }
+    
     public var currentParshaStr: String {
         getParshaString(date: Date(), il: il, lang: TranslationLang(rawValue: lang) ?? TranslationLang.en)
     }

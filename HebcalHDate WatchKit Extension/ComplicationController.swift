@@ -180,7 +180,7 @@ class ComplicationController: NSObject, CLKComplicationDataSource {
 
     // Return a modular small template.
     private func createHDateModularSmallTemplate(forDate date: Date) -> CLKComplicationTemplate {
-        let hebDateStr = getHebDateString(forDate: date)
+        let hebDateStr = settings.getHebDateString(date: date)
         let parts = hebDateStr.split(separator: " ")
         // Create the data providers.
         let dayNumberProvider = CLKSimpleTextProvider(text: String(parts[0]))
@@ -195,7 +195,7 @@ class ComplicationController: NSObject, CLKComplicationDataSource {
     // Return a utilitarian small flat template.
     private func createHDateUtilitarianSmallFlatTemplate(forDate date: Date) -> CLKComplicationTemplate {
         // Create the data providers.
-        let hebDateStr = getHebDateString(forDate: date)
+        let hebDateStr = settings.getHebDateString(date: date)
         let parts = hebDateStr.split(separator: " ")
         let dayNumberProvider = CLKSimpleTextProvider(text: String(parts[0]))
         dayNumberProvider.tintColor = .red
@@ -209,7 +209,7 @@ class ComplicationController: NSObject, CLKComplicationDataSource {
     // Return a utilitarian large template.
     private func createHDateUtilitarianLargeTemplate(forDate date: Date) -> CLKComplicationTemplate {
         // Create the data providers.
-        let hebDateStr = getHebDateString(forDate: date)
+        let hebDateStr = settings.getHebDateString(date: date)
         let hebDateProvider = CLKSimpleTextProvider(text: hebDateStr)
         // Create the template using the providers.
         return CLKComplicationTemplateUtilitarianLargeFlat(textProvider: hebDateProvider)
@@ -218,7 +218,7 @@ class ComplicationController: NSObject, CLKComplicationDataSource {
     // Return a circular small template.
     private func createHDateCircularSmallTemplate(forDate date: Date) -> CLKComplicationTemplate {
         // Create the data providers.
-        let hebDateStr = getHebDateString(forDate: date)
+        let hebDateStr = settings.getHebDateString(date: date)
         let parts = hebDateStr.split(separator: " ")
         // Create the data providers.
         let dayNumberProvider = CLKSimpleTextProvider(text: String(parts[0]))
@@ -233,7 +233,7 @@ class ComplicationController: NSObject, CLKComplicationDataSource {
     // Return a graphic template that fills the corner of the watch face.
     private func createHDateGraphicCornerTemplate(forDate date: Date) -> CLKComplicationTemplate {
         // Create the data providers.
-        let hebDateStr = getHebDateString(forDate: date)
+        let hebDateStr = settings.getHebDateString(date: date)
         let hebDateProvider = CLKSimpleTextProvider(text: hebDateStr)
         let labelProvider = CLKSimpleTextProvider(text: "Today")
         // Create the template using the providers.
@@ -244,7 +244,7 @@ class ComplicationController: NSObject, CLKComplicationDataSource {
     // Return a graphic circle template.
     private func createHDateGraphicCircleTemplate(forDate date: Date) -> CLKComplicationTemplate {
         // Create the data providers.
-        let hebDateStr = getHebDateString(forDate: date)
+        let hebDateStr = settings.getHebDateString(date: date)
         let parts = hebDateStr.split(separator: " ")
         let dayNumberProvider = CLKSimpleTextProvider(text: String(parts[0]))
         dayNumberProvider.tintColor = .red
