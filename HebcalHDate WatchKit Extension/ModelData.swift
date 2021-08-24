@@ -23,16 +23,16 @@ class ModelData: ObservableObject {
         }
     }
 
-    @Published public var locale: String {
+    @Published public var lang: Int {
         didSet {
-            UserDefaults.standard.set(locale, forKey: "locale")
-            logger.debug("A value \(self.locale) has been assigned to the Locale property.")
+            UserDefaults.standard.set(lang, forKey: "lang")
+            logger.debug("A value \(self.lang) has been assigned to the Lang property.")
         }
     }
 
     private init() {
         logger.debug("ModelData init")
         self.il = UserDefaults.standard.bool(forKey: "israel")
-        self.locale = UserDefaults.standard.string(forKey: "locale") ?? "en"
+        self.lang = UserDefaults.standard.integer(forKey: "lang") 
     }
 }

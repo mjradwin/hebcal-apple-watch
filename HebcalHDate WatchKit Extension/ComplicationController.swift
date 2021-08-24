@@ -256,7 +256,8 @@ class ComplicationController: NSObject, CLKComplicationDataSource {
 
     // Return a modular small template.
     private func createParshaModularSmallTemplate(forDate date: Date) -> CLKComplicationTemplate {
-        let parsha = getParshaString(date: date, il: settings.il)
+        let lang = TranslationLang(rawValue: settings.lang)!
+        let parsha = getParshaString(date: date, il: settings.il, lang: lang)
         // Create the data providers.
         let parshaProvider = CLKSimpleTextProvider(text: "Parashat")
         let parshaNameProvider = CLKSimpleTextProvider(text: parsha)
@@ -270,7 +271,8 @@ class ComplicationController: NSObject, CLKComplicationDataSource {
     private func createParshaUtilitarianSmallFlatTemplate(forDate date: Date) -> CLKComplicationTemplate {
         let flatUtilitarianImageProvider = CLKImageProvider(onePieceImage: #imageLiteral(resourceName: "Torah_964497"))
         flatUtilitarianImageProvider.accessibilityLabel = "Parsha"
-        let parsha = getParshaString(date: date, il: settings.il)
+        let lang = TranslationLang(rawValue: settings.lang)!
+        let parsha = getParshaString(date: date, il: settings.il, lang: lang)
         // Create the data providers.
         let parshaNameProvider = CLKSimpleTextProvider(text: parsha)
         // Create the template using the providers.
@@ -284,7 +286,8 @@ class ComplicationController: NSObject, CLKComplicationDataSource {
         let imageProvider = CLKImageProvider(onePieceImage: #imageLiteral(resourceName: "Torah_964497"))
         imageProvider.tintColor = .red
         imageProvider.accessibilityLabel = "Parsha"
-        let parsha = getParshaString(date: date, il: settings.il)
+        let lang = TranslationLang(rawValue: settings.lang)!
+        let parsha = getParshaString(date: date, il: settings.il, lang: lang)
         let parshaStrProvider = CLKSimpleTextProvider(text: parsha)
         // Create the template using the providers.
         return CLKComplicationTemplateUtilitarianLargeFlat(textProvider: parshaStrProvider,
@@ -294,7 +297,8 @@ class ComplicationController: NSObject, CLKComplicationDataSource {
     // Return a circular small template.
     private func createParshaCircularSmallTemplate(forDate date: Date) -> CLKComplicationTemplate {
         // Create the data providers.
-        let parsha = getParshaString(date: date, il: settings.il)
+        let lang = TranslationLang(rawValue: settings.lang)!
+        let parsha = getParshaString(date: date, il: settings.il, lang: lang)
         // Create the data providers.
         let labelProvider = CLKSimpleTextProvider(text: "Parashat")
         let parshaNameProvider = CLKSimpleTextProvider(text: parsha)
@@ -307,7 +311,8 @@ class ComplicationController: NSObject, CLKComplicationDataSource {
     // Return a graphic template that fills the corner of the watch face.
     private func createParshaGraphicCornerTemplate(forDate date: Date) -> CLKComplicationTemplate {
         // Create the data providers.
-        let parsha = getParshaString(date: date, il: settings.il)
+        let lang = TranslationLang(rawValue: settings.lang)!
+        let parsha = getParshaString(date: date, il: settings.il, lang: lang)
         let parshaNameProvider = CLKSimpleTextProvider(text: parsha)
         let imageProvider = CLKFullColorImageProvider(fullColorImage: #imageLiteral(resourceName: "torah-orange"))
         imageProvider.accessibilityLabel = "Parsha"
@@ -319,7 +324,8 @@ class ComplicationController: NSObject, CLKComplicationDataSource {
     // Return a graphic circle template.
     private func createParshaGraphicCircleTemplate(forDate date: Date) -> CLKComplicationTemplate {
         // Create the data providers.
-        let parsha = getParshaString(date: date, il: settings.il)
+        let lang = TranslationLang(rawValue: settings.lang)!
+        let parsha = getParshaString(date: date, il: settings.il, lang: lang)
         // Create the data providers.
         let imageProvider = CLKFullColorImageProvider(fullColorImage: #imageLiteral(resourceName: "torah-orange-png"))
         imageProvider.accessibilityLabel = "Parsha"
