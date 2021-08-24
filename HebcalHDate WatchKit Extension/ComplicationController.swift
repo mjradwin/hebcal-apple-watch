@@ -25,6 +25,7 @@ class ComplicationController: NSObject, CLKComplicationDataSource {
                                    CLKComplicationFamily.graphicCircular
         ];
         let descriptors = [
+            CLKComplicationDescriptor(identifier: "complicationHebcal", displayName: "Hebcal", supportedFamilies: [.modularLarge, .graphicRectangular]),
             CLKComplicationDescriptor(identifier: "complicationHdate", displayName: "Hebrew Date", supportedFamilies: mySupportedFamilies),
             CLKComplicationDescriptor(identifier: "complicationParsha", displayName: "Torah Portion", supportedFamilies: mySupportedFamilies)
             // Multiple complication support can be added here with more descriptors
@@ -92,6 +93,19 @@ class ComplicationController: NSObject, CLKComplicationDataSource {
     
     func getLocalizableSampleTemplate(for complication: CLKComplication, withHandler handler: @escaping (CLKComplicationTemplate?) -> Void) {
         // This method will be called once per supported complication, and the results will be cached
+        if complication.identifier == "complicationHebcal" {
+            switch complication.family {
+            case .modularLarge:
+                let template = createModularLargeTemplate(forDate: Date())
+                handler(template)
+            case .graphicRectangular:
+                let template = createGraphicRectangularTemplate(forDate: Date())
+                handler(template)
+            default:
+                fatalError("*** Unknown Complication Family ***")
+            }
+            return
+        }
         switch complication.family {
         case .modularSmall, .utilitarianSmall, .utilitarianSmallFlat, .utilitarianLarge, .circularSmall, .graphicCorner, .graphicCircular:
             let template = complication.identifier == "complicationHdate" ?
@@ -109,6 +123,19 @@ class ComplicationController: NSObject, CLKComplicationDataSource {
 
     // Return a timeline entry for the specified complication and date.
     private func createTimelineEntry(forComplication complication: CLKComplication, date: Date) -> CLKComplicationTimelineEntry {
+
+        if complication.identifier == "complicationHebcal" {
+            switch complication.family {
+            case .modularLarge:
+                let template = createModularLargeTemplate(forDate: date)
+                return CLKComplicationTimelineEntry(date: date, complicationTemplate: template)
+            case .graphicRectangular:
+                let template = createGraphicRectangularTemplate(forDate: date)
+                return CLKComplicationTimelineEntry(date: date, complicationTemplate: template)
+            default:
+                fatalError("*** Unsupported Complication Family ***")
+            }
+        }
 
         // Get the correct template based on the complication.
         let template = complication.identifier == "complicationHdate" ?
@@ -360,5 +387,43 @@ class ComplicationController: NSObject, CLKComplicationDataSource {
                 // Create the template using the providers.
         return CLKComplicationTemplateGraphicCircularStackText(line1TextProvider: line1TextProvider,
                                                                line2TextProvider: line2TextProvider)
+    }
+
+    // Return a modular large template.
+    private func createModularLargeTemplate(forDate date: Date) -> CLKComplicationTemplate {
+        // Create the data providers.
+        let headerTextProvider = CLKSimpleTextProvider(text: "Hebcal", shortText: "Hebcal")
+
+        let hebDateStr = settings.getHebDateString(date: date)
+        let body1TextProvider = CLKSimpleTextProvider(text: hebDateStr)
+
+        let lang = TranslationLang(rawValue: settings.lang)!
+        let parshaName = getParshaString(date: date, il: settings.il, lang: lang)
+        let parshaPrefix = lookupTranslation(str: "Parashat", lang: lang)
+        let parsha = parshaPrefix + " " + parshaName
+        let body2TextProvider = CLKSimpleTextProvider(text: parsha)
+
+        // Create the template using the providers.
+        return CLKComplicationTemplateModularLargeStandardBody(                    headerTextProvider: headerTextProvider,
+            body1TextProvider: body1TextProvider,
+            body2TextProvider: body2TextProvider)
+    }
+    
+    // Return a large rectangular graphic template.
+    private func createGraphicRectangularTemplate(forDate date: Date) -> CLKComplicationTemplate {
+        let headerTextProvider = CLKSimpleTextProvider(text: "Hebcal", shortText: "Hebcal")
+
+        let hebDateStr = settings.getHebDateString(date: date)
+        let body1TextProvider = CLKSimpleTextProvider(text: hebDateStr)
+
+        let lang = TranslationLang(rawValue: settings.lang)!
+        let parshaName = getParshaString(date: date, il: settings.il, lang: lang)
+        let parshaPrefix = lookupTranslation(str: "Parashat", lang: lang)
+        let parsha = parshaPrefix + " " + parshaName
+        let body2TextProvider = CLKSimpleTextProvider(text: parsha)
+
+        return CLKComplicationTemplateGraphicRectangularStandardBody(                    headerTextProvider: headerTextProvider,
+            body1TextProvider: body1TextProvider,
+            body2TextProvider: body2TextProvider)
     }
 }
