@@ -233,21 +233,17 @@ class ComplicationController: NSObject, CLKComplicationDataSource {
     // Return a graphic template that fills the corner of the watch face.
     private func createHDateGraphicCornerTemplate(forDate date: Date) -> CLKComplicationTemplate {
         // Create the data providers.
-        let hebDateStr = settings.getHebDateString(date: date)
-        let space: Character = " "
-        let firstSpace = hebDateStr.firstIndex(of: space)
-        let afterSpace = hebDateStr.index(firstSpace!, offsetBy: 2)
-        let remainder = hebDateStr[afterSpace...]
-        let secondSpace = remainder.firstIndex(of: space)
-        let afterSecondSpace = hebDateStr.index(secondSpace!, offsetBy: 1)
-        let dayMonth = hebDateStr[..<afterSecondSpace]
-        let year = hebDateStr[afterSecondSpace..<hebDateStr.endIndex]
-        logger.debug("dayMonth=[\(dayMonth)], and year=[\(year)]")
-        let hebDateProvider = CLKSimpleTextProvider(text: String(dayMonth))
-        let labelProvider = CLKSimpleTextProvider(text: String(year))
+        let hdate = HDate(date: date)
+        let monthName = hdate.monthName()
+        let lang = TranslationLang(rawValue: settings.lang) ?? TranslationLang.en
+        let day = lang == .he ? hebnumToString(number: hdate.dd) : String(hdate.dd)
+        let month = lookupTranslation(str: monthName, lang: lang)
+        let innerTextProvider = CLKSimpleTextProvider(text: month)
+        let outerTextProvider = CLKSimpleTextProvider(text: day)
+        outerTextProvider.tintColor = .red
         // Create the template using the providers.
-        return CLKComplicationTemplateGraphicCornerStackText(innerTextProvider: hebDateProvider,
-                                                             outerTextProvider: labelProvider)
+        return CLKComplicationTemplateGraphicCornerStackText(innerTextProvider: innerTextProvider,
+                                                             outerTextProvider: outerTextProvider)
     }
 
     // Return a graphic circle template.
@@ -268,7 +264,8 @@ class ComplicationController: NSObject, CLKComplicationDataSource {
         let lang = TranslationLang(rawValue: settings.lang)!
         let parsha = getParshaString(date: date, il: settings.il, lang: lang)
         // Create the data providers.
-        let parshaProvider = CLKSimpleTextProvider(text: "Parashat")
+        let parshaPrefix = lookupTranslation(str: "Parashat", lang: lang)
+        let parshaProvider = CLKSimpleTextProvider(text: parshaPrefix)
         let parshaNameProvider = CLKSimpleTextProvider(text: parsha)
 
         // Create the template using the providers.
@@ -304,7 +301,8 @@ class ComplicationController: NSObject, CLKComplicationDataSource {
         let lang = TranslationLang(rawValue: settings.lang)!
         let parsha = getParshaString(date: date, il: settings.il, lang: lang)
         // Create the data providers.
-        let labelProvider = CLKSimpleTextProvider(text: "Parashat")
+        let parshaPrefix = lookupTranslation(str: "Parashat", lang: lang)
+        let labelProvider = CLKSimpleTextProvider(text: parshaPrefix)
         let parshaNameProvider = CLKSimpleTextProvider(text: parsha)
 
         // Create the template using the providers.
@@ -318,11 +316,11 @@ class ComplicationController: NSObject, CLKComplicationDataSource {
         let lang = TranslationLang(rawValue: settings.lang)!
         let parsha = getParshaString(date: date, il: settings.il, lang: lang)
         let parshaNameProvider = CLKSimpleTextProvider(text: parsha)
-        let imageProvider = CLKFullColorImageProvider(fullColorImage: #imageLiteral(resourceName: "torah-orange-png"))
-        imageProvider.accessibilityLabel = "Parsha"
+        let parshaPrefix = lookupTranslation(str: "Parashat", lang: lang)
+        let outerTextProvider = CLKSimpleTextProvider(text: parshaPrefix)
         // Create the template using the providers.
-        return CLKComplicationTemplateGraphicCornerTextImage(textProvider: parshaNameProvider,
-                                                             imageProvider: imageProvider)
+        return CLKComplicationTemplateGraphicCornerStackText(innerTextProvider: parshaNameProvider,
+                                                             outerTextProvider: outerTextProvider)
     }
     
     private func splitFirstChar(str: String, char: Character) -> [String] {
