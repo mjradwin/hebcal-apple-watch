@@ -14,36 +14,30 @@ struct ContentView: View {
 
     @StateObject var settings = ModelData.shared
 
-    let hebDateStr = getHebDateString(forDate: Date())
-    let parshaStr = getParshaString(date: Date(), il: false, lang: TranslationLang.en)
+    @Environment(\.scenePhase) private var scenePhase
 
     var body: some View {
-        NavigationView {
-            VStack {
-                Text(hebDateStr)
-                    .fontWeight(.regular)
-                    .multilineTextAlignment(.center)
-                    .padding()
-                HStack {
-                    Image("torah-orange-png")
-                    Text(parshaStr)
-                        .fontWeight(.thin)
-                        .multilineTextAlignment(.center)
+        HebcalView()
+            .environmentObject(settings)
+            .onChange(of: scenePhase) { (phase) in
+                switch phase {
+
+                case .inactive:
+                    logger.debug("Scene became inactive.")
+
+                case .active:
+                    logger.debug("Scene became active.")
+
+                case .background:
+                    logger.debug("Scene moved to the background.")
+                    // Schedule a background refresh task
+                    // to update the complications.
+
+                @unknown default:
+                    logger.debug("Scene entered unknown state.")
+                    assertionFailure()
                 }
-                Form {
-                    Picker("Language", selection: $settings.lang) {
-                        Text("Sephardic").tag(TranslationLang.en.rawValue)
-                        Text("Ashkenazi").tag(TranslationLang.ashkenazi.rawValue)
-                        Text("Hebrew").tag(TranslationLang.he.rawValue)
-                    }
-                    Toggle(isOn: $settings.il) {
-                        Text("Israel")
-                    }
-                }
-            }
-            .navigationTitle("Hebcal")
         }
-        .environmentObject(settings)
     }
 }
 

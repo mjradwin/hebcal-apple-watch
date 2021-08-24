@@ -8,6 +8,7 @@
 import Foundation
 import Combine
 import os
+import Hebcal
 
 class ModelData: ObservableObject {
     let logger = Logger(subsystem: "com.hebcal.HebcalHDate.watchkitapp.watchkitextension.ModelData", category: "Root View")
@@ -30,9 +31,17 @@ class ModelData: ObservableObject {
         }
     }
 
+    public var currentHebDateStr: String {
+        getHebDateString(forDate: Date())
+    }
+
+    public var currentParshaStr: String {
+        getParshaString(date: Date(), il: il, lang: TranslationLang(rawValue: lang) ?? TranslationLang.en)
+    }
+
     private init() {
         logger.debug("ModelData init")
         self.il = UserDefaults.standard.bool(forKey: "israel")
-        self.lang = UserDefaults.standard.integer(forKey: "lang") 
+        self.lang = UserDefaults.standard.integer(forKey: "lang")
     }
 }
