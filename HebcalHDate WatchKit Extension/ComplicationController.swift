@@ -327,14 +327,27 @@ class ComplicationController: NSObject, CLKComplicationDataSource {
         // Create the data providers.
         let lang = TranslationLang(rawValue: settings.lang)!
         let parsha = getParshaString(date: date, il: settings.il, lang: lang)
-        // Create the data providers.
-        let parshaPrefix = lookupTranslation(str: "Parashat", lang: lang)
-        let labelProvider = CLKSimpleTextProvider(text: parshaPrefix)
-        let parshaNameProvider = CLKSimpleTextProvider(text: parsha)
-
+        var line1TextProvider: CLKTextProvider
+        var line2TextProvider: CLKTextProvider
+        let space: Character = " "
+        let spaceParts = self.splitFirstChar(str: parsha, char: space)
+        if spaceParts.count == 2 {
+            line1TextProvider = CLKSimpleTextProvider(text: spaceParts[0])
+            line2TextProvider = CLKSimpleTextProvider(text: spaceParts[1])
+        } else {
+            let dash: Character = "-"
+            let dashParts = self.splitFirstChar(str: parsha, char: dash)
+            if dashParts.count == 2 {
+                line1TextProvider = CLKSimpleTextProvider(text: dashParts[0] + "-")
+                line2TextProvider = CLKSimpleTextProvider(text: dashParts[1])
+            } else {
+                line1TextProvider = CLKSimpleTextProvider(text: parsha)
+                line2TextProvider = CLKSimpleTextProvider(text: "")
+            }
+        }
         // Create the template using the providers.
-        return CLKComplicationTemplateCircularSmallStackText(line1TextProvider: labelProvider,
-                                                             line2TextProvider: parshaNameProvider)
+        return CLKComplicationTemplateCircularSmallStackText(line1TextProvider: line1TextProvider,
+                                                             line2TextProvider: line2TextProvider)
     }
 
     // Return a graphic template that fills the corner of the watch face.
