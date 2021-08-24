@@ -9,6 +9,7 @@ import Foundation
 import Combine
 import os
 import Hebcal
+import ClockKit
 
 class ModelData: ObservableObject {
     let logger = Logger(subsystem: "com.hebcal.HebcalHDate.watchkitapp.watchkitextension.ModelData", category: "Root View")
@@ -21,6 +22,11 @@ class ModelData: ObservableObject {
         didSet {
             UserDefaults.standard.set(il, forKey: "israel")
             logger.debug("A value \(self.il) has been assigned to the Israel property.")
+            // Update any complications on active watch faces.
+            let server = CLKComplicationServer.sharedInstance()
+            for complication in server.activeComplications ?? [] {
+                server.reloadTimeline(for: complication)
+            }
         }
     }
 
@@ -28,6 +34,11 @@ class ModelData: ObservableObject {
         didSet {
             UserDefaults.standard.set(lang, forKey: "lang")
             logger.debug("A value \(self.lang) has been assigned to the Lang property.")
+            // Update any complications on active watch faces.
+            let server = CLKComplicationServer.sharedInstance()
+            for complication in server.activeComplications ?? [] {
+                server.reloadTimeline(for: complication)
+            }
         }
     }
 

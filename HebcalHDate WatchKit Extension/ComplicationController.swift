@@ -322,32 +322,26 @@ class ComplicationController: NSObject, CLKComplicationDataSource {
         return CLKComplicationTemplateUtilitarianLargeFlat(textProvider: parshaStrProvider)
     }
 
+    private let space: Character = " "
+    private let dash: Character = "-"
+    private let maqaf: Character = "־"
+
     // Return a circular small template.
     private func createParshaCircularSmallTemplate(forDate date: Date) -> CLKComplicationTemplate {
         // Create the data providers.
         let lang = TranslationLang(rawValue: settings.lang)!
         let parsha = getParshaString(date: date, il: settings.il, lang: lang)
-        var line1TextProvider: CLKTextProvider
-        var line2TextProvider: CLKTextProvider
-        let space: Character = " "
-        let spaceParts = self.splitFirstChar(str: parsha, char: space)
-        if spaceParts.count == 2 {
-            line1TextProvider = CLKSimpleTextProvider(text: spaceParts[0])
-            line2TextProvider = CLKSimpleTextProvider(text: spaceParts[1])
-        } else {
-            let dash: Character = "-"
-            let dashParts = self.splitFirstChar(str: parsha, char: dash)
-            if dashParts.count == 2 {
-                line1TextProvider = CLKSimpleTextProvider(text: dashParts[0] + "-")
-                line2TextProvider = CLKSimpleTextProvider(text: dashParts[1])
-            } else {
-                line1TextProvider = CLKSimpleTextProvider(text: parsha)
-                line2TextProvider = CLKSimpleTextProvider(text: "")
+        for delim in [space, dash, maqaf] {
+            if (parsha.firstIndex(of: delim) != nil) {
+                let parts = self.splitFirstChar(str: parsha, char: delim)
+                return CLKComplicationTemplateCircularSmallStackText(
+                    line1TextProvider: CLKSimpleTextProvider(text: parts[0]),
+                    line2TextProvider: CLKSimpleTextProvider(text: parts[1]))
             }
         }
-        // Create the template using the providers.
-        return CLKComplicationTemplateCircularSmallStackText(line1TextProvider: line1TextProvider,
-                                                             line2TextProvider: line2TextProvider)
+        return CLKComplicationTemplateCircularSmallStackText(
+            line1TextProvider: CLKSimpleTextProvider(text: parsha),
+            line2TextProvider: CLKSimpleTextProvider(text: ""))
     }
 
     // Return a graphic template that fills the corner of the watch face.
@@ -379,64 +373,54 @@ class ComplicationController: NSObject, CLKComplicationDataSource {
         // Create the data providers.
         let lang = TranslationLang(rawValue: settings.lang)!
         let parsha = getParshaString(date: date, il: settings.il, lang: lang)
-        var line1TextProvider: CLKTextProvider
-        var line2TextProvider: CLKTextProvider
-        let space: Character = " "
-        let spaceParts = self.splitFirstChar(str: parsha, char: space)
-        if spaceParts.count == 2 {
-            line1TextProvider = CLKSimpleTextProvider(text: spaceParts[0])
-            line2TextProvider = CLKSimpleTextProvider(text: spaceParts[1])
-        } else {
-            let dash: Character = "-"
-            let dashParts = self.splitFirstChar(str: parsha, char: dash)
-            if dashParts.count == 2 {
-                line1TextProvider = CLKSimpleTextProvider(text: dashParts[0] + "-")
-                line2TextProvider = CLKSimpleTextProvider(text: dashParts[1])
-            } else {
-                line1TextProvider = CLKSimpleTextProvider(text: parsha)
-                line2TextProvider = CLKSimpleTextProvider(text: "")
+        for delim in [space, dash, maqaf] {
+            if (parsha.firstIndex(of: delim) != nil) {
+                let parts = self.splitFirstChar(str: parsha, char: delim)
+                return CLKComplicationTemplateGraphicCircularStackText(
+                    line1TextProvider: CLKSimpleTextProvider(text: parts[0]),
+                    line2TextProvider: CLKSimpleTextProvider(text: parts[1]))
             }
         }
-                // Create the template using the providers.
-        return CLKComplicationTemplateGraphicCircularStackText(line1TextProvider: line1TextProvider,
-                                                               line2TextProvider: line2TextProvider)
+        return CLKComplicationTemplateGraphicCircularStackText(
+            line1TextProvider: CLKSimpleTextProvider(text: parsha),
+            line2TextProvider: CLKSimpleTextProvider(text: ""))
     }
 
     // Return a modular large template.
     private func createModularLargeTemplate(forDate date: Date) -> CLKComplicationTemplate {
         // Create the data providers.
-        let headerTextProvider = CLKSimpleTextProvider(text: "Hebcal", shortText: "Hebcal")
-
         let hebDateStr = settings.getHebDateString(date: date)
-        let body1TextProvider = CLKSimpleTextProvider(text: hebDateStr)
+        let headerTextProvider = CLKSimpleTextProvider(text: hebDateStr)
+        headerTextProvider.tintColor = .cyan
 
         let lang = TranslationLang(rawValue: settings.lang)!
         let parshaName = getParshaString(date: date, il: settings.il, lang: lang)
         let parshaPrefix = lookupTranslation(str: "Parashat", lang: lang)
         let parsha = parshaPrefix + " " + parshaName
-        let body2TextProvider = CLKSimpleTextProvider(text: parsha)
+        let body1TextProvider = CLKSimpleTextProvider(text: parsha)
 
         // Create the template using the providers.
         return CLKComplicationTemplateModularLargeStandardBody(                    headerTextProvider: headerTextProvider,
             body1TextProvider: body1TextProvider,
-            body2TextProvider: body2TextProvider)
+            body2TextProvider: CLKSimpleTextProvider(text: ""))
     }
     
     // Return a large rectangular graphic template.
     private func createGraphicRectangularTemplate(forDate date: Date) -> CLKComplicationTemplate {
-        let headerTextProvider = CLKSimpleTextProvider(text: "Hebcal", shortText: "Hebcal")
-
+        // Create the data providers.
         let hebDateStr = settings.getHebDateString(date: date)
-        let body1TextProvider = CLKSimpleTextProvider(text: hebDateStr)
+        let headerTextProvider = CLKSimpleTextProvider(text: hebDateStr)
+        headerTextProvider.tintColor = .cyan
 
         let lang = TranslationLang(rawValue: settings.lang)!
         let parshaName = getParshaString(date: date, il: settings.il, lang: lang)
         let parshaPrefix = lookupTranslation(str: "Parashat", lang: lang)
         let parsha = parshaPrefix + " " + parshaName
-        let body2TextProvider = CLKSimpleTextProvider(text: parsha)
+        let body1TextProvider = CLKSimpleTextProvider(text: parsha)
 
+        // Create the template using the providers.
         return CLKComplicationTemplateGraphicRectangularStandardBody(                    headerTextProvider: headerTextProvider,
             body1TextProvider: body1TextProvider,
-            body2TextProvider: body2TextProvider)
+            body2TextProvider: CLKSimpleTextProvider(text: ""))
     }
 }
