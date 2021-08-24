@@ -20,25 +20,29 @@ class ModelData: ObservableObject {
 
     @Published public var il: Bool {
         didSet {
+            logger.debug("il=\(self.il)")
             UserDefaults.standard.set(il, forKey: "israel")
-            logger.debug("A value \(self.il) has been assigned to the Israel property.")
             // Update any complications on active watch faces.
             let server = CLKComplicationServer.sharedInstance()
+            logger.debug("il ComplicationServer.sharedInstance")
             for complication in server.activeComplications ?? [] {
                 server.reloadTimeline(for: complication)
             }
+            logger.debug("il Finished reloadTimeline")
         }
     }
 
     @Published public var lang: Int {
         didSet {
+            logger.debug("lang=\(self.lang)")
             UserDefaults.standard.set(lang, forKey: "lang")
-            logger.debug("A value \(self.lang) has been assigned to the Lang property.")
             // Update any complications on active watch faces.
             let server = CLKComplicationServer.sharedInstance()
+            logger.debug("lang ComplicationServer.sharedInstance")
             for complication in server.activeComplications ?? [] {
                 server.reloadTimeline(for: complication)
             }
+            logger.debug("lang Finished reloadTimeline")
         }
     }
 

@@ -82,7 +82,6 @@ class ComplicationController: NSObject, CLKComplicationDataSource {
         // Create a timeline entry for every 24h from the starting time.
         // Stop once you reach the limit or the end date.
         while (current.compare(endDate) == .orderedAscending) && (entries.count < limit) {
-            logger.debug("getTimelineEntries \(current)")
             entries.append(createTimelineEntry(forComplication: complication, date: current))
             current = current.addingTimeInterval(twentyFourHours)
         }

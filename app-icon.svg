@@ -2,13 +2,16 @@
 <!-- Created with Inkscape (http://www.inkscape.org/) -->
 
 <svg
-   width="210mm"
-   height="297mm"
-   viewBox="0 0 210 297"
+   width="12.964582mm"
+   height="12.964582mm"
+   viewBox="0 0 12.964582 12.964582"
    version="1.1"
    id="svg123"
    inkscape:version="1.1 (c4e8f9e, 2021-05-24)"
-   sodipodi:docname="luach.svg"
+   sodipodi:docname="app-icon.svg"
+   inkscape:export-filename="/Users/mradwin/Downloads/luach-48.png"
+   inkscape:export-xdpi="94.040001"
+   inkscape:export-ydpi="94.040001"
    xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
    xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
    xmlns="http://www.w3.org/2000/svg"
@@ -24,15 +27,19 @@
      inkscape:document-units="mm"
      showgrid="false"
      inkscape:zoom="5.331114"
-     inkscape:cx="123.33257"
-     inkscape:cy="443.52832"
+     inkscape:cx="13.693198"
+     inkscape:cy="17.538548"
      inkscape:window-width="1312"
      inkscape:window-height="847"
      inkscape:window-x="0"
      inkscape:window-y="25"
      inkscape:window-maximized="0"
      inkscape:current-layer="layer1"
-     showguides="false" />
+     showguides="false"
+     fit-margin-top="0"
+     fit-margin-left="0"
+     fit-margin-right="0"
+     fit-margin-bottom="0" />
   <defs
      id="defs120">
     <linearGradient
@@ -47,7 +54,14 @@
   <g
      inkscape:label="Layer 1"
      inkscape:groupmode="layer"
-     id="layer1">
+     id="layer1"
+     transform="translate(-29.598737,-112.70719)">
+    <circle
+       style="fill:#000000;fill-opacity:0;stroke:#000000;stroke-width:0.1;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:0"
+       id="path121"
+       cx="36.081028"
+       cy="119.18948"
+       r="6.4324794" />
     <rect
        style="fill:#ffffff;fill-opacity:1;stroke-width:0.264583"
        id="rect4273"
@@ -64,10 +78,10 @@
     <path
        d="m 33.357539,114.05079 a 0.3038938,0.3038938 0 0 1 0.303892,0.30389 v 0.30389 h 4.862302 v -0.30389 a 0.3038938,0.3038938 0 0 1 0.607787,0 v 0.30389 h 0.607789 a 1.2155753,1.2155753 0 0 1 1.215573,1.21558 v 6.68567 a 1.2155753,1.2155753 0 0 1 -1.215573,1.21557 h -7.293452 a 1.2155753,1.2155753 0 0 1 -1.215576,-1.21557 v -6.68567 a 1.2155753,1.2155753 0 0 1 1.215576,-1.21558 h 0.607787 v -0.30389 a 0.3038938,0.3038938 0 0 1 0.303895,-0.30389 z m -0.911682,1.21557 a 0.60778763,0.60778763 0 0 0 -0.607789,0.60779 v 6.68567 a 0.60778763,0.60778763 0 0 0 0.607789,0.60778 h 7.293452 a 0.60778763,0.60778763 0 0 0 0.607787,-0.60778 v -6.68567 a 0.60778763,0.60778763 0 0 0 -0.607787,-0.60779 z"
        id="path114"
-       style="fill:#660202;stroke-width:0.607787;fill-opacity:1" />
+       style="fill:#660202;fill-opacity:1;stroke-width:0.607787" />
     <path
        d="m 32.749749,116.44472 a 0.3038938,0.2666711 0 0 1 0.303895,-0.26667 h 6.077876 a 0.3038938,0.2666711 0 0 1 0.303894,0.26667 v 0.53334 a 0.3038938,0.2666711 0 0 1 -0.303894,0.26667 h -6.077876 a 0.3038938,0.2666711 0 0 1 -0.303895,-0.26667 z"
        id="path116"
-       style="fill:#941003;fill-opacity:0.31983805;stroke-width:0.569349" />
+       style="fill:#941003;fill-opacity:0.319838;stroke-width:0.569349" />
   </g>
 </svg>
