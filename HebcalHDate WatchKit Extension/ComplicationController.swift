@@ -234,8 +234,17 @@ class ComplicationController: NSObject, CLKComplicationDataSource {
     private func createHDateGraphicCornerTemplate(forDate date: Date) -> CLKComplicationTemplate {
         // Create the data providers.
         let hebDateStr = settings.getHebDateString(date: date)
-        let hebDateProvider = CLKSimpleTextProvider(text: hebDateStr)
-        let labelProvider = CLKSimpleTextProvider(text: "Today")
+        let space: Character = " "
+        let firstSpace = hebDateStr.firstIndex(of: space)
+        let afterSpace = hebDateStr.index(firstSpace!, offsetBy: 2)
+        let remainder = hebDateStr[afterSpace...]
+        let secondSpace = remainder.firstIndex(of: space)
+        let afterSecondSpace = hebDateStr.index(secondSpace!, offsetBy: 1)
+        let dayMonth = hebDateStr[..<afterSecondSpace]
+        let year = hebDateStr[afterSecondSpace..<hebDateStr.endIndex]
+        logger.debug("dayMonth=[\(dayMonth)], and year=[\(year)]")
+        let hebDateProvider = CLKSimpleTextProvider(text: String(dayMonth))
+        let labelProvider = CLKSimpleTextProvider(text: String(year))
         // Create the template using the providers.
         return CLKComplicationTemplateGraphicCornerStackText(innerTextProvider: hebDateProvider,
                                                              outerTextProvider: labelProvider)
@@ -269,29 +278,24 @@ class ComplicationController: NSObject, CLKComplicationDataSource {
 
     // Return a utilitarian small flat template.
     private func createParshaUtilitarianSmallFlatTemplate(forDate date: Date) -> CLKComplicationTemplate {
-        let flatUtilitarianImageProvider = CLKImageProvider(onePieceImage: #imageLiteral(resourceName: "Torah_964497"))
-        flatUtilitarianImageProvider.accessibilityLabel = "Parsha"
         let lang = TranslationLang(rawValue: settings.lang)!
         let parsha = getParshaString(date: date, il: settings.il, lang: lang)
         // Create the data providers.
         let parshaNameProvider = CLKSimpleTextProvider(text: parsha)
         // Create the template using the providers.
-        return CLKComplicationTemplateUtilitarianSmallFlat(textProvider: parshaNameProvider,
-                                                           imageProvider: flatUtilitarianImageProvider)
+        return CLKComplicationTemplateUtilitarianSmallFlat(textProvider: parshaNameProvider)
     }
 
     // Return a utilitarian large template.
     private func createParshaUtilitarianLargeTemplate(forDate date: Date) -> CLKComplicationTemplate {
         // Create the data providers.
-        let imageProvider = CLKImageProvider(onePieceImage: #imageLiteral(resourceName: "Torah_964497"))
-        imageProvider.tintColor = .red
-        imageProvider.accessibilityLabel = "Parsha"
         let lang = TranslationLang(rawValue: settings.lang)!
-        let parsha = getParshaString(date: date, il: settings.il, lang: lang)
+        let parshaName = getParshaString(date: date, il: settings.il, lang: lang)
+        let parshaPrefix = lookupTranslation(str: "Parashat", lang: lang)
+        let parsha = parshaPrefix + " " + parshaName
         let parshaStrProvider = CLKSimpleTextProvider(text: parsha)
         // Create the template using the providers.
-        return CLKComplicationTemplateUtilitarianLargeFlat(textProvider: parshaStrProvider,
-                                                           imageProvider: imageProvider)
+        return CLKComplicationTemplateUtilitarianLargeFlat(textProvider: parshaStrProvider)
     }
 
     // Return a circular small template.
@@ -314,11 +318,22 @@ class ComplicationController: NSObject, CLKComplicationDataSource {
         let lang = TranslationLang(rawValue: settings.lang)!
         let parsha = getParshaString(date: date, il: settings.il, lang: lang)
         let parshaNameProvider = CLKSimpleTextProvider(text: parsha)
-        let imageProvider = CLKFullColorImageProvider(fullColorImage: #imageLiteral(resourceName: "torah-orange"))
+        let imageProvider = CLKFullColorImageProvider(fullColorImage: #imageLiteral(resourceName: "torah-orange-png"))
         imageProvider.accessibilityLabel = "Parsha"
         // Create the template using the providers.
         return CLKComplicationTemplateGraphicCornerTextImage(textProvider: parshaNameProvider,
                                                              imageProvider: imageProvider)
+    }
+    
+    private func splitFirstChar(str: String, char: Character) -> [String] {
+        if let idx = str.firstIndex(of: char) {
+            let firstWord = String(str[..<idx])
+            let afterIdx = str.index(idx, offsetBy: 1)
+            let remainder = String(str[afterIdx...])
+            return [firstWord, remainder]
+        } else {
+            return [str]
+        }
     }
 
     // Return a graphic circle template.
@@ -326,11 +341,26 @@ class ComplicationController: NSObject, CLKComplicationDataSource {
         // Create the data providers.
         let lang = TranslationLang(rawValue: settings.lang)!
         let parsha = getParshaString(date: date, il: settings.il, lang: lang)
-        // Create the data providers.
-        let imageProvider = CLKFullColorImageProvider(fullColorImage: #imageLiteral(resourceName: "torah-orange-png"))
-        imageProvider.accessibilityLabel = "Parsha"
-        let parshaNameProvider = CLKSimpleTextProvider(text: parsha)
-        // Create the template using the providers.
-        return CLKComplicationTemplateGraphicCircularStackImage(line1ImageProvider: imageProvider, line2TextProvider: parshaNameProvider)
+        var line1TextProvider: CLKTextProvider
+        var line2TextProvider: CLKTextProvider
+        let space: Character = " "
+        let spaceParts = self.splitFirstChar(str: parsha, char: space)
+        if spaceParts.count == 2 {
+            line1TextProvider = CLKSimpleTextProvider(text: spaceParts[0])
+            line2TextProvider = CLKSimpleTextProvider(text: spaceParts[1])
+        } else {
+            let dash: Character = "-"
+            let dashParts = self.splitFirstChar(str: parsha, char: dash)
+            if dashParts.count == 2 {
+                line1TextProvider = CLKSimpleTextProvider(text: dashParts[0] + "-")
+                line2TextProvider = CLKSimpleTextProvider(text: dashParts[1])
+            } else {
+                line1TextProvider = CLKSimpleTextProvider(text: parsha)
+                line2TextProvider = CLKSimpleTextProvider(text: "")
+            }
+        }
+                // Create the template using the providers.
+        return CLKComplicationTemplateGraphicCircularStackText(line1TextProvider: line1TextProvider,
+                                                               line2TextProvider: line2TextProvider)
     }
 }
