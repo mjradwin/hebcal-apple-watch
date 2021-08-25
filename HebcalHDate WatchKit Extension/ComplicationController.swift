@@ -195,7 +195,7 @@ class ComplicationController: NSObject, CLKComplicationDataSource {
         let parts = hebDateStr.split(separator: " ")
         // Create the data providers.
         let dayNumberProvider = CLKSimpleTextProvider(text: String(parts[0]))
-        dayNumberProvider.tintColor = .red
+        dayNumberProvider.tintColor = .orange
         let monthNameProvider = CLKSimpleTextProvider(text: String(parts[1]))
         
         // Create the template using the providers.
@@ -236,7 +236,7 @@ class ComplicationController: NSObject, CLKComplicationDataSource {
         let parts = hebDateStr.split(separator: " ")
         // Create the data providers.
         let dayNumberProvider = CLKSimpleTextProvider(text: String(parts[0]))
-        dayNumberProvider.tintColor = .red
+        dayNumberProvider.tintColor = .orange
         let monthNameProvider = CLKSimpleTextProvider(text: String(parts[1]))
 
         // Create the template using the providers.
@@ -254,7 +254,7 @@ class ComplicationController: NSObject, CLKComplicationDataSource {
         let month = lookupTranslation(str: monthName, lang: lang)
         let innerTextProvider = CLKSimpleTextProvider(text: month)
         let outerTextProvider = CLKSimpleTextProvider(text: day)
-        outerTextProvider.tintColor = .red
+        outerTextProvider.tintColor = .orange
         // Create the template using the providers.
         return CLKComplicationTemplateGraphicCornerStackText(innerTextProvider: innerTextProvider,
                                                              outerTextProvider: outerTextProvider)
@@ -266,7 +266,7 @@ class ComplicationController: NSObject, CLKComplicationDataSource {
         let hebDateStr = settings.getHebDateString(date: date)
         let parts = hebDateStr.split(separator: " ")
         let dayNumberProvider = CLKSimpleTextProvider(text: String(parts[0]))
-        dayNumberProvider.tintColor = .red
+        dayNumberProvider.tintColor = .orange
         let monthNameProvider = CLKSimpleTextProvider(text: String(parts[1]))
         // Create the template using the providers.
         return CLKComplicationTemplateGraphicCircularStackText(line1TextProvider: dayNumberProvider,
