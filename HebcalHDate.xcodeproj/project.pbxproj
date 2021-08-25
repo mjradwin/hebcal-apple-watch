@@ -421,6 +421,7 @@
 				ASSETCATALOG_COMPILER_COMPLICATION_NAME = Complication;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_ASSET_PATHS = "\"HebcalHDate WatchKit Extension/Preview Content\"";
+				DEVELOPMENT_TEAM = 4ZRJ2HBKYL;
 				ENABLE_PREVIEWS = YES;
 				INFOPLIST_FILE = "HebcalHDate WatchKit Extension/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -444,6 +445,7 @@
 				ASSETCATALOG_COMPILER_COMPLICATION_NAME = Complication;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_ASSET_PATHS = "\"HebcalHDate WatchKit Extension/Preview Content\"";
+				DEVELOPMENT_TEAM = 4ZRJ2HBKYL;
 				ENABLE_PREVIEWS = YES;
 				INFOPLIST_FILE = "HebcalHDate WatchKit Extension/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -468,6 +470,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = 4ZRJ2HBKYL;
 				IBSC_MODULE = HebcalHDate_WatchKit_Extension;
 				INFOPLIST_FILE = "HebcalHDate WatchKit App/Info.plist";
 				PRODUCT_BUNDLE_IDENTIFIER = com.hebcal.HebcalHDate.watchkitapp;
@@ -487,6 +490,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = 4ZRJ2HBKYL;
 				IBSC_MODULE = HebcalHDate_WatchKit_Extension;
 				INFOPLIST_FILE = "HebcalHDate WatchKit App/Info.plist";
 				PRODUCT_BUNDLE_IDENTIFIER = com.hebcal.HebcalHDate.watchkitapp;
@@ -504,6 +508,7 @@
 			buildSettings = {
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = 4ZRJ2HBKYL;
 				MARKETING_VERSION = 1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = com.hebcal.HebcalHDate;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -516,6 +521,7 @@
 			buildSettings = {
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = 4ZRJ2HBKYL;
 				MARKETING_VERSION = 1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = com.hebcal.HebcalHDate;
 				PRODUCT_NAME = "$(TARGET_NAME)";

@@ -20,12 +20,14 @@ class ComplicationController: NSObject, CLKComplicationDataSource {
                                    CLKComplicationFamily.circularSmall,
                                    CLKComplicationFamily.utilitarianSmall,
                                    CLKComplicationFamily.utilitarianSmallFlat,
-                                   CLKComplicationFamily.utilitarianLarge,
                                    CLKComplicationFamily.graphicCorner,
                                    CLKComplicationFamily.graphicCircular
         ];
         let descriptors = [
-            CLKComplicationDescriptor(identifier: "complicationHebcal", displayName: "Hebcal", supportedFamilies: [.modularLarge, .graphicRectangular]),
+            CLKComplicationDescriptor(
+                identifier: "complicationHebcal",
+                displayName: "Hebcal",
+                supportedFamilies: [.utilitarianLarge, .modularLarge, .graphicRectangular]),
             CLKComplicationDescriptor(identifier: "complicationHdate", displayName: "Hebrew Date", supportedFamilies: mySupportedFamilies),
             CLKComplicationDescriptor(identifier: "complicationParsha", displayName: "Torah Portion", supportedFamilies: mySupportedFamilies)
             // Multiple complication support can be added here with more descriptors
@@ -92,113 +94,96 @@ class ComplicationController: NSObject, CLKComplicationDataSource {
     
     func getLocalizableSampleTemplate(for complication: CLKComplication, withHandler handler: @escaping (CLKComplicationTemplate?) -> Void) {
         // This method will be called once per supported complication, and the results will be cached
+        var template: CLKComplicationTemplate?
         if complication.identifier == "complicationHebcal" {
             switch complication.family {
             case .modularLarge:
-                let template = createModularLargeTemplate(forDate: Date())
-                handler(template)
+                template = createModularLargeTemplate(forDate: Date())
             case .graphicRectangular:
-                let template = createGraphicRectangularTemplate(forDate: Date())
-                handler(template)
+                template = createGraphicRectangularTemplate(forDate: Date())
+            case .utilitarianLarge:
+                template = createUtilitarianLargeTemplate(forDate: Date())
             default:
-                fatalError("*** Unknown Complication Family ***")
+                template = nil
             }
-            return
-        }
-        switch complication.family {
-        case .modularSmall, .utilitarianSmall, .utilitarianSmallFlat, .utilitarianLarge, .circularSmall, .graphicCorner, .graphicCircular:
-            let template = complication.identifier == "complicationHdate" ?
+        } else {
+            switch complication.family {
+            case .modularSmall, .utilitarianSmall, .utilitarianSmallFlat, .circularSmall, .graphicCorner, .graphicCircular:
+                template = complication.identifier == "complicationHdate" ?
                     createHDateTemplate(forComplication: complication, date: Date()) :
                     createParshaTemplate(forComplication: complication, date: Date())
-            handler(template)
-        case .modularLarge, .extraLarge, .graphicRectangular, .graphicBezel, .graphicExtraLarge:
-            handler(nil)
-        @unknown default:
-            fatalError("*** Unknown Complication Family ***")
+            default:
+                template = nil
+            }
         }
+        handler(template)
     }
-
-    var cal2 = Calendar(identifier: Calendar.Identifier.hebrew)
 
     // Return a timeline entry for the specified complication and date.
     private func createTimelineEntry(forComplication complication: CLKComplication, date: Date) -> CLKComplicationTimelineEntry {
 
         if complication.identifier == "complicationHebcal" {
+            var template: CLKComplicationTemplate
             switch complication.family {
             case .modularLarge:
-                let template = createModularLargeTemplate(forDate: date)
-                return CLKComplicationTimelineEntry(date: date, complicationTemplate: template)
+                template = createModularLargeTemplate(forDate: date)
             case .graphicRectangular:
-                let template = createGraphicRectangularTemplate(forDate: date)
-                return CLKComplicationTimelineEntry(date: date, complicationTemplate: template)
+                template = createGraphicRectangularTemplate(forDate: date)
+            case .utilitarianLarge:
+                template = createUtilitarianLargeTemplate(forDate: date)
             default:
                 fatalError("*** Unsupported Complication Family ***")
             }
+            return CLKComplicationTimelineEntry(date: date, complicationTemplate: template)
         }
 
         // Get the correct template based on the complication.
         let template = complication.identifier == "complicationHdate" ?
                 createHDateTemplate(forComplication: complication, date: date) :
                 createParshaTemplate(forComplication: complication, date: date)
-
+        if template == nil {
+            fatalError("*** Unsupported Complication Family ***")
+        }
         // Use the template and date to create a timeline entry.
-        return CLKComplicationTimelineEntry(date: date, complicationTemplate: template)
+        return CLKComplicationTimelineEntry(date: date, complicationTemplate: template!)
     }
 
     // Select the correct template based on the complication's family.
-    private func createParshaTemplate(forComplication complication: CLKComplication, date: Date) -> CLKComplicationTemplate {
+    private func createParshaTemplate(forComplication complication: CLKComplication, date: Date) -> CLKComplicationTemplate? {
         switch complication.family {
         case .modularSmall:
             return createParshaModularSmallTemplate(forDate: date)
-        case .modularLarge:
-            fatalError("*** Unsupported Complication Family ***")
         case .utilitarianSmall, .utilitarianSmallFlat:
             return createParshaUtilitarianSmallFlatTemplate(forDate: date)
-        case .utilitarianLarge:
-            return createParshaUtilitarianLargeTemplate(forDate: date)
         case .circularSmall:
             return createParshaCircularSmallTemplate(forDate: date)
         case .graphicCorner:
             return createParshaGraphicCornerTemplate(forDate: date)
         case .graphicCircular:
             return createParshaGraphicCircleTemplate(forDate: date)
-        case .extraLarge:
-            fatalError("*** Unsupported Complication Family ***")
-        case .graphicRectangular:
-            fatalError("*** Unsupported Complication Family ***")
-        case .graphicBezel:
-            fatalError("*** Unsupported Complication Family ***")
-        case .graphicExtraLarge:
-            fatalError("*** Unsupported Complication Family ***")
+        case .modularLarge, .utilitarianLarge, .extraLarge, .graphicRectangular, .graphicBezel, .graphicExtraLarge:
+            logger.error("Unsupported Parsha Complication Family")
+            return nil
         @unknown default:
             fatalError("*** Unknown Complication Family ***")
         }
     }
 
-    private func createHDateTemplate(forComplication complication: CLKComplication, date: Date) -> CLKComplicationTemplate {
+    private func createHDateTemplate(forComplication complication: CLKComplication, date: Date) -> CLKComplicationTemplate? {
         switch complication.family {
         case .modularSmall:
             return createHDateModularSmallTemplate(forDate: date)
-        case .modularLarge:
-            fatalError("*** Unsupported Complication Family ***")
         case .utilitarianSmall, .utilitarianSmallFlat:
             return createHDateUtilitarianSmallFlatTemplate(forDate: date)
-        case .utilitarianLarge:
-            return createHDateUtilitarianLargeTemplate(forDate: date)
         case .circularSmall:
             return createHDateCircularSmallTemplate(forDate: date)
         case .graphicCorner:
             return createHDateGraphicCornerTemplate(forDate: date)
         case .graphicCircular:
             return createHDateGraphicCircleTemplate(forDate: date)
-        case .extraLarge:
-            fatalError("*** Unsupported Complication Family ***")
-        case .graphicRectangular:
-            fatalError("*** Unsupported Complication Family ***")
-        case .graphicBezel:
-            fatalError("*** Unsupported Complication Family ***")
-        case .graphicExtraLarge:
-            fatalError("*** Unsupported Complication Family ***")
+        case .modularLarge, .utilitarianLarge, .extraLarge, .graphicRectangular, .graphicBezel, .graphicExtraLarge:
+            logger.error("Unsupported HDate Complication Family")
+            return nil
         @unknown default:
             fatalError("*** Unknown Complication Family ***")
         }
@@ -224,23 +209,26 @@ class ComplicationController: NSObject, CLKComplicationDataSource {
         let hebDateStr = settings.getHebDateString(date: date)
         let parts = hebDateStr.split(separator: " ")
         let dayNumberProvider = CLKSimpleTextProvider(text: String(parts[0]))
-        dayNumberProvider.tintColor = .red
+        dayNumberProvider.tintColor = .orange
         let monthNameProvider = CLKSimpleTextProvider(text: String(parts[1]))
         let combinedProvider = CLKTextProvider(format: "%@ %@", dayNumberProvider, monthNameProvider)
 
         // Create the template using the providers.
         return CLKComplicationTemplateUtilitarianSmallFlat(textProvider: combinedProvider)
     }
-    
+
     // Return a utilitarian large template.
-    private func createHDateUtilitarianLargeTemplate(forDate date: Date) -> CLKComplicationTemplate {
+    private func createUtilitarianLargeTemplate(forDate date: Date) -> CLKComplicationTemplate {
         // Create the data providers.
         let hebDateStr = settings.getHebDateString(date: date)
-        let hebDateProvider = CLKSimpleTextProvider(text: hebDateStr)
+        let parts = hebDateStr.split(separator: " ")
+        let lang = TranslationLang(rawValue: settings.lang)!
+        let parshaName = getParshaString(date: date, il: settings.il, lang: lang)
+        let combinedProvider = CLKTextProvider(format: "%@ %@ · %@", String(parts[0]), String(parts[1]), parshaName)
         // Create the template using the providers.
-        return CLKComplicationTemplateUtilitarianLargeFlat(textProvider: hebDateProvider)
+        return CLKComplicationTemplateUtilitarianLargeFlat(textProvider: combinedProvider)
     }
-    
+
     // Return a circular small template.
     private func createHDateCircularSmallTemplate(forDate date: Date) -> CLKComplicationTemplate {
         // Create the data providers.
@@ -307,18 +295,6 @@ class ComplicationController: NSObject, CLKComplicationDataSource {
         let parshaNameProvider = CLKSimpleTextProvider(text: parsha)
         // Create the template using the providers.
         return CLKComplicationTemplateUtilitarianSmallFlat(textProvider: parshaNameProvider)
-    }
-
-    // Return a utilitarian large template.
-    private func createParshaUtilitarianLargeTemplate(forDate date: Date) -> CLKComplicationTemplate {
-        // Create the data providers.
-        let lang = TranslationLang(rawValue: settings.lang)!
-        let parshaName = getParshaString(date: date, il: settings.il, lang: lang)
-        let parshaPrefix = lookupTranslation(str: "Parashat", lang: lang)
-        let parsha = parshaPrefix + " " + parshaName
-        let parshaStrProvider = CLKSimpleTextProvider(text: parsha)
-        // Create the template using the providers.
-        return CLKComplicationTemplateUtilitarianLargeFlat(textProvider: parshaStrProvider)
     }
 
     private let space: Character = " "
