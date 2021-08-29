@@ -26,6 +26,68 @@ let monthAbbrev = [
     "Tishrei": "Tish",
 ]
 
+let parshaHyphenate = [
+    "Achrei Mot": nil,
+    "Balak": nil,
+    "Bamidbar": ["Bamid", "bar"],
+    "Bechukotai": ["Bechu", "kotai"],
+    "Beha'alotcha": ["Behaa", "lotcha"],
+    "Behar": nil,
+    "Bereshit": ["Bere-", "sheet"],
+    "Beshalach": ["Besha", "lach"],
+    "Bo": nil,
+    "Chayei Sara": nil,
+    "Chukat": nil,
+    "Devarim": ["Deva-", "rim"],
+    "Eikev": nil,
+    "Emor": nil,
+    "Ha'Azinu": ["Ha-", "Azinu"],
+    "Kedoshim": ["Kedo-", "shim"],
+    "Ki Tavo": nil,
+    "Ki Teitzei": nil,
+    "Ki Tisa": nil,
+    "Korach": nil,
+    "Lech-Lecha": nil,
+    "Masei": nil,
+    "Matot": nil,
+    "Metzora": ["Metz-", "ora"],
+    "Miketz": ["Mi-", "ketz"],
+    "Mishpatim": ["Mish-", "patim"],
+    "Nasso": nil,
+    "Nitzavim": ["Nitz-", "avim"],
+    "Noach": nil,
+    "Pekudei": ["Peku-", "dei"],
+    "Pinchas": ["Pin-", "chas"],
+    "Re'eh": nil,
+    "Sh'lach": ["Sh'", "lach"],
+    "Shemot": nil,
+    "Shmini": nil,
+    "Shoftim": ["Shof-", "tim"],
+    "Tazria": nil,
+    "Terumah": ["Teru-", "mah"],
+    "Tetzaveh": ["Tet-", "zaveh"],
+    "Toldot": ["Tol-", "dot"],
+    "Tzav": nil,
+    "Vaera": nil,
+    "Vaetchanan": ["Vaet-", "chanan"],
+    "Vayakhel": ["Vaya-", "khel"],
+    "Vayechi": nil,
+    "Vayeilech": ["Vayei", "lech"],
+    "Vayera": nil,
+    "Vayeshev": ["Vaye-", "shev"],
+    "Vayetzei": ["Vaye-", "tzei"],
+    "Vayigash": ["Vayi-", "gash"],
+    "Vayikra": ["Vayi-", "kra"],
+    "Vayishlach": ["Vayish", "lach"],
+    "Yitro": nil,
+    // ashk
+    "Bechukosai": ["Bechu", "kosai"],
+    "Beha'aloscha": ["Behaa", "loscha"],
+    "Bereshis": ["Bere-", "shis"],
+    "Toldos": ["Tol-", "dos"],
+    "Vaeschanan": ["Vaes-", "chanan"],
+]
+
 class ComplicationController: NSObject, CLKComplicationDataSource {
     lazy var settings = ModelData.shared
     let logger = Logger(subsystem: "com.hebcal.HebcalHDate.watchkitapp.watchkitextension.ComplicationController", category: "Root View")
@@ -335,6 +397,12 @@ class ComplicationController: NSObject, CLKComplicationDataSource {
                     CLKSimpleTextProvider(text: parts[1])
                 ]
             }
+        }
+        if let hyphenated = parshaHyphenate[parsha] {
+            return [
+                CLKSimpleTextProvider(text: hyphenated![0]),
+                CLKSimpleTextProvider(text: hyphenated![1])
+            ]
         }
         return [
             CLKSimpleTextProvider(text: parsha),
