@@ -46,12 +46,22 @@ class ModelData: ObservableObject {
         }
     }
 
+    private let gregCalendar = Calendar(identifier: .gregorian)
+    private func makeHDate(date: Date) -> HDate {
+        var hdate = HDate(date: date)
+        let hour = gregCalendar.dateComponents([.hour], from: date).hour!
+        if (hour > 19) {
+            hdate = HDate(absdate: hdate.abs() + 1)
+        }
+        return hdate
+    }
+
     public var currentHebDateStr: String {
         self.getHebDateString(date: Date())
     }
 
     public func getHebDateString(date: Date) -> String {
-        let hdate = HDate(date: date)
+        let hdate = makeHDate(date: date)
         let monthName = hdate.monthName()
         let lang = TranslationLang(rawValue: lang) ?? TranslationLang.en
         if lang == .he {
@@ -62,9 +72,17 @@ class ModelData: ObservableObject {
             return String(hdate.dd) + " " + monthName + " " + String(hdate.yy)
         }
     }
-    
+
+    public func getParshaString(date: Date) -> String {
+        let hdate = makeHDate(date: date)
+        let sedra = Sedra(year: hdate.yy, il: il)
+        let lang = TranslationLang(rawValue: lang) ?? TranslationLang.en
+        let parsha0 = sedra.lookup(hdate: hdate, lang: lang)
+        return parsha0 == nil ? "Holiday" : parsha0!
+    }
+
     public var currentParshaStr: String {
-        getParshaString(date: Date(), il: il, lang: TranslationLang(rawValue: lang) ?? TranslationLang.en)
+        self.getParshaString(date: Date())
     }
 
     private init() {

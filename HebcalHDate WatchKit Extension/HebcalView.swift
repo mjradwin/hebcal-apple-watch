@@ -23,7 +23,10 @@ struct HebcalView: View {
                     .multilineTextAlignment(.center)
                     .padding()
                 HStack {
-                    Image("torah-orange-png")
+                    Image("torah-orange-solid-2")
+                        .resizable()
+                        .scaledToFit()
+                        .frame(width: 22.0, height: 22.0)
                     Text(modelData.currentParshaStr)
                         .fontWeight(.thin)
                         .multilineTextAlignment(.center)

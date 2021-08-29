@@ -10,7 +10,7 @@ import os
 import Hebcal
 
 struct ContentView: View {
-    let logger = Logger(subsystem: "com.hebcal.HebcalHDate.watchkitapp.watchkitextension.ContentView", category: "Root View")
+    // let logger = Logger(subsystem: "com.hebcal.HebcalHDate.watchkitapp.watchkitextension.ContentView", category: "Root View")
 
     @StateObject var settings = ModelData.shared
 
@@ -19,6 +19,7 @@ struct ContentView: View {
     var body: some View {
         HebcalView()
             .environmentObject(settings)
+            /*
             .onChange(of: scenePhase) { (phase) in
                 switch phase {
 
@@ -38,6 +39,7 @@ struct ContentView: View {
                     assertionFailure()
                 }
         }
+        */
     }
 }
 

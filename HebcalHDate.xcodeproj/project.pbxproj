@@ -17,7 +17,6 @@
 		9D9A028926CC6A480055160C /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 9D9A028826CC6A480055160C /* Assets.xcassets */; };
 		9D9A028C26CC6A480055160C /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 9D9A028B26CC6A480055160C /* Preview Assets.xcassets */; };
 		9DC2BBE426D421A300A248EB /* ModelData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9DC2BBE326D421A300A248EB /* ModelData.swift */; };
-		9DC2BBE626D429F600A248EB /* MyUtils.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9DC2BBE526D429F600A248EB /* MyUtils.swift */; };
 		9DD92EFE26D4AF0E00D62CDE /* HebcalView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9DD92EFD26D4AF0E00D62CDE /* HebcalView.swift */; };
 /* End PBXBuildFile section */
 
@@ -76,7 +75,6 @@
 		9D9A028B26CC6A480055160C /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
 		9D9A028D26CC6A480055160C /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		9DC2BBE326D421A300A248EB /* ModelData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ModelData.swift; sourceTree = "<group>"; };
-		9DC2BBE526D429F600A248EB /* MyUtils.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyUtils.swift; sourceTree = "<group>"; };
 		9DD92EFD26D4AF0E00D62CDE /* HebcalView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HebcalView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -126,7 +124,6 @@
 				9D9A028226CC6A460055160C /* ContentView.swift */,
 				9DD92EFD26D4AF0E00D62CDE /* HebcalView.swift */,
 				9DC2BBE326D421A300A248EB /* ModelData.swift */,
-				9DC2BBE526D429F600A248EB /* MyUtils.swift */,
 				9D9A028426CC6A460055160C /* HebcalHDateApp.swift */,
 				9D9A028626CC6A460055160C /* ComplicationController.swift */,
 				9D9A028826CC6A480055160C /* Assets.xcassets */,
@@ -278,7 +275,6 @@
 			files = (
 				9D9A028326CC6A460055160C /* ContentView.swift in Sources */,
 				9DD92EFE26D4AF0E00D62CDE /* HebcalView.swift in Sources */,
-				9DC2BBE626D429F600A248EB /* MyUtils.swift in Sources */,
 				9DC2BBE426D421A300A248EB /* ModelData.swift in Sources */,
 				9D9A028526CC6A460055160C /* HebcalHDateApp.swift in Sources */,
 				9D9A028726CC6A460055160C /* ComplicationController.swift in Sources */,
@@ -509,7 +505,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = 4ZRJ2HBKYL;
-				MARKETING_VERSION = 1.0;
+				MARKETING_VERSION = 1.2;
 				PRODUCT_BUNDLE_IDENTIFIER = com.hebcal.HebcalHDate;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 5.0;
@@ -522,7 +518,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = 4ZRJ2HBKYL;
-				MARKETING_VERSION = 1.0;
+				MARKETING_VERSION = 1.2;
 				PRODUCT_BUNDLE_IDENTIFIER = com.hebcal.HebcalHDate;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 5.0;
