@@ -343,17 +343,10 @@ class ComplicationController: NSObject, CLKComplicationDataSource {
     // Return a graphic template that fills the corner of the watch face.
     private func createHDateGraphicCornerTemplate(forDate date: Date) -> CLKComplicationTemplate {
         // Create the data providers.
-        let hdate = HDate(date: date)
-        let monthName = hdate.monthName()
-        let lang = TranslationLang(rawValue: settings.lang) ?? TranslationLang.en
-        let day = lang == .he ? hebnumToString(number: hdate.dd) : String(hdate.dd)
-        let month = lookupTranslation(str: monthName, lang: lang)
-        let innerTextProvider = CLKSimpleTextProvider(text: month, shortText: monthAbbrev[monthName] ?? nil)
-        let outerTextProvider = CLKSimpleTextProvider(text: day)
-        outerTextProvider.tintColor = .orange
+        let hdateProviders = makeHDateSimpleTextProviders(date: date)
         // Create the template using the providers.
-        return CLKComplicationTemplateGraphicCornerStackText(innerTextProvider: innerTextProvider,
-                                                             outerTextProvider: outerTextProvider)
+        return CLKComplicationTemplateGraphicCornerStackText(innerTextProvider: hdateProviders[1],
+                                                             outerTextProvider: hdateProviders[0])
     }
 
     // Return a graphic circle template.
@@ -399,6 +392,12 @@ class ComplicationController: NSObject, CLKComplicationDataSource {
             }
         }
         if let hyphenated = parshaHyphenate[parsha] {
+            if hyphenated == nil {
+                return [
+                    CLKSimpleTextProvider(text: parsha),
+                    CLKSimpleTextProvider(text: "")
+                ]
+            }
             return [
                 CLKSimpleTextProvider(text: hyphenated![0]),
                 CLKSimpleTextProvider(text: hyphenated![1])
@@ -450,11 +449,14 @@ class ComplicationController: NSObject, CLKComplicationDataSource {
         let parsha = parshaPrefix + " " + parshaName
         let body1TextProvider = CLKSimpleTextProvider(text: parsha)
 
+        let holidayToday = settings.getHolidayString(date: date)
+        let body2TextProvider = CLKSimpleTextProvider(text: holidayToday)
+
         // Create the template using the providers.
         return CLKComplicationTemplateModularLargeStandardBody(
             headerTextProvider: headerTextProvider,
             body1TextProvider: body1TextProvider,
-            body2TextProvider: CLKSimpleTextProvider(text: ""))
+            body2TextProvider: body2TextProvider)
     }
     
     // Return a large rectangular graphic template.
@@ -470,10 +472,13 @@ class ComplicationController: NSObject, CLKComplicationDataSource {
         let parsha = parshaPrefix + " " + parshaName
         let body1TextProvider = CLKSimpleTextProvider(text: parsha)
 
+        let holidayToday = settings.getHolidayString(date: date)
+        let body2TextProvider = CLKSimpleTextProvider(text: holidayToday)
+
         // Create the template using the providers.
         return CLKComplicationTemplateGraphicRectangularStandardBody(
             headerTextProvider: headerTextProvider,
             body1TextProvider: body1TextProvider,
-            body2TextProvider: CLKSimpleTextProvider(text: ""))
+            body2TextProvider: body2TextProvider)
     }
 }

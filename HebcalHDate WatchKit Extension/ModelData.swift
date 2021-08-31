@@ -47,13 +47,14 @@ class ModelData: ObservableObject {
     }
 
     private let gregCalendar = Calendar(identifier: .gregorian)
-    private func makeHDate(date: Date) -> HDate {
+    public func makeHDate(date: Date) -> HDate {
         var hdate = HDate(date: date)
         let hour = gregCalendar.dateComponents([.hour], from: date).hour!
         if (hour > 19) {
             hdate = HDate(absdate: hdate.abs() + 1)
         }
         return hdate
+        // return HDate(yy: 5795, mm: .TISHREI, dd: 8)
     }
 
     public var currentHebDateStr: String {
@@ -73,16 +74,57 @@ class ModelData: ObservableObject {
         }
     }
 
+    public func getHolidayNameForParsha(hdate: HDate) -> String {
+        let abs = dayOnOrBefore(dayOfWeek: DayOfWeek.SAT, absdate: hdate.abs() + 6)
+        let hd = HDate(absdate: abs)
+        if (hd.mm == .TISHREI) {
+            switch hd.dd {
+            case 1: return "Rosh Hashana"
+            case 10: return "Yom Kippur"
+            case 15, 16, 17, 18, 19, 20, 21: return "Sukkot"
+            case 22: return "Shmini Atzeret"
+            default: return "??"
+            }
+        } else if (hd.mm == .NISAN) {
+            return "Pesach"
+        } else if (hd.mm == .SIVAN) {
+            return "Shavuot"
+        } else {
+            return "??"
+        }
+    }
+
     public func getParshaString(date: Date) -> String {
         let hdate = makeHDate(date: date)
         let sedra = Sedra(year: hdate.yy, il: il)
         let lang = TranslationLang(rawValue: lang) ?? TranslationLang.en
         let parsha0 = sedra.lookup(hdate: hdate, lang: lang)
-        return parsha0 == nil ? "Holiday" : parsha0!
+        return parsha0 == nil ?
+            lookupTranslation(str: getHolidayNameForParsha(hdate: hdate), lang: lang) :
+            parsha0!
     }
 
     public var currentParshaStr: String {
         self.getParshaString(date: Date())
+    }
+
+    public func getHolidayString(date: Date) -> String {
+        let hdate = makeHDate(date: date)
+        let holidays = getHolidaysOnDate(hdate: hdate, il: il)
+        if holidays.count == 0 {
+            return ""
+        }
+        var result = [String]()
+        let lang = TranslationLang(rawValue: lang) ?? TranslationLang.en
+        for h in holidays {
+            let desc = lookupTranslation(str: h.desc, lang: lang)
+            result.append(desc)
+        }
+        return result[0]
+    }
+
+    public var currenHolidayStr: String {
+        self.getHolidayString(date: Date())
     }
 
     private init() {
