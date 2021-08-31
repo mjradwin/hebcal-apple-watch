@@ -6,6 +6,8 @@
 	<dict>
 		<key>HebcalHDate WatchKit App (Complication).xcscheme_^#shared#^_</key>
 		<dict>
+			<key>isShown</key>
+			<true/>
 			<key>orderHint</key>
 			<integer>1</integer>
 		</dict>
@@ -13,6 +15,19 @@
 		<dict>
 			<key>orderHint</key>
 			<integer>0</integer>
+		</dict>
+	</dict>
+	<key>SuppressBuildableAutocreation</key>
+	<dict>
+		<key>9D9A026C26CC6A410055160C</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>9D9A027026CC6A420055160C</key>
+		<dict>
+			<key>primary</key>
+			<true/>
 		</dict>
 	</dict>
 </dict>
