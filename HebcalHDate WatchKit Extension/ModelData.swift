@@ -108,32 +108,41 @@ class ModelData: ObservableObject {
         self.getParshaString(date: Date())
     }
 
-    public func getHolidayString(date: Date) -> String {
+    private let priortyFlags = HolidayFlags([.EREV, .CHAG, .MINOR_HOLIDAY])
+    private func pickHolidayToDisplay(date: Date) -> HEvent? {
         let hdate = makeHDate(date: date)
         let holidays = getHolidaysOnDate(hdate: hdate, il: il)
-        let lang = TranslationLang(rawValue: lang) ?? TranslationLang.en
         if holidays.count == 0 {
+            // if there are no holidays today, see if Shabbat is a special Shabbat
             let saturdayAbs = dayOnOrBefore(dayOfWeek: DayOfWeek.SAT, absdate: hdate.abs() + 6)
             let saturday = HDate(absdate: saturdayAbs)
             let satHolidays = getHolidaysOnDate(hdate: saturday, il: il)
             for h in satHolidays {
                 if h.flags.contains(.SPECIAL_SHABBAT) {
-                    return lookupTranslation(str: h.desc, lang: lang)
+                    return h
                 }
             }
-            return "" // today isn't a holiday and no special shabbat
+            return nil // today isn't a holiday and no special shabbat
         } else if holidays.count == 1 {
-            let h = holidays[0]
-            return lookupTranslation(str: h.desc, lang: lang)
+            return holidays[0]
         } else {
-            if let h = holidays.first(where: {
-                                        $0.flags.contains([.EREV, .CHAG, .MINOR_HOLIDAY]) }) {
-                return lookupTranslation(str: h.desc, lang: lang)
+            // multiple holidays today, such as "Erev Pesach" and "Ta'anit Bechorot"
+            // so pick the most "important" one to display
+            if let h = holidays.first(
+                where: { !priortyFlags.intersection($0.flags).isEmpty }) {
+                return h
             } else {
-                let h = holidays[0]
-                return lookupTranslation(str: h.desc, lang: lang)
+                // whatever, just show the first holiday today
+                return holidays[0]
             }
         }
+    }
+    public func getHolidayString(date: Date) -> String {
+        let lang = TranslationLang(rawValue: lang) ?? TranslationLang.en
+        if let ev = pickHolidayToDisplay(date: date) {
+            return lookupTranslation(str: ev.desc, lang: lang)
+        }
+        return "" // today isn't a holiday and no special shabbat
     }
 
     public var currenHolidayStr: String {

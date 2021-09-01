@@ -55,7 +55,7 @@
       "subtype" : "44mm"
     },
     {
-      "filename" : "luach-172.png",
+      "filename" : "hebcal-172.png",
       "idiom" : "watch",
       "role" : "quickLook",
       "scale" : "2x",
@@ -63,7 +63,7 @@
       "subtype" : "38mm"
     },
     {
-      "filename" : "luach-196.png",
+      "filename" : "hebcal-196.png",
       "idiom" : "watch",
       "role" : "quickLook",
       "scale" : "2x",
@@ -71,7 +71,7 @@
       "subtype" : "42mm"
     },
     {
-      "filename" : "luach-216.png",
+      "filename" : "hebcal-216.png",
       "idiom" : "watch",
       "role" : "quickLook",
       "scale" : "2x",
@@ -79,7 +79,7 @@
       "subtype" : "44mm"
     },
     {
-      "filename" : "luach-1024.png",
+      "filename" : "hebcal-1024.png",
       "idiom" : "watch-marketing",
       "scale" : "1x",
       "size" : "1024x1024"
