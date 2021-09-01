@@ -449,7 +449,7 @@ class ComplicationController: NSObject, CLKComplicationDataSource {
         let parsha = parshaPrefix + " " + parshaName
         let body1TextProvider = CLKSimpleTextProvider(text: parsha)
 
-        let holidayToday = settings.getHolidayString(date: date)
+        let holidayToday = settings.getHolidayString(date: date) ?? ""
         let body2TextProvider = CLKSimpleTextProvider(text: holidayToday)
 
         // Create the template using the providers.
@@ -472,7 +472,7 @@ class ComplicationController: NSObject, CLKComplicationDataSource {
         let parsha = parshaPrefix + " " + parshaName
         let body1TextProvider = CLKSimpleTextProvider(text: parsha)
 
-        let holidayToday = settings.getHolidayString(date: date)
+        let holidayToday = settings.getHolidayString(date: date) ?? ""
         let body2TextProvider = CLKSimpleTextProvider(text: holidayToday)
 
         // Create the template using the providers.

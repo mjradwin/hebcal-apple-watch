@@ -137,15 +137,15 @@ class ModelData: ObservableObject {
             }
         }
     }
-    public func getHolidayString(date: Date) -> String {
+    public func getHolidayString(date: Date) -> String? {
         let lang = TranslationLang(rawValue: lang) ?? TranslationLang.en
         if let ev = pickHolidayToDisplay(date: date) {
             return lookupTranslation(str: ev.desc, lang: lang)
         }
-        return "" // today isn't a holiday and no special shabbat
+        return nil // today isn't a holiday and no special shabbat
     }
 
-    public var currenHolidayStr: String {
+    public var currenHolidayStr: String? {
         self.getHolidayString(date: Date())
     }
 

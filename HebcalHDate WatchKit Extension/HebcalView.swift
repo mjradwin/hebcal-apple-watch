@@ -31,6 +31,12 @@ struct HebcalView: View {
                         .fontWeight(.thin)
                         .multilineTextAlignment(.center)
                 }
+                modelData.currenHolidayStr.map({
+                    Text($0)
+                        .fontWeight(.regular)
+                        .multilineTextAlignment(.center)
+                        .padding()
+                })
                 Spacer()
                 Form {
                     Picker("Language", selection: $modelData.lang) {
