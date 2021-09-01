@@ -111,16 +111,29 @@ class ModelData: ObservableObject {
     public func getHolidayString(date: Date) -> String {
         let hdate = makeHDate(date: date)
         let holidays = getHolidaysOnDate(hdate: hdate, il: il)
-        if holidays.count == 0 {
-            return ""
-        }
-        var result = [String]()
         let lang = TranslationLang(rawValue: lang) ?? TranslationLang.en
-        for h in holidays {
-            let desc = lookupTranslation(str: h.desc, lang: lang)
-            result.append(desc)
+        if holidays.count == 0 {
+            let saturdayAbs = dayOnOrBefore(dayOfWeek: DayOfWeek.SAT, absdate: hdate.abs() + 6)
+            let saturday = HDate(absdate: saturdayAbs)
+            let satHolidays = getHolidaysOnDate(hdate: saturday, il: il)
+            for h in satHolidays {
+                if h.flags.contains(.SPECIAL_SHABBAT) {
+                    return lookupTranslation(str: h.desc, lang: lang)
+                }
+            }
+            return "" // today isn't a holiday and no special shabbat
+        } else if holidays.count == 1 {
+            let h = holidays[0]
+            return lookupTranslation(str: h.desc, lang: lang)
+        } else {
+            if let h = holidays.first(where: {
+                                        $0.flags.contains([.EREV, .CHAG, .MINOR_HOLIDAY]) }) {
+                return lookupTranslation(str: h.desc, lang: lang)
+            } else {
+                let h = holidays[0]
+                return lookupTranslation(str: h.desc, lang: lang)
+            }
         }
-        return result[0]
     }
 
     public var currenHolidayStr: String {
