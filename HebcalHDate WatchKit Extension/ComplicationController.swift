@@ -382,7 +382,7 @@ class ComplicationController: NSObject, CLKComplicationDataSource {
 
     private func makeParshaSimpleTextProviders(date: Date) -> [CLKSimpleTextProvider] {
         let parsha = settings.getParshaString(date: date)
-        for delim in [dash, space, maqaf] {
+        for delim in [dash, maqaf, space] {
             if (parsha.firstIndex(of: delim) != nil) {
                 let parts = self.splitFirstChar(str: parsha, char: delim)
                 return [
