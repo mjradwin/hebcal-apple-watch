@@ -57,20 +57,27 @@ class ModelData: ObservableObject {
         // return HDate(yy: 5795, mm: .TISHREI, dd: 8)
     }
 
-    public var currentHebDateStr: String {
-        self.getHebDateString(date: Date())
+    public func getHebDateString(date: Date, showYear: Bool) -> String {
+        let hdate = makeHDate(date: date)
+        return self.getHebDateString(hdate: hdate, showYear: showYear)
     }
 
-    public func getHebDateString(date: Date) -> String {
-        let hdate = makeHDate(date: date)
+    public func getHebDateString(hdate: HDate, showYear: Bool) -> String {
         let monthName = hdate.monthName()
         let lang = TranslationLang(rawValue: lang) ?? TranslationLang.en
         if lang == .he {
-            return hebnumToString(number: hdate.dd) + " " +
-                lookupTranslation(str: monthName, lang: lang) + " " +
-                hebnumToString(number: hdate.yy)
+            var str = hebnumToString(number: hdate.dd) + " " +
+                lookupTranslation(str: monthName, lang: lang)
+            if showYear {
+                str += " " + hebnumToString(number: hdate.yy)
+            }
+            return str
         } else {
-            return String(hdate.dd) + " " + monthName + " " + String(hdate.yy)
+            var str = String(hdate.dd) + " " + monthName
+            if showYear {
+                str += " " + String(hdate.yy)
+            }
+            return str
         }
     }
 
@@ -96,6 +103,10 @@ class ModelData: ObservableObject {
 
     public func getParshaString(date: Date) -> String {
         let hdate = makeHDate(date: date)
+        return self.getParshaString(hdate: hdate)
+    }
+
+    public func getParshaString(hdate: HDate) -> String {
         let sedra = Sedra(year: hdate.yy, il: il)
         let lang = TranslationLang(rawValue: lang) ?? TranslationLang.en
         let parsha0 = sedra.lookup(hdate: hdate, lang: lang)
@@ -109,10 +120,16 @@ class ModelData: ObservableObject {
     }
 
     private let priortyFlags = HolidayFlags([.EREV, .CHAG, .MINOR_HOLIDAY])
-    private func pickHolidayToDisplay(date: Date) -> HEvent? {
+    private func pickHolidayToDisplay(date: Date, todayOnly: Bool) -> HEvent? {
         let hdate = makeHDate(date: date)
+        return self.pickHolidayToDisplay(hdate: hdate, todayOnly: todayOnly)
+    }
+    private func pickHolidayToDisplay(hdate: HDate, todayOnly: Bool) -> HEvent? {
         let holidays = getHolidaysOnDate(hdate: hdate, il: il)
         if holidays.count == 0 {
+            if todayOnly {
+                return nil
+            }
             // if there are no holidays today, see if Shabbat is a special Shabbat
             let saturdayAbs = dayOnOrBefore(dayOfWeek: DayOfWeek.SAT, absdate: hdate.abs() + 6)
             let saturday = HDate(absdate: saturdayAbs)
@@ -139,14 +156,10 @@ class ModelData: ObservableObject {
     }
     public func getHolidayString(date: Date) -> String? {
         let lang = TranslationLang(rawValue: lang) ?? TranslationLang.en
-        if let ev = pickHolidayToDisplay(date: date) {
+        if let ev = pickHolidayToDisplay(date: date, todayOnly: false) {
             return lookupTranslation(str: ev.desc, lang: lang)
         }
         return nil // today isn't a holiday and no special shabbat
-    }
-
-    public var currenHolidayStr: String? {
-        self.getHolidayString(date: Date())
     }
 
     private init() {
@@ -155,29 +168,64 @@ class ModelData: ObservableObject {
         self.lang = UserDefaults.standard.integer(forKey: "lang")
     }
 
+    private let dayOfWeek = ["", "Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"]
+    private let dayOfWeekHe = [
+        "",
+        "ראשון",
+        "שני",
+        "שלישי",
+        "רביעי",
+        "חמישי",
+        "שישי",
+        "שבת",
+    ]
     private let shortMonth = [
         "",
         "Jan", "Feb", "Mar", "Apr", "May", "Jun",
         "Jul", "Aug", "Sep", "Oct", "Nov", "Dec",
     ]
+    private let shortMonthHe = [
+        "",
+        "ינו",
+        "פבר",
+        "מרץ",
+        "אפר",
+        "מאי",
+        "יונ",
+        "יול",
+        "אוג",
+        "ספט",
+        "אוק",
+        "נוב",
+        "דצמ",
+    ]
     public func makeDateItem(date: Date) -> DateItem {
-        let ymd = gregCalendar.dateComponents([.year, .month, .day], from: date)
-        let hdate = self.getHebDateString(date: date)
-        let parsha = self.getParshaString(date: date)
-        let holiday = self.getHolidayString(date: date)
+        let dateComponents = gregCalendar.dateComponents([.weekday, .month, .day], from: date)
+        let hdate = HDate(date: date)
+        let hdateStr = self.getHebDateString(hdate: hdate, showYear: false)
+        let parsha = self.getParshaString(hdate: hdate)
+        let lang = TranslationLang(rawValue: lang) ?? TranslationLang.en
+        var holiday: String? = nil
+        // let holidays = getHolidaysOnDate(hdate: hdate, il: il)
+        if let ev = pickHolidayToDisplay(hdate: hdate, todayOnly: true) {
+            holiday = lookupTranslation(str: ev.desc, lang: lang)
+        }
+        let gregMonth = lang == .he ? shortMonthHe[dateComponents.month!] : shortMonth[dateComponents.month!]
+        let dow = lang == .he ? dayOfWeekHe[dateComponents.weekday!] : dayOfWeek[dateComponents.weekday!]
         return DateItem(
-            gregDay: ymd.day!, gregMonth: shortMonth[ymd.month!],
-            hdate: hdate, parsha: parsha, holiday: holiday)
+            dow: dow,
+            gregDay: dateComponents.day!, gregMonth: gregMonth,
+            hdate: hdateStr, parsha: parsha, holiday: holiday)
     }
 
-    let tenDays = 10.0 * 24.0 * 60.0 * 60.0
+    let thirtyDays = 30.0 * 24.0 * 60.0 * 60.0
     let twentyFourHours = 24.0 * 60.0 * 60.0
 
     public func makeDateItems(date: Date) -> [DateItem] {
         var entries = [DateItem]()
         // Calculate the start and end dates.
         var current = date
-        let endDate = date.addingTimeInterval(tenDays)
+        let endDate = date.addingTimeInterval(thirtyDays)
         while (current.compare(endDate) == .orderedAscending) {
             let item = self.makeDateItem(date: current)
             entries.append(item)

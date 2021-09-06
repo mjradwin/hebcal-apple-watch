@@ -19,6 +19,7 @@ struct HDateList: View {
     var body: some View {
         List(items) {
             HDateRow(item: $0)
+                .environmentObject(modelData)
         }
         .navigationTitle("Hebcal")
     }

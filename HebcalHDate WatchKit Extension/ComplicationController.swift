@@ -291,7 +291,7 @@ class ComplicationController: NSObject, CLKComplicationDataSource {
     }
 
     private func makeHDateSimpleTextProviders(date: Date) -> [CLKSimpleTextProvider] {
-        let hebDateStr = settings.getHebDateString(date: date)
+        let hebDateStr = settings.getHebDateString(date: date, showYear: false)
         let parts = hebDateStr.split(separator: " ")
         let dayNumber = String(parts[0])
         let monthName = String(parts[1])
@@ -439,7 +439,7 @@ class ComplicationController: NSObject, CLKComplicationDataSource {
     // Return a modular large template.
     private func createModularLargeTemplate(forDate date: Date) -> CLKComplicationTemplate {
         // Create the data providers.
-        let hebDateStr = settings.getHebDateString(date: date)
+        let hebDateStr = settings.getHebDateString(date: date, showYear: true)
         let headerTextProvider = CLKSimpleTextProvider(text: hebDateStr)
         headerTextProvider.tintColor = .orange
 
@@ -462,7 +462,7 @@ class ComplicationController: NSObject, CLKComplicationDataSource {
     // Return a large rectangular graphic template.
     private func createGraphicRectangularTemplate(forDate date: Date) -> CLKComplicationTemplate {
         // Create the data providers.
-        let hebDateStr = settings.getHebDateString(date: date)
+        let hebDateStr = settings.getHebDateString(date: date, showYear: true)
         let headerTextProvider = CLKSimpleTextProvider(text: hebDateStr)
         headerTextProvider.tintColor = .orange
 

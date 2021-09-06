@@ -7,7 +7,6 @@
 
 import Foundation
 import SwiftUI
-import Hebcal
 
 // The app's main view.
 struct HebcalView: View {
@@ -17,37 +16,11 @@ struct HebcalView: View {
     // Lay out the view's body.
     var body: some View {
         NavigationView {
-            VStack {
-                Text(modelData.currentHebDateStr)
-                    .fontWeight(.regular)
-                    .multilineTextAlignment(.center)
-                    .padding()
-                HStack {
-                    Image("torah-orange-solid-2")
-                        .resizable()
-                        .scaledToFit()
-                        .frame(width: 22.0, height: 22.0)
-                    Text(modelData.currentParshaStr)
-                        .fontWeight(.thin)
-                        .multilineTextAlignment(.center)
-                }
-                modelData.currenHolidayStr.map({
-                    Text($0)
-                        .fontWeight(.regular)
-                        .multilineTextAlignment(.center)
-                        .padding()
-                })
-                Spacer()
-                Form {
-                    Picker("Language", selection: $modelData.lang) {
-                        Text("Sephardic").tag(TranslationLang.en.rawValue)
-                        Text("Ashkenazi").tag(TranslationLang.ashkenazi.rawValue)
-                        Text("Hebrew").tag(TranslationLang.he.rawValue)
-                    }
-                    Toggle(isOn: $modelData.il) {
-                        Text("Israel")
-                    }
-                }
+            TabView {
+                HDateList()
+                    .tabItem { Label("Hebcal", systemImage: "list.dash") }
+                SettingsView()
+                    .tabItem { Label("Settings", systemImage: "gear") }
             }
             .navigationTitle("Hebcal")
         }
