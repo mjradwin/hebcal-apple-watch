@@ -7,6 +7,9 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		9D35F47B26E5792700EC5AAD /* HDateRow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D35F47A26E5792700EC5AAD /* HDateRow.swift */; };
+		9D35F47F26E57B3200EC5AAD /* DateItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D35F47E26E57B3200EC5AAD /* DateItem.swift */; };
+		9D35F48126E5809100EC5AAD /* HDateList.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D35F48026E5809100EC5AAD /* HDateList.swift */; };
 		9D3F0F6D26D03C8E002B41F2 /* Hebcal in Frameworks */ = {isa = PBXBuildFile; productRef = 9D3F0F6C26D03C8E002B41F2 /* Hebcal */; };
 		9D9A027226CC6A420055160C /* HebcalHDate WatchKit App.app in Embed Watch Content */ = {isa = PBXBuildFile; fileRef = 9D9A027126CC6A420055160C /* HebcalHDate WatchKit App.app */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 		9D9A027726CC6A460055160C /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 9D9A027626CC6A460055160C /* Assets.xcassets */; };
@@ -63,6 +66,9 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		9D35F47A26E5792700EC5AAD /* HDateRow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HDateRow.swift; sourceTree = "<group>"; };
+		9D35F47E26E57B3200EC5AAD /* DateItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DateItem.swift; sourceTree = "<group>"; };
+		9D35F48026E5809100EC5AAD /* HDateList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HDateList.swift; sourceTree = "<group>"; };
 		9D9A026D26CC6A410055160C /* HebcalHDate.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = HebcalHDate.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		9D9A027126CC6A420055160C /* HebcalHDate WatchKit App.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "HebcalHDate WatchKit App.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		9D9A027626CC6A460055160C /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -123,6 +129,9 @@
 			children = (
 				9D9A028226CC6A460055160C /* ContentView.swift */,
 				9DD92EFD26D4AF0E00D62CDE /* HebcalView.swift */,
+				9D35F47A26E5792700EC5AAD /* HDateRow.swift */,
+				9D35F48026E5809100EC5AAD /* HDateList.swift */,
+				9D35F47E26E57B3200EC5AAD /* DateItem.swift */,
 				9DC2BBE326D421A300A248EB /* ModelData.swift */,
 				9D9A028426CC6A460055160C /* HebcalHDateApp.swift */,
 				9D9A028626CC6A460055160C /* ComplicationController.swift */,
@@ -274,10 +283,13 @@
 			buildActionMask = 2147483647;
 			files = (
 				9D9A028326CC6A460055160C /* ContentView.swift in Sources */,
+				9D35F47B26E5792700EC5AAD /* HDateRow.swift in Sources */,
 				9DD92EFE26D4AF0E00D62CDE /* HebcalView.swift in Sources */,
 				9DC2BBE426D421A300A248EB /* ModelData.swift in Sources */,
+				9D35F48126E5809100EC5AAD /* HDateList.swift in Sources */,
 				9D9A028526CC6A460055160C /* HebcalHDateApp.swift in Sources */,
 				9D9A028726CC6A460055160C /* ComplicationController.swift in Sources */,
+				9D35F47F26E57B3200EC5AAD /* DateItem.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -154,4 +154,35 @@ class ModelData: ObservableObject {
         self.il = UserDefaults.standard.bool(forKey: "israel")
         self.lang = UserDefaults.standard.integer(forKey: "lang")
     }
+
+    private let shortMonth = [
+        "",
+        "Jan", "Feb", "Mar", "Apr", "May", "Jun",
+        "Jul", "Aug", "Sep", "Oct", "Nov", "Dec",
+    ]
+    public func makeDateItem(date: Date) -> DateItem {
+        let ymd = gregCalendar.dateComponents([.year, .month, .day], from: date)
+        let hdate = self.getHebDateString(date: date)
+        let parsha = self.getParshaString(date: date)
+        let holiday = self.getHolidayString(date: date)
+        return DateItem(
+            gregDay: ymd.day!, gregMonth: shortMonth[ymd.month!],
+            hdate: hdate, parsha: parsha, holiday: holiday)
+    }
+
+    let tenDays = 10.0 * 24.0 * 60.0 * 60.0
+    let twentyFourHours = 24.0 * 60.0 * 60.0
+
+    public func makeDateItems(date: Date) -> [DateItem] {
+        var entries = [DateItem]()
+        // Calculate the start and end dates.
+        var current = date
+        let endDate = date.addingTimeInterval(tenDays)
+        while (current.compare(endDate) == .orderedAscending) {
+            let item = self.makeDateItem(date: current)
+            entries.append(item)
+            current = current.addingTimeInterval(twentyFourHours)
+        }
+        return entries
+    }
 }
