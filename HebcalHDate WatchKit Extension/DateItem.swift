@@ -8,11 +8,12 @@
 import Foundation
 
 struct DateItem: Hashable, Codable, Identifiable {
-    var id = UUID()
+    var id: Int
+    var weekday: Int
     var dow: String
     var gregDay: Int
     var gregMonth: String
     var hdate: String
-    var parsha: String
-    var holiday: String?
+    var parsha: String?
+    var holidays: [String]
 }

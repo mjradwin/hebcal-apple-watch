@@ -21,29 +21,34 @@ struct HDateRow: View {
         HStack {
             VStack {
                 Text(item.dow)
-                    .font(.system(size: 10, weight: .semibold, design: .default))
-                    .foregroundColor(.gray)
+                    .font(.system(size: 12, weight: .regular, design: .default))
+                    .foregroundColor(.white)
                 Text(String(item.gregDay))
-                    .font(.system(size: 20, weight: .semibold, design: .default))
+                    .font(.system(size: 20, weight: .semibold, design: .monospaced))
                     .foregroundColor(.orange)
                 Text(item.gregMonth)
                     .font(.system(size: 12, weight: .regular, design: .default))
+                    .foregroundColor(.gray)
             }
-            .padding(.leading, 5.0)
+            .padding(.leading, 2.0)
             if lang == .he {
                 Spacer()
             }
             VStack(alignment: (lang == .he) ? .trailing : .leading) {
                 Text(item.hdate)
                     .font(.system(size: 16, weight: .regular, design: .default))
-                Text(item.parsha)
-                    .font(.system(size: 14, weight: .regular, design: .default))
-                    .foregroundColor(.gray)
-                item.holiday.map({
+                item.parsha.map({
                     Text($0)
-                        .font(.system(size: 12, weight: .light, design: .default))
-                        .foregroundColor(.yellow)
+                        .font(.system(size: (lang == .he) ? 16 : 14,
+                                      weight: .regular, design: .default))
+                        .foregroundColor(.gray)
                 })
+                ForEach(item.holidays, id: \.self) { holiday in
+                    Text(holiday)
+                        .font(.system(size: (lang == .he) ? 16 : 14,
+                                      weight: .regular, design: .default))
+                        .foregroundColor(.yellow)
+                }
             }
             .padding(.leading)
         }
@@ -53,9 +58,12 @@ struct HDateRow: View {
 
 struct HDateRow_Previews: PreviewProvider {
     static var items: [DateItem] = [
-        DateItem(dow: "Sun", gregDay: 4, gregMonth: "Sep", hdate: "27 Elul", parsha: "Nitzavim"),
-        DateItem(dow: "Mon", gregDay: 25, gregMonth: "Sep", hdate: "28 Elul", parsha: "Vayeilech",
-                 holiday: "Shabbat Shuva"),
+        DateItem(id: 1, weekday: 1, dow: "Sun", gregDay: 4, gregMonth: "Sep",
+                 hdate: "27 Elul", parsha: "Nitzavim",
+                 holidays: []),
+        DateItem(id: 2, weekday: 2, dow: "Mon", gregDay: 25, gregMonth: "Sep",
+                 hdate: "28 Elul", parsha: "Vayeilech",
+                 holidays: ["Shabbat Shuva"]),
     ]
 
     static var previews: some View {
