@@ -21,7 +21,6 @@
 		9D9A028926CC6A480055160C /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 9D9A028826CC6A480055160C /* Assets.xcassets */; };
 		9D9A028C26CC6A480055160C /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 9D9A028B26CC6A480055160C /* Preview Assets.xcassets */; };
 		9DC2BBE426D421A300A248EB /* ModelData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9DC2BBE326D421A300A248EB /* ModelData.swift */; };
-		9DD92EFE26D4AF0E00D62CDE /* HebcalView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9DD92EFD26D4AF0E00D62CDE /* HebcalView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -83,7 +82,6 @@
 		9D9A028B26CC6A480055160C /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
 		9D9A028D26CC6A480055160C /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		9DC2BBE326D421A300A248EB /* ModelData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ModelData.swift; sourceTree = "<group>"; };
-		9DD92EFD26D4AF0E00D62CDE /* HebcalView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HebcalView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -130,7 +128,6 @@
 			isa = PBXGroup;
 			children = (
 				9D9A028226CC6A460055160C /* ContentView.swift */,
-				9DD92EFD26D4AF0E00D62CDE /* HebcalView.swift */,
 				9D35F48226E6698400EC5AAD /* SettingsView.swift */,
 				9D35F47A26E5792700EC5AAD /* HDateRow.swift */,
 				9D35F48026E5809100EC5AAD /* HDateList.swift */,
@@ -287,7 +284,6 @@
 			files = (
 				9D9A028326CC6A460055160C /* ContentView.swift in Sources */,
 				9D35F47B26E5792700EC5AAD /* HDateRow.swift in Sources */,
-				9DD92EFE26D4AF0E00D62CDE /* HebcalView.swift in Sources */,
 				9D35F48326E6698400EC5AAD /* SettingsView.swift in Sources */,
 				9DC2BBE426D421A300A248EB /* ModelData.swift in Sources */,
 				9D35F48126E5809100EC5AAD /* HDateList.swift in Sources */,
@@ -519,9 +515,9 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 1.5.0;
+				CURRENT_PROJECT_VERSION = 1.5.2;
 				DEVELOPMENT_TEAM = 4ZRJ2HBKYL;
-				MARKETING_VERSION = 1.5.0;
+				MARKETING_VERSION = 1.5.2;
 				PRODUCT_BUNDLE_IDENTIFIER = com.hebcal.HebcalHDate;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 5.0;
@@ -532,9 +528,9 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 1.5.0;
+				CURRENT_PROJECT_VERSION = 1.5.2;
 				DEVELOPMENT_TEAM = 4ZRJ2HBKYL;
-				MARKETING_VERSION = 1.5.0;
+				MARKETING_VERSION = 1.5.2;
 				PRODUCT_BUNDLE_IDENTIFIER = com.hebcal.HebcalHDate;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 5.0;

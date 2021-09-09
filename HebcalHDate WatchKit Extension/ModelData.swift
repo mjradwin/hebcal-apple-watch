@@ -104,10 +104,10 @@ class ModelData: ObservableObject {
 
     public func getParshaString(date: Date) -> String {
         let hdate = makeHDate(date: date)
-        return self.getParshaString(hdate: hdate)
+        return self.getParshaString(hdate: hdate, fallbackToHoliday: true) ?? "??"
     }
 
-    public func getParshaString(hdate: HDate) -> String {
+    private func getParshaString(hdate: HDate, fallbackToHoliday: Bool) -> String? {
         let year = hdate.yy
         var sedra = sedraCache[year]
         if sedra == nil {
@@ -116,22 +116,22 @@ class ModelData: ObservableObject {
         }
         let lang = TranslationLang(rawValue: lang) ?? TranslationLang.en
         let parsha0 = sedra!.lookup(hdate: hdate, lang: lang)
+        if parsha0 == nil && !fallbackToHoliday {
+            return nil
+        }
         return parsha0 == nil ?
             lookupTranslation(str: getHolidayNameForParsha(hdate: hdate), lang: lang) :
             parsha0!
     }
 
     private let priortyFlags = HolidayFlags([.EREV, .CHAG, .MINOR_HOLIDAY])
-    private func pickHolidayToDisplay(date: Date, todayOnly: Bool) -> HEvent? {
+    private func pickHolidayToDisplay(date: Date) -> HEvent? {
         let hdate = makeHDate(date: date)
-        return self.pickHolidayToDisplay(hdate: hdate, todayOnly: todayOnly)
+        return self.pickHolidayToDisplay(hdate: hdate)
     }
-    private func pickHolidayToDisplay(hdate: HDate, todayOnly: Bool) -> HEvent? {
+    private func pickHolidayToDisplay(hdate: HDate) -> HEvent? {
         let holidays = self.getHolidaysOnDate(hdate: hdate)
         if holidays.count == 0 {
-            if todayOnly {
-                return nil
-            }
             // if there are no holidays today, see if Shabbat is a special Shabbat
             let saturdayAbs = dayOnOrBefore(dayOfWeek: DayOfWeek.SAT, absdate: hdate.abs() + 6)
             let saturday = HDate(absdate: saturdayAbs)
@@ -157,7 +157,7 @@ class ModelData: ObservableObject {
         }
     }
     public func getHolidayString(date: Date) -> String? {
-        if let ev = pickHolidayToDisplay(date: date, todayOnly: false) {
+        if let ev = pickHolidayToDisplay(date: date) {
             return translateHolidayName(ev: ev)
         }
         return nil // today isn't a holiday and no special shabbat
@@ -246,12 +246,12 @@ class ModelData: ObservableObject {
     private func makeDateItem(date: Date) -> DateItem {
         let dateComponents = gregCalendar.dateComponents([.weekday, .month, .day], from: date)
         let weekday = dateComponents.weekday!
-        let isShabbat = weekday == 7
         let hdate = HDate(date: date)
         var hdateStr = self.getHebDateString(hdate: hdate, showYear: false)
-        let parshaName = isShabbat ? self.getParshaString(hdate: hdate) : nil
+        let parshaName = (weekday == 7) ? self.getParshaString(hdate: hdate, fallbackToHoliday: false) : nil
         let lang = TranslationLang(rawValue: lang) ?? TranslationLang.en
-        let parshaPrefix = isShabbat ? lookupTranslation(str: "Parashat", lang: lang) : nil
+        let parshaPrefix = parshaName != nil ? lookupTranslation(str: "Parashat", lang: lang) : nil
+        let parsha = parshaName != nil ? parshaPrefix! + " " + parshaName! : nil
         let events = self.getHolidaysOnDate(hdate: hdate)
         var holidays = [String]()
         for ev in events {
@@ -270,7 +270,7 @@ class ModelData: ObservableObject {
             dow: dow,
             gregDay: dateComponents.day!, gregMonth: gregMonth,
             hdate: hdateStr,
-            parsha: isShabbat ? parshaPrefix! + " " + parshaName! : nil,
+            parsha: parsha,
             holidays: holidays)
     }
 
