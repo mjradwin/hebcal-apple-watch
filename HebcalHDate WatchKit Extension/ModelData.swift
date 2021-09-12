@@ -23,9 +23,9 @@ class ModelData: ObservableObject {
             logger.debug("il=\(self.il)")
             UserDefaults.standard.set(il, forKey: "israel")
             sedraCache = [:]
+            updateDateItems()
             // Update any complications on active watch faces.
             let server = CLKComplicationServer.sharedInstance()
-            logger.debug("il ComplicationServer.sharedInstance")
             for complication in server.activeComplications ?? [] {
                 server.reloadTimeline(for: complication)
             }
@@ -39,7 +39,6 @@ class ModelData: ObservableObject {
             UserDefaults.standard.set(lang, forKey: "lang")
             // Update any complications on active watch faces.
             let server = CLKComplicationServer.sharedInstance()
-            logger.debug("lang ComplicationServer.sharedInstance")
             for complication in server.activeComplications ?? [] {
                 server.reloadTimeline(for: complication)
             }
@@ -167,6 +166,7 @@ class ModelData: ObservableObject {
         logger.debug("ModelData init")
         self.il = UserDefaults.standard.bool(forKey: "israel")
         self.lang = UserDefaults.standard.integer(forKey: "lang")
+        self.dateItems = self.makeDateItems(date: Date())
     }
 
     private let dayOfWeek = ["", "Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"]
@@ -276,7 +276,7 @@ class ModelData: ObservableObject {
 
     let twentyFourHours = 24.0 * 60.0 * 60.0
 
-    public func makeDateItems(date: Date) -> [DateItem] {
+    private func makeDateItems(date: Date) -> [DateItem] {
         var entries = [DateItem]()
         // Calculate the start and end dates.
         var current = date
@@ -288,4 +288,10 @@ class ModelData: ObservableObject {
         }
         return entries
     }
+
+    public func updateDateItems() -> Void {
+        dateItems = makeDateItems(date: Date())
+    }
+
+    @Published var dateItems = [DateItem]()
 }

@@ -11,13 +11,9 @@ import SwiftUI
 struct HDateList: View {
     @EnvironmentObject var modelData: ModelData
 
-    var items: [DateItem] {
-        modelData.makeDateItems(date: Date())
-    }
-
     // Lay out the view's body.
     var body: some View {
-        List(items) {
+        List(modelData.dateItems) {
             HDateRow(item: $0)
                 .environmentObject(modelData)
         }

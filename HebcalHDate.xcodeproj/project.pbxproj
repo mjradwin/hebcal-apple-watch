@@ -20,6 +20,7 @@
 		9D9A028726CC6A460055160C /* ComplicationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D9A028626CC6A460055160C /* ComplicationController.swift */; };
 		9D9A028926CC6A480055160C /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 9D9A028826CC6A480055160C /* Assets.xcassets */; };
 		9D9A028C26CC6A480055160C /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 9D9A028B26CC6A480055160C /* Preview Assets.xcassets */; };
+		9DA5666626EEBFF10074F100 /* ExtensionDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9DA5666526EEBFF10074F100 /* ExtensionDelegate.swift */; };
 		9DC2BBE426D421A300A248EB /* ModelData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9DC2BBE326D421A300A248EB /* ModelData.swift */; };
 /* End PBXBuildFile section */
 
@@ -81,6 +82,7 @@
 		9D9A028826CC6A480055160C /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		9D9A028B26CC6A480055160C /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
 		9D9A028D26CC6A480055160C /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		9DA5666526EEBFF10074F100 /* ExtensionDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExtensionDelegate.swift; sourceTree = "<group>"; };
 		9DC2BBE326D421A300A248EB /* ModelData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ModelData.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -137,6 +139,7 @@
 				9D9A028626CC6A460055160C /* ComplicationController.swift */,
 				9D9A028826CC6A480055160C /* Assets.xcassets */,
 				9D9A028D26CC6A480055160C /* Info.plist */,
+				9DA5666526EEBFF10074F100 /* ExtensionDelegate.swift */,
 				9D9A028A26CC6A480055160C /* Preview Content */,
 			);
 			path = "HebcalHDate WatchKit Extension";
@@ -284,6 +287,7 @@
 			files = (
 				9D9A028326CC6A460055160C /* ContentView.swift in Sources */,
 				9D35F47B26E5792700EC5AAD /* HDateRow.swift in Sources */,
+				9DA5666626EEBFF10074F100 /* ExtensionDelegate.swift in Sources */,
 				9D35F48326E6698400EC5AAD /* SettingsView.swift in Sources */,
 				9DC2BBE426D421A300A248EB /* ModelData.swift in Sources */,
 				9D35F48126E5809100EC5AAD /* HDateList.swift in Sources */,
