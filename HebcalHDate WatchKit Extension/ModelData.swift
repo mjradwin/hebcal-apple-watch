@@ -37,6 +37,7 @@ class ModelData: ObservableObject {
         didSet {
             logger.debug("lang=\(self.lang)")
             UserDefaults.standard.set(lang, forKey: "lang")
+            updateDateItems()
             // Update any complications on active watch faces.
             let server = CLKComplicationServer.sharedInstance()
             for complication in server.activeComplications ?? [] {

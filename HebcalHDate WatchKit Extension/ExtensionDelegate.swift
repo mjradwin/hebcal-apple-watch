@@ -59,8 +59,8 @@ func scheduleBackgroundRefreshTasks() {
 
     // If there is a complication on the watch face, the app should get at least one
     // update an hour. So calculate a target date 60 minutes in the future.
-    //let targetDate = Date().addingTimeInterval(60.0 * 60.0)
-    let targetDate = Date().addingTimeInterval(12.0)
+    let targetDate = Date().addingTimeInterval(60.0 * 60.0)
+    //let targetDate = Date().addingTimeInterval(12.0)
 
     // Schedule the background refresh task.
     watchExtension.scheduleBackgroundRefresh(withPreferredDate: targetDate, userInfo: nil) { (error) in
