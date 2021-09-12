@@ -11,15 +11,13 @@ struct ContentView: View {
     @StateObject var settings = ModelData.shared
 
     var body: some View {
-        NavigationView {
-            TabView {
-                HDateList()
-                    .tabItem { Label("Hebcal", systemImage: "list.dash") }
-                SettingsView()
-                    .tabItem { Label("Settings", systemImage: "gear") }
-            }
-            .navigationTitle("Hebcal")
+        TabView {
+            HDateList()
+                .tabItem { Label("Hebcal", systemImage: "list.dash") }
+            SettingsView()
+                .tabItem { Label("Settings", systemImage: "gear") }
         }
+        .navigationTitle("Hebcal")
         .environmentObject(settings)
     }
 }

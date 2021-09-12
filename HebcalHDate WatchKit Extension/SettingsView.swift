@@ -12,46 +12,40 @@ import Hebcal
 // The app's main view.
 struct SettingsView: View {
     @EnvironmentObject var modelData: ModelData
-    
+
     var langDescription: String {
         switch modelData.lang {
             case TranslationLang.en.rawValue:
-                return "e.g. Shabbat Shuvah"
+                return "e.g. “Sukkot”"
         case TranslationLang.ashkenazi.rawValue:
-            return "e.g. Shabbos Shuvah"
+            return "e.g. “Sukkos”"
         case TranslationLang.he.rawValue:
-            return "e.g. שַׁבָּת שׁוּבָה"
+            return "e.g. \"סוּכּוֹת\""
         default:
             return ""
         }
     }
+    var ilDescription: String {
+        return (modelData.il ? "Israel" : "Diaspora") + " schedule"
+    }
 
     // Lay out the view's body.
     var body: some View {
-        NavigationView {
-            Form {
+        Form {
+            Section(header: Text(langDescription).textCase(.none),
+                    content: {
                 Picker("Language", selection: $modelData.lang) {
                     Text("Sephardic").tag(TranslationLang.en.rawValue)
                     Text("Ashkenazi").tag(TranslationLang.ashkenazi.rawValue)
                     Text("Hebrew").tag(TranslationLang.he.rawValue)
                 }
-            }
-            Text(langDescription)
-                .font(.system(size: 14, weight: .thin, design: .default))
-                .italic()
-                .multilineTextAlignment(.center)
-                .padding([.leading, .trailing, .bottom])
-            Form {
+            })
+            Section(header: Text(ilDescription).textCase(.none),
+                    content: {
                 Toggle(isOn: $modelData.il) {
                     Text("Israel")
                 }
-            }
-            Text(modelData.il ?
-                    "Israel holiday and Torah reading schedule" :
-                    "Diaspora holiday and Torah reading schedule")
-                .font(.system(size: 14, weight: .thin, design: .default))
-                .multilineTextAlignment(.center)
-                .padding(.leading)
+            })
         }
         .navigationTitle("Settings")
     }
