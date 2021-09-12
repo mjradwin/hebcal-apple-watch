@@ -12,6 +12,19 @@ import Hebcal
 // The app's main view.
 struct SettingsView: View {
     @EnvironmentObject var modelData: ModelData
+    
+    var langDescription: String {
+        switch modelData.lang {
+            case TranslationLang.en.rawValue:
+                return "e.g. Shabbat Shuvah"
+        case TranslationLang.ashkenazi.rawValue:
+            return "e.g. Shabbos Shuvah"
+        case TranslationLang.he.rawValue:
+            return "e.g. שַׁבָּת שׁוּבָה"
+        default:
+            return ""
+        }
+    }
 
     // Lay out the view's body.
     var body: some View {
@@ -22,12 +35,25 @@ struct SettingsView: View {
                     Text("Ashkenazi").tag(TranslationLang.ashkenazi.rawValue)
                     Text("Hebrew").tag(TranslationLang.he.rawValue)
                 }
+            }
+            Text(langDescription)
+                .font(.system(size: 14, weight: .thin, design: .default))
+                .italic()
+                .multilineTextAlignment(.center)
+                .padding([.leading, .trailing, .bottom])
+            Form {
                 Toggle(isOn: $modelData.il) {
                     Text("Israel")
                 }
             }
-            .navigationTitle("Settings")
+            Text(modelData.il ?
+                    "Israel holiday and Torah reading schedule" :
+                    "Diaspora holiday and Torah reading schedule")
+                .font(.system(size: 14, weight: .thin, design: .default))
+                .multilineTextAlignment(.center)
+                .padding(.leading)
         }
+        .navigationTitle("Settings")
     }
 }
 
