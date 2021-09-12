@@ -8,17 +8,17 @@
 import SwiftUI
 
 struct ContentView: View {
-    @StateObject var settings = ModelData.shared
-
     var body: some View {
-        TabView {
-            HDateList()
-                .tabItem { Label("Hebcal", systemImage: "list.dash") }
-            SettingsView()
-                .tabItem { Label("Settings", systemImage: "gear") }
+        NavigationView {
+            TabView {
+                HDateList()
+                    .tabItem { Label("Hebcal", systemImage: "list.dash") }
+                SettingsView()
+                    .tabItem { Label("Settings", systemImage: "gear") }
+            }
+            .tabViewStyle(PageTabViewStyle())
+            .navigationTitle("Hebcal")
         }
-        .navigationTitle("Hebcal")
-        .environmentObject(settings)
     }
 }
 

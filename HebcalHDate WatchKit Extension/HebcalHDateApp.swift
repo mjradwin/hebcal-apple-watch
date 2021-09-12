@@ -9,11 +9,11 @@ import SwiftUI
 
 @main
 struct HebcalHDateApp: App {
+    @StateObject var settings = ModelData.shared
     var body: some Scene {
         WindowGroup {
-            NavigationView {
-                ContentView()
-            }
+            ContentView()
+                .environmentObject(settings)
         }
     }
 }
