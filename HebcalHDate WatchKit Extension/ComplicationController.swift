@@ -90,7 +90,7 @@ let parshaHyphenate = [
 
 class ComplicationController: NSObject, CLKComplicationDataSource {
     lazy var settings = ModelData.shared
-    let logger = Logger(subsystem: "com.hebcal.HebcalHDate.watchkitapp.watchkitextension.ComplicationController", category: "Root View")
+    let logger = Logger(subsystem: "com.hebcal.HebcalHDate.watchkitapp.watchkitextension.ComplicationController", category: "Complication")
 
     // MARK: - Complication Configuration
 
@@ -144,7 +144,7 @@ class ComplicationController: NSObject, CLKComplicationDataSource {
 
     // Define how far into the future the app can provide data.
     func getTimelineEndDate(for complication: CLKComplication, withHandler handler: @escaping (Date?) -> Void) {
-        // Indicate that the app can provide timeline entries for the next 30 days
+        // Indicate that the app can provide timeline entries for the next 48h
         let endDate = Date().addingTimeInterval(fortyEightFourHours)
         logger.debug("getTimelineEndDate \(complication.identifier) \(endDate)")
         handler(endDate)

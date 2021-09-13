@@ -48,8 +48,9 @@ class ExtensionDelegate: NSObject, WKExtensionDelegate {
 
 // Schedule the next background refresh task.
 
-let scheduleLogger = Logger(subsystem: "com.hebcal.HebcalHDate.watchkitapp.watchkitextension.scheduleLogger",
-                            category: "Scheduler")
+let scheduleLogger = Logger(
+    subsystem: "com.hebcal.HebcalHDate.watchkitapp.watchkitextension.scheduleLogger",
+    category: "Scheduler")
 
 func scheduleBackgroundRefreshTasks() {
     scheduleLogger.debug("Scheduling a background task.")
@@ -57,10 +58,9 @@ func scheduleBackgroundRefreshTasks() {
     // Get the shared extension object.
     let watchExtension = WKExtension.shared()
 
-    // If there is a complication on the watch face, the app should get at least one
-    // update an hour. So calculate a target date 60 minutes in the future.
-    let targetDate = Date().addingTimeInterval(60.0 * 60.0)
-    //let targetDate = Date().addingTimeInterval(12.0)
+    // We want 8 app updates a day, so schedule refresh 3 hours in the future
+    let targetDate = Date().addingTimeInterval(3.0 * 60.0 * 60.0)
+    // let targetDate = Date().addingTimeInterval(1.0)
 
     // Schedule the background refresh task.
     watchExtension.scheduleBackgroundRefresh(withPreferredDate: targetDate, userInfo: nil) { (error) in

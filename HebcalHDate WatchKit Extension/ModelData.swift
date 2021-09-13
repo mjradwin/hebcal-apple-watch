@@ -12,7 +12,9 @@ import Hebcal
 import ClockKit
 
 class ModelData: ObservableObject {
-    let logger = Logger(subsystem: "com.hebcal.HebcalHDate.watchkitapp.watchkitextension.ModelData", category: "Root View")
+    let logger = Logger(
+        subsystem: "com.hebcal.HebcalHDate.watchkitapp.watchkitextension.ModelData",
+        category: "Model")
 
     // The data model needs to be accessed both from the app extension
     // and from the complication controller.
@@ -291,6 +293,7 @@ class ModelData: ObservableObject {
     }
 
     public func updateDateItems() -> Void {
+        logger.debug("updating dateItems")
         dateItems = makeDateItems(date: Date())
     }
 
