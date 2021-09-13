@@ -290,13 +290,17 @@ class ComplicationController: NSObject, CLKComplicationDataSource {
         }
     }
 
+    // #F47063
+    private var tintColor: UIColor = UIColor(
+        red: 244.0/255.0, green: 112.0/255.0,
+        blue: 99.0/255.0, alpha: 1.0)
     private func makeHDateSimpleTextProviders(date: Date) -> [CLKSimpleTextProvider] {
         let hebDateStr = settings.getHebDateString(date: date, showYear: false)
         let parts = hebDateStr.split(separator: " ")
         let dayNumber = String(parts[0])
         let monthName = String(parts[1])
         let dayNumberProvider = CLKSimpleTextProvider(text: dayNumber)
-        dayNumberProvider.tintColor = .orange
+        dayNumberProvider.tintColor = tintColor
         let monthNameProvider = CLKSimpleTextProvider(text: monthName, shortText: monthAbbrev[monthName] ?? nil)
         return [dayNumberProvider, monthNameProvider]
     }
@@ -441,7 +445,7 @@ class ComplicationController: NSObject, CLKComplicationDataSource {
         // Create the data providers.
         let hebDateStr = settings.getHebDateString(date: date, showYear: true)
         let headerTextProvider = CLKSimpleTextProvider(text: hebDateStr)
-        headerTextProvider.tintColor = .orange
+        headerTextProvider.tintColor = tintColor
 
         let lang = TranslationLang(rawValue: settings.lang)!
         let parshaName = settings.getParshaString(date: date)
@@ -464,7 +468,7 @@ class ComplicationController: NSObject, CLKComplicationDataSource {
         // Create the data providers.
         let hebDateStr = settings.getHebDateString(date: date, showYear: true)
         let headerTextProvider = CLKSimpleTextProvider(text: hebDateStr)
-        headerTextProvider.tintColor = .orange
+        headerTextProvider.tintColor = tintColor
 
         let lang = TranslationLang(rawValue: settings.lang)!
         let parshaName = settings.getParshaString(date: date)
