@@ -27,6 +27,8 @@ class ExtensionDelegate: NSObject, WKExtensionDelegate {
             case let backgroundTask as WKApplicationRefreshBackgroundTask:
                 let model = ModelData.shared
                 model.updateDateItems()
+                // Schedule the next background update.
+                scheduleBackgroundRefreshTasks()
                 // Mark the task as ended, and request an updated snapshot, if necessary.
                 backgroundTask.setTaskCompletedWithSnapshot(true)
             case let snapshotTask as WKSnapshotRefreshBackgroundTask:

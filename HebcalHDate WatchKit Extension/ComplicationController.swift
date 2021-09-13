@@ -290,18 +290,17 @@ class ComplicationController: NSObject, CLKComplicationDataSource {
         }
     }
 
-    // #F47063
     private var tintColor: UIColor = UIColor(
-        red: 244.0/255.0, green: 112.0/255.0,
-        blue: 99.0/255.0, alpha: 1.0)
+        red: 1.0, green: 0.75, blue: 0.0, alpha: 1.0)
     private func makeHDateSimpleTextProviders(date: Date) -> [CLKSimpleTextProvider] {
         let hebDateStr = settings.getHebDateString(date: date, showYear: false)
         let parts = hebDateStr.split(separator: " ")
         let dayNumber = String(parts[0])
         let monthName = String(parts[1])
         let dayNumberProvider = CLKSimpleTextProvider(text: dayNumber)
-        dayNumberProvider.tintColor = tintColor
+        dayNumberProvider.tintColor = .white
         let monthNameProvider = CLKSimpleTextProvider(text: monthName, shortText: monthAbbrev[monthName] ?? nil)
+        monthNameProvider.tintColor = tintColor
         return [dayNumberProvider, monthNameProvider]
     }
 

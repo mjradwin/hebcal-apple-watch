@@ -225,6 +225,10 @@ class ModelData: ObservableObject {
             let month0 = String(ev.desc[start..<ev.desc.endIndex])
             let month = lookupTranslation(str: month0, lang: lg)
             return rch + " " + month
+        } else if ev.desc == "Rosh Hashana" {
+            let holiday = lookupTranslation(str: ev.desc, lang: lg)
+            let yearStr = lg == .he ? hebnumToString(number: ev.hdate.yy) : String(ev.hdate.yy)
+            return holiday + " " + yearStr
         }
         let holiday = lookupTranslation(str: ev.desc, lang: lg)
         return holiday
@@ -246,11 +250,12 @@ class ModelData: ObservableObject {
         return nil
     }
 
-    private func makeDateItem(date: Date) -> DateItem {
+    private func makeDateItem(date: Date, showYear: Bool) -> DateItem {
         let dateComponents = gregCalendar.dateComponents([.weekday, .month, .day], from: date)
         let weekday = dateComponents.weekday!
         let hdate = HDate(date: date)
-        var hdateStr = self.getHebDateString(hdate: hdate, showYear: false)
+        let showYear0 = (hdate.mm == .TISHREI && hdate.dd == 1) || showYear
+        var hdateStr = self.getHebDateString(hdate: hdate, showYear: showYear0)
         let parshaName = (weekday == 7) ? self.getParshaString(hdate: hdate, fallbackToHoliday: false) : nil
         let lang = TranslationLang(rawValue: lang) ?? TranslationLang.en
         let parshaPrefix = parshaName != nil ? lookupTranslation(str: "Parashat", lang: lang) : nil
@@ -284,10 +289,12 @@ class ModelData: ObservableObject {
         // Calculate the start and end dates.
         var current = date
         let endDate = date.addingTimeInterval(60.0 * twentyFourHours)
+        var isFirst = true // show year only for first item in the list
         while (current.compare(endDate) == .orderedAscending) {
-            let item = self.makeDateItem(date: current)
+            let item = self.makeDateItem(date: current, showYear: isFirst)
             entries.append(item)
             current = current.addingTimeInterval(twentyFourHours)
+            isFirst = false
         }
         return entries
     }
