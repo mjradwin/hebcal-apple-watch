@@ -10,8 +10,9 @@ The app requires an iPhone with iOS 13.0 or later and an Apple Watch® with watc
 
 As of September 2021, there are two ways to get the watch app:
 
-Sign up for [Hebcal Watch Beta](https://testflight.apple.com/join/Okxe2ONS) so we can collect your feedback and improve the app! The public beta installs via TestFlight, which will let you get early access to any new features
-Install the released version of the app directly from the App Store:
+1. Sign up for [Hebcal Watch Beta](https://testflight.apple.com/join/Okxe2ONS) so we can collect your feedback and improve the app! The public beta installs via TestFlight, which will let you get early access to any new features
+
+2. Install the released version of the app directly from the App Store:
 
 [![Download on the App Store](assets/download-app-store.jpg)](https://apps.apple.com/us/app/hebcal-hebrew-calendar/id1582733315)
 
