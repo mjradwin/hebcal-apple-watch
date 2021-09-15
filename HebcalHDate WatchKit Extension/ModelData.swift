@@ -286,9 +286,9 @@ class ModelData: ObservableObject {
 
     private func makeDateItems(date: Date) -> [DateItem] {
         var entries = [DateItem]()
-        // Calculate the start and end dates.
+        // Show everything daily for the next 30 days
         var current = date
-        let endDate = date.addingTimeInterval(60.0 * twentyFourHours)
+        let endDate = date.addingTimeInterval(30.0 * twentyFourHours)
         var isFirst = true // show year only for first item in the list
         while (current.compare(endDate) == .orderedAscending) {
             let item = self.makeDateItem(date: current, showYear: isFirst)
@@ -296,6 +296,23 @@ class ModelData: ObservableObject {
             current = current.addingTimeInterval(twentyFourHours)
             isFirst = false
         }
+        // Then show Shabbat and holidays for the next 4 months
+        let startAbs = greg2abs(date: endDate) + 1
+        let endAbs = startAbs + 120
+        for abs in startAbs...endAbs {
+            let hdate = HDate(absdate: abs)
+            if hdate.dow() == .SAT {
+                let item = self.makeDateItem(date: hdate.greg(), showYear: false)
+                entries.append(item)
+            } else {
+                let events = self.getHolidaysOnDate(hdate: hdate)
+                if events.count > 0 {
+                    let item = self.makeDateItem(date: hdate.greg(), showYear: false)
+                    entries.append(item)
+                }
+            }
+        }
+        logger.debug("Made \(entries.count) dateItems")
         return entries
     }
 

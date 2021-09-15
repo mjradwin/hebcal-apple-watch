@@ -16,6 +16,12 @@ struct HDateRow: View {
     var lang: TranslationLang  {
         TranslationLang(rawValue: modelData.lang) ?? TranslationLang.en
     }
+    var textAlignment: TextAlignment {
+        (lang == .he) ? .trailing : .leading
+    }
+    var stackAlignment: HorizontalAlignment {
+        (lang == .he) ? .trailing : .leading
+    }
 
     var body: some View {
         HStack {
@@ -34,20 +40,23 @@ struct HDateRow: View {
             if lang == .he {
                 Spacer()
             }
-            VStack(alignment: (lang == .he) ? .trailing : .leading) {
+            VStack(alignment: stackAlignment) {
                 Text(item.hdate)
                     .font(.system(size: 16, weight: .regular, design: .default))
+                    .multilineTextAlignment(textAlignment)
                 item.parsha.map({
                     Text($0)
                         .font(.system(size: (lang == .he) ? 16 : 14,
                                       weight: .regular, design: .default))
                         .foregroundColor(.gray)
+                        .multilineTextAlignment(textAlignment)
                 })
                 ForEach(item.holidays, id: \.self) { holiday in
                     Text(holiday)
                         .font(.system(size: (lang == .he) ? 16 : 14,
                                       weight: .regular, design: .default))
                         .foregroundColor(.yellow)
+                        .multilineTextAlignment(textAlignment)
                 }
             }
             .padding(.leading)
