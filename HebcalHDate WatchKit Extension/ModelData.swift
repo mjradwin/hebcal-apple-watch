@@ -250,6 +250,43 @@ class ModelData: ObservableObject {
         return nil
     }
 
+    private func omerDay(hdate: HDate) -> Int {
+        switch hdate.mm {
+        case .NISAN:
+            return hdate.dd >= 16 ? 1 + (hdate.dd - 16) : -1
+        case .IYYAR:
+            return 15 + hdate.dd
+        case .SIVAN:
+            return hdate.dd <= 5 ? 44 + hdate.dd : -1
+        default:
+            return -1
+        }
+    }
+
+    private func enNumSuffix(_ n: Int) -> String {
+        let tens: Int = (n % 100) / 10
+        if tens == 1 {
+            return "th"
+        }
+        switch n % 10 {
+        case 1: return "st"
+        case 2: return "nd"
+        case 3: return "rd"
+        default:
+            return "th"
+        }
+    }
+
+    private func omerStr(hdate: HDate, lang: TranslationLang) -> String? {
+        let omer = omerDay(hdate: hdate)
+        if omer == -1 {
+            return nil
+        }
+        let o = String(omer)
+        return lang == .he ? "עוֹמֶר" + " " + o :
+            "Omer: " + o + enNumSuffix(omer) + " day"
+    }
+
     private func makeDateItem(date: Date, showYear: Bool) -> DateItem {
         let dateComponents = gregCalendar.dateComponents([.weekday, .month, .day], from: date)
         let weekday = dateComponents.weekday!
@@ -279,7 +316,9 @@ class ModelData: ObservableObject {
             gregDay: dateComponents.day!, gregMonth: gregMonth,
             hdate: hdateStr,
             parsha: parsha,
-            holidays: holidays)
+            holidays: holidays,
+            omer: omerStr(hdate: hdate, lang: lang)
+        )
     }
 
     let twentyFourHours = 24.0 * 60.0 * 60.0

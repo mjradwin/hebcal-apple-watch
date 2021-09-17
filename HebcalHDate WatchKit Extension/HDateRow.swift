@@ -58,6 +58,13 @@ struct HDateRow: View {
                         .foregroundColor(.yellow)
                         .multilineTextAlignment(textAlignment)
                 }
+                item.omer.map({
+                    Text($0)
+                        .font(.system(size: (lang == .he) ? 16 : 14,
+                                      weight: .regular, design: .default))
+                        .foregroundColor(.gray)
+                        .multilineTextAlignment(textAlignment)
+                })
             }
             .padding(.leading)
         }
@@ -67,10 +74,16 @@ struct HDateRow: View {
 
 struct HDateRow_Previews: PreviewProvider {
     static var items: [DateItem] = [
-        DateItem(id: 1, weekday: 1, dow: "Sun", gregDay: 4, gregMonth: "Sep",
-                 hdate: "27 Elul", parsha: "Nitzavim",
-                 holidays: []),
-        DateItem(id: 2, weekday: 2, dow: "Mon", gregDay: 25, gregMonth: "Sep",
+        DateItem(id: 1, weekday: 1, dow: "Wed", gregDay: 28, gregMonth: "Apr",
+                 hdate: "16 Iyyar", parsha: "Parashat Emor",
+                 holidays: [], omer: "Omer: 31st day"),
+        DateItem(id: 2, weekday: 1,
+                 dow: "חמישי",
+                 gregDay: 28,
+                 gregMonth:   "מאי",
+                 hdate: "ט״ז אייר", parsha: "פרשת אמור",
+                 holidays: [], omer: "עומר 31"),
+        DateItem(id: 3, weekday: 2, dow: "Mon", gregDay: 25, gregMonth: "Sep",
                  hdate: "28 Elul", parsha: "Vayeilech",
                  holidays: ["Shabbat Shuva"]),
     ]
@@ -81,5 +94,6 @@ struct HDateRow_Previews: PreviewProvider {
             HDateRow(item: items[1])
         }
         .previewLayout(.fixed(width: 300, height: 70))
+        .environmentObject(ModelData.shared)
     }
 }
