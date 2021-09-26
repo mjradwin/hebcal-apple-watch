@@ -29,6 +29,7 @@ struct ContentView: View {
                 logger.debug("Scene became inactive.")
             case .active:
                 logger.debug("Scene became active.")
+                ModelData.shared.updateDateItems()
             case .background:
                 logger.debug("Scene moved to the background.")
                 // Schedule a background refresh task

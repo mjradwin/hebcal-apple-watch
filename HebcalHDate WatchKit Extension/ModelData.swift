@@ -25,6 +25,7 @@ class ModelData: ObservableObject {
             logger.debug("il=\(self.il)")
             UserDefaults.standard.set(il, forKey: "israel")
             sedraCache = [:]
+            currentDay = -1
             updateDateItems()
             // Update any complications on active watch faces.
             let server = CLKComplicationServer.sharedInstance()
@@ -39,6 +40,7 @@ class ModelData: ObservableObject {
         didSet {
             logger.debug("lang=\(self.lang)")
             UserDefaults.standard.set(lang, forKey: "lang")
+            currentDay = -1
             updateDateItems()
             // Update any complications on active watch faces.
             let server = CLKComplicationServer.sharedInstance()
@@ -54,7 +56,7 @@ class ModelData: ObservableObject {
         var hdate = HDate(date: date)
         let hour = gregCalendar.dateComponents([.hour], from: date).hour!
         if (hour > 19) {
-            hdate = HDate(absdate: hdate.abs() + 1)
+            hdate = hdate.next()
         }
         return hdate
         // return HDate(yy: 5795, mm: .TISHREI, dd: 8)
@@ -169,7 +171,7 @@ class ModelData: ObservableObject {
         logger.debug("ModelData init")
         self.il = UserDefaults.standard.bool(forKey: "israel")
         self.lang = UserDefaults.standard.integer(forKey: "lang")
-        self.dateItems = self.makeDateItems(date: Date())
+        updateDateItems()
     }
 
     private let dayOfWeek = ["", "Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"]
@@ -355,9 +357,19 @@ class ModelData: ObservableObject {
         return entries
     }
 
+    private var currentDay: Int = -1
+
     public func updateDateItems() -> Void {
-        logger.debug("updating dateItems")
-        dateItems = makeDateItems(date: Date())
+        let now = Date()
+        let dateComponents = gregCalendar.dateComponents([.day], from: now)
+        let today = dateComponents.day!
+        if self.currentDay == today {
+            logger.debug("dateItems are already up to date; refresh skipped")
+        } else {
+            logger.debug("updating dateItems; currentDay changed from \(self.currentDay) to \(today)")
+            self.currentDay = today
+            self.dateItems = makeDateItems(date: now)
+        }
     }
 
     @Published var dateItems = [DateItem]()

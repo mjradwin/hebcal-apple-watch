@@ -202,10 +202,14 @@ class ComplicationController: NSObject, CLKComplicationDataSource {
             template = createHebcalTemplate(forComplication: complication, date: date)
         } else {
             switch complication.family {
-            case .modularSmall, .utilitarianSmall, .utilitarianSmallFlat, .circularSmall, .graphicCorner, .graphicCircular:
+            case .modularSmall, .utilitarianSmall, .utilitarianSmallFlat, .circularSmall, .graphicCircular:
                 template = complication.identifier == complicationHdateIdentifier ?
                     createHDateTemplate(forComplication: complication, date: date) :
                     createParshaTemplate(forComplication: complication, date: date)
+            case .graphicCorner:
+                template = complication.identifier == complicationHdateIdentifier ?
+                    createHDateTemplate(forComplication: complication, date: date) :
+                    nil
             default:
                 template = nil
             }

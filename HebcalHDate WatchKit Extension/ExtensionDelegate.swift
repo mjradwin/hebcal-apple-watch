@@ -54,25 +54,13 @@ let scheduleLogger = Logger(
     subsystem: "com.hebcal.HebcalHDate.watchkitapp.watchkitextension.scheduleLogger",
     category: "Scheduler")
 
+private let backgroundRefreshInterval = 6.0 * 60.0 * 60.0
 func scheduleBackgroundRefreshTasks() {
-    scheduleLogger.debug("Scheduling a background task.")
-
-    // Get the shared extension object.
-    let watchExtension = WKExtension.shared()
-
-    // We want 8 app updates a day, so schedule refresh 3 hours in the future
-    let targetDate = Date().addingTimeInterval(3.0 * 60.0 * 60.0)
-    // let targetDate = Date().addingTimeInterval(1.0)
-
-    // Schedule the background refresh task.
-    watchExtension.scheduleBackgroundRefresh(withPreferredDate: targetDate, userInfo: nil) { (error) in
-
-        // Check for errors.
-        if let error = error {
-            scheduleLogger.error("An error occurred while scheduling a background refresh task: \(error.localizedDescription)")
-            return
-        }
-
-        scheduleLogger.debug("Task scheduled!")
+    let refreshTime = Date().advanced(by: backgroundRefreshInterval)
+    WKExtension.shared().scheduleBackgroundRefresh(
+        withPreferredDate: refreshTime,
+        userInfo: nil
+    ) { (error) in
+        scheduleLogger.debug("Scheduled the next background refresh task.")
     }
 }
