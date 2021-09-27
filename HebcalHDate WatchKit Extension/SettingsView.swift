@@ -20,7 +20,7 @@ struct SettingsView: View {
         case TranslationLang.ashkenazi.rawValue:
             return "e.g. “Sukkos”"
         case TranslationLang.he.rawValue:
-            return "e.g. \"סוּכּוֹת\""
+            return "e.g. \"סוכות\""
         default:
             return ""
         }

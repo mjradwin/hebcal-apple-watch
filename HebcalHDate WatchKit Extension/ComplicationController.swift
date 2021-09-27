@@ -320,24 +320,24 @@ class ComplicationController: NSObject, CLKComplicationDataSource {
     // Return a utilitarian small flat template.
     private func createHDateUtilitarianSmallFlatTemplate(forDate date: Date) -> CLKComplicationTemplate {
         // Create the data providers.
-        let hdateProviders = makeHDateSimpleTextProviders(date: date)
-        let combinedProvider = CLKTextProvider(format: "%@ %@", hdateProviders[0], hdateProviders[1])
+        let hebDateStr = settings.getHebDateString(date: date, showYear: false)
+        let textProvider = CLKSimpleTextProvider(text: hebDateStr)
 
         // Create the template using the providers.
-        return CLKComplicationTemplateUtilitarianSmallFlat(textProvider: combinedProvider)
+        return CLKComplicationTemplateUtilitarianSmallFlat(textProvider: textProvider)
     }
 
-    private let largeFlatFormatRTL = "\u{202E}%@ %@ · %@"
-    private let largeFlatFormatLTR = "%@ %@ · %@"
+    private let largeFlatFormatRTL = "\u{202E}%@ · %@"
+    private let largeFlatFormatLTR = "%@ · %@"
 
     // Return a utilitarian large template.
     private func createUtilitarianLargeTemplate(forDate date: Date) -> CLKComplicationTemplate {
         // Create the data providers.
-        let hdateProviders = makeHDateSimpleTextProviders(date: date)
-        let parshaName = settings.getParshaString(date: date)
+        let hebDateStr = settings.getHebDateString(date: date, showYear: false)
+        let parshaName = settings.getParshaString(date: date, heNikud: false)
         let lang = TranslationLang(rawValue: settings.lang)!
         let format = lang == .he ? largeFlatFormatRTL : largeFlatFormatLTR
-        let combinedProvider = CLKTextProvider(format: format, hdateProviders[0], hdateProviders[1], parshaName)
+        let combinedProvider = CLKTextProvider(format: format, hebDateStr, parshaName)
         // Create the template using the providers.
         return CLKComplicationTemplateUtilitarianLargeFlat(textProvider: combinedProvider)
     }
@@ -381,7 +381,7 @@ class ComplicationController: NSObject, CLKComplicationDataSource {
 
     // Return a utilitarian small flat template.
     private func createParshaUtilitarianSmallFlatTemplate(forDate date: Date) -> CLKComplicationTemplate {
-        let parsha = settings.getParshaString(date: date)
+        let parsha = settings.getParshaString(date: date, heNikud: false)
         // Create the data providers.
         let parshaNameProvider = CLKSimpleTextProvider(text: parsha)
         // Create the template using the providers.
@@ -393,7 +393,7 @@ class ComplicationController: NSObject, CLKComplicationDataSource {
     private let maqaf: Character = "־"
 
     private func makeParshaSimpleTextProviders(date: Date) -> [CLKSimpleTextProvider] {
-        let parsha = settings.getParshaString(date: date)
+        let parsha = settings.getParshaString(date: date, heNikud: true)
         for delim in [dash, maqaf, space] {
             if (parsha.firstIndex(of: delim) != nil) {
                 let parts = self.splitFirstChar(str: parsha, char: delim)
@@ -456,7 +456,7 @@ class ComplicationController: NSObject, CLKComplicationDataSource {
         headerTextProvider.tintColor = tintColor
 
         let lang = TranslationLang(rawValue: settings.lang)!
-        let parshaName = settings.getParshaString(date: date)
+        let parshaName = settings.getParshaString(date: date, heNikud: false)
         let parshaPrefix = lookupTranslation(str: "Parashat", lang: lang)
         let parsha = parshaPrefix + " " + parshaName
         let body1TextProvider = CLKSimpleTextProvider(text: parsha)
@@ -479,7 +479,7 @@ class ComplicationController: NSObject, CLKComplicationDataSource {
         headerTextProvider.tintColor = tintColor
 
         let lang = TranslationLang(rawValue: settings.lang)!
-        let parshaName = settings.getParshaString(date: date)
+        let parshaName = settings.getParshaString(date: date, heNikud: false)
         let parshaPrefix = lookupTranslation(str: "Parashat", lang: lang)
         let parsha = parshaPrefix + " " + parshaName
         let body1TextProvider = CLKSimpleTextProvider(text: parsha)

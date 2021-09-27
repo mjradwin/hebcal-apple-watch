@@ -110,19 +110,20 @@ final class ModelData: ObservableObject {
         }
     }
 
-    public func getParshaString(date: Date) -> String {
+    public func getParshaString(date: Date, heNikud: Bool) -> String {
         let hdate = makeHDate(date: date)
-        return self.getParshaString(hdate: hdate, fallbackToHoliday: true) ?? "??"
+        return self.getParshaString(hdate: hdate, fallbackToHoliday: true, heNikud: heNikud) ?? "??"
     }
 
-    private func getParshaString(hdate: HDate, fallbackToHoliday: Bool) -> String? {
+    private func getParshaString(hdate: HDate, fallbackToHoliday: Bool, heNikud: Bool) -> String? {
         let year = hdate.yy
         var sedra = sedraCache[year]
         if sedra == nil {
             sedra = Sedra(year: year, il: il)
             sedraCache[year] = sedra
         }
-        let lang = TranslationLang(rawValue: lang) ?? TranslationLang.en
+        let lang0 = TranslationLang(rawValue: lang) ?? TranslationLang.en
+        let lang = heNikud && lang0 == .he ? .heNikud : lang0
         let parsha0 = sedra!.lookup(hdate: hdate, lang: lang)
         if parsha0 == nil && !fallbackToHoliday {
             return nil
@@ -302,7 +303,7 @@ final class ModelData: ObservableObject {
         let hdate = HDate(date: date)
         let showYear0 = (hdate.mm == .TISHREI && hdate.dd == 1) || showYear
         var hdateStr = self.getHebDateString(hdate: hdate, showYear: showYear0)
-        let parshaName = (weekday == 7) ? self.getParshaString(hdate: hdate, fallbackToHoliday: false) : nil
+        let parshaName = (weekday == 7) ? self.getParshaString(hdate: hdate, fallbackToHoliday: false, heNikud: false) : nil
         let lang = TranslationLang(rawValue: lang) ?? TranslationLang.en
         let parshaPrefix = parshaName != nil ? lookupTranslation(str: "Parashat", lang: lang) : nil
         let parsha = parshaName != nil ? parshaPrefix! + " " + parshaName! : nil

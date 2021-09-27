@@ -16,9 +16,9 @@ struct ContentView: View {
         NavigationView {
             TabView {
                 HDateList()
-                    .tabItem { Label("Hebcal", systemImage: "list.dash") }
+                    .tabItem { Label("Hebcal", systemImage: "circle.fill") }
                 SettingsView()
-                    .tabItem { Label("Settings", systemImage: "gear") }
+                    .tabItem { Label("Settings", systemImage: "circle.fill") }
             }
             .tabViewStyle(PageTabViewStyle())
             .navigationTitle("Hebcal")
