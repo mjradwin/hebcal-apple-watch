@@ -14,14 +14,16 @@ struct ContentView: View {
 
     var body: some View {
         NavigationView {
-            TabView {
+            VStack {
                 HDateList()
-                    .tabItem { Label("Hebcal", systemImage: "circle.fill") }
-                SettingsView()
-                    .tabItem { Label("Settings", systemImage: "circle.fill") }
+                NavigationLink(destination: SettingsView()) {
+                    Label("Settings", systemImage: "gear")
+                        .font(.system(size: 12, weight: .regular, design: .default))
+                        .foregroundColor(.blue)
+                }
+                .buttonStyle(.plain)
+                .frame(maxHeight: 0, alignment: .top)
             }
-            .tabViewStyle(PageTabViewStyle())
-            .navigationTitle("Hebcal")
         }
         .onChange(of: scenePhase) { (phase) in
             switch phase {
