@@ -10,17 +10,15 @@ import SwiftUI
 import Hebcal
 
 struct HDateRow: View {
-    @EnvironmentObject var modelData: ModelData
-
     var item: DateItem
-    var lang: TranslationLang  {
-        TranslationLang(rawValue: modelData.lang) ?? TranslationLang.en
+    var lang: TranslationLang {
+        item.lang
     }
     var textAlignment: TextAlignment {
-        (lang == .he) ? .trailing : .leading
+        (item.lang == .he) ? .trailing : .leading
     }
     var stackAlignment: HorizontalAlignment {
-        (lang == .he) ? .trailing : .leading
+        (item.lang == .he) ? .trailing : .leading
     }
 
     var body: some View {
@@ -74,16 +72,22 @@ struct HDateRow: View {
 
 struct HDateRow_Previews: PreviewProvider {
     static var items: [DateItem] = [
-        DateItem(id: 1, weekday: 1, dow: "Wed", gregDay: 28, gregMonth: "Apr",
+        DateItem(id: 1,
+                 lang: .en,
+                 weekday: 1, dow: "Wed", gregDay: 28, gregMonth: "Apr",
                  hdate: "16 Iyyar", parsha: "Parashat Emor",
                  holidays: [], omer: "Omer: 31st day"),
-        DateItem(id: 2, weekday: 1,
+        DateItem(id: 2,
+                 lang: .he,
+                 weekday: 1,
                  dow: "חמישי",
                  gregDay: 28,
                  gregMonth:   "מאי",
                  hdate: "ט״ז אייר", parsha: "פרשת אמור",
                  holidays: [], omer: "עומר 31"),
-        DateItem(id: 3, weekday: 2, dow: "Mon", gregDay: 25, gregMonth: "Sep",
+        DateItem(id: 3,
+                 lang: .en,
+                 weekday: 2, dow: "Mon", gregDay: 25, gregMonth: "Sep",
                  hdate: "28 Elul", parsha: "Vayeilech",
                  holidays: ["Shabbat Shuva"]),
     ]
@@ -94,6 +98,5 @@ struct HDateRow_Previews: PreviewProvider {
             HDateRow(item: items[1])
         }
         .previewLayout(.fixed(width: 300, height: 70))
-        .environmentObject(ModelData.shared)
     }
 }

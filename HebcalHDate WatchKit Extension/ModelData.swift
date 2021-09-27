@@ -115,10 +115,6 @@ final class ModelData: ObservableObject {
         return self.getParshaString(hdate: hdate, fallbackToHoliday: true) ?? "??"
     }
 
-    //private func hebrewStripNikkud(str: String) -> String {
-    //  return str.replace(/[\u0590-\u05bd]/g, '').replace(/[\u05bf-\u05c7]/g, '');
-    //}
-
     private func getParshaString(hdate: HDate, fallbackToHoliday: Bool) -> String? {
         let year = hdate.yy
         var sedra = sedraCache[year]
@@ -324,6 +320,7 @@ final class ModelData: ObservableObject {
         let dow = lang == .he ? dayOfWeekHe[weekday] : dayOfWeek[weekday]
         return DateItem(
             id: ((hdate.yy * 10000) + (hdate.mm.rawValue * 100) + hdate.dd),
+            lang: lang,
             weekday: weekday,
             dow: dow,
             gregDay: dateComponents.day!, gregMonth: gregMonth,
