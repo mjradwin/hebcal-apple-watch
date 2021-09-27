@@ -327,12 +327,17 @@ class ComplicationController: NSObject, CLKComplicationDataSource {
         return CLKComplicationTemplateUtilitarianSmallFlat(textProvider: combinedProvider)
     }
 
+    private let largeFlatFormatRTL = "\u{202E}%@ %@ · %@"
+    private let largeFlatFormatLTR = "%@ %@ · %@"
+
     // Return a utilitarian large template.
     private func createUtilitarianLargeTemplate(forDate date: Date) -> CLKComplicationTemplate {
         // Create the data providers.
         let hdateProviders = makeHDateSimpleTextProviders(date: date)
         let parshaName = settings.getParshaString(date: date)
-        let combinedProvider = CLKTextProvider(format: "%@ %@ · %@", hdateProviders[0], hdateProviders[1], parshaName)
+        let lang = TranslationLang(rawValue: settings.lang)!
+        let format = lang == .he ? largeFlatFormatRTL : largeFlatFormatLTR
+        let combinedProvider = CLKTextProvider(format: format, hdateProviders[0], hdateProviders[1], parshaName)
         // Create the template using the providers.
         return CLKComplicationTemplateUtilitarianLargeFlat(textProvider: combinedProvider)
     }

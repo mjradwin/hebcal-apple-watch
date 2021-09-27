@@ -11,7 +11,7 @@ import os
 import Hebcal
 import ClockKit
 
-class ModelData: ObservableObject {
+final class ModelData: ObservableObject {
     let logger = Logger(
         subsystem: "com.hebcal.HebcalHDate.watchkitapp.watchkitextension.ModelData",
         category: "Model")
@@ -22,32 +22,36 @@ class ModelData: ObservableObject {
 
     @Published public var il: Bool {
         didSet {
-            logger.debug("il=\(self.il)")
-            UserDefaults.standard.set(il, forKey: "israel")
-            sedraCache = [:]
-            currentDay = -1
-            updateDateItems()
-            // Update any complications on active watch faces.
-            let server = CLKComplicationServer.sharedInstance()
-            for complication in server.activeComplications ?? [] {
-                server.reloadTimeline(for: complication)
+            if !doingInit {
+                logger.debug("il=\(self.il)")
+                UserDefaults.standard.set(il, forKey: "israel")
+                sedraCache = [:]
+                currentDay = -1
+                updateDateItems()
+                // Update any complications on active watch faces.
+                let server = CLKComplicationServer.sharedInstance()
+                for complication in server.activeComplications ?? [] {
+                    server.reloadTimeline(for: complication)
+                }
+                logger.debug("il Finished reloadTimeline")
             }
-            logger.debug("il Finished reloadTimeline")
         }
     }
 
     @Published public var lang: Int {
         didSet {
-            logger.debug("lang=\(self.lang)")
-            UserDefaults.standard.set(lang, forKey: "lang")
-            currentDay = -1
-            updateDateItems()
-            // Update any complications on active watch faces.
-            let server = CLKComplicationServer.sharedInstance()
-            for complication in server.activeComplications ?? [] {
-                server.reloadTimeline(for: complication)
+            if !doingInit {
+                logger.debug("lang=\(self.lang)")
+                UserDefaults.standard.set(lang, forKey: "lang")
+                currentDay = -1
+                updateDateItems()
+                // Update any complications on active watch faces.
+                let server = CLKComplicationServer.sharedInstance()
+                for complication in server.activeComplications ?? [] {
+                    server.reloadTimeline(for: complication)
+                }
+                logger.debug("lang Finished reloadTimeline")
             }
-            logger.debug("lang Finished reloadTimeline")
         }
     }
 
@@ -111,6 +115,10 @@ class ModelData: ObservableObject {
         return self.getParshaString(hdate: hdate, fallbackToHoliday: true) ?? "??"
     }
 
+    //private func hebrewStripNikkud(str: String) -> String {
+    //  return str.replace(/[\u0590-\u05bd]/g, '').replace(/[\u05bf-\u05c7]/g, '');
+    //}
+
     private func getParshaString(hdate: HDate, fallbackToHoliday: Bool) -> String? {
         let year = hdate.yy
         var sedra = sedraCache[year]
@@ -167,11 +175,14 @@ class ModelData: ObservableObject {
         return nil // today isn't a holiday and no special shabbat
     }
 
+    private var doingInit = true
     private init() {
         logger.debug("ModelData init")
         self.il = UserDefaults.standard.bool(forKey: "israel")
         self.lang = UserDefaults.standard.integer(forKey: "lang")
         updateDateItems()
+        logger.debug("il=\(self.il), lang=\(self.lang)")
+        doingInit = false
     }
 
     private let dayOfWeek = ["", "Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"]
@@ -372,5 +383,5 @@ class ModelData: ObservableObject {
         }
     }
 
-    @Published var dateItems = [DateItem]()
+    @Published public var dateItems = [DateItem]()
 }
