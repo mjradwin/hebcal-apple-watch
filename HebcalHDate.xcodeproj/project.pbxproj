@@ -7,7 +7,6 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		9D35F47B26E5792700EC5AAD /* HDateRow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D35F47A26E5792700EC5AAD /* HDateRow.swift */; };
 		9D35F47F26E57B3200EC5AAD /* DateItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D35F47E26E57B3200EC5AAD /* DateItem.swift */; };
 		9D35F48126E5809100EC5AAD /* HDateList.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D35F48026E5809100EC5AAD /* HDateList.swift */; };
 		9D35F48326E6698400EC5AAD /* SettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D35F48226E6698400EC5AAD /* SettingsView.swift */; };
@@ -69,7 +68,6 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
-		9D35F47A26E5792700EC5AAD /* HDateRow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HDateRow.swift; sourceTree = "<group>"; };
 		9D35F47E26E57B3200EC5AAD /* DateItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DateItem.swift; sourceTree = "<group>"; };
 		9D35F48026E5809100EC5AAD /* HDateList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HDateList.swift; sourceTree = "<group>"; };
 		9D35F48226E6698400EC5AAD /* SettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsView.swift; sourceTree = "<group>"; };
@@ -135,7 +133,6 @@
 			children = (
 				9D9A028226CC6A460055160C /* ContentView.swift */,
 				9D35F48226E6698400EC5AAD /* SettingsView.swift */,
-				9D35F47A26E5792700EC5AAD /* HDateRow.swift */,
 				9DE0D4BB2703936B00486082 /* TodayView.swift */,
 				9DF84E9E27052F55003906F6 /* ScaledFont.swift */,
 				9D35F48026E5809100EC5AAD /* HDateList.swift */,
@@ -243,6 +240,10 @@
 			knownRegions = (
 				en,
 				Base,
+				"en-AU",
+				"en-GB",
+				"en-IN",
+				he,
 			);
 			mainGroup = 9D9A026626CC6A410055160C;
 			packageReferences = (
@@ -292,7 +293,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				9D9A028326CC6A460055160C /* ContentView.swift in Sources */,
-				9D35F47B26E5792700EC5AAD /* HDateRow.swift in Sources */,
 				9DA5666626EEBFF10074F100 /* ExtensionDelegate.swift in Sources */,
 				9D35F48326E6698400EC5AAD /* SettingsView.swift in Sources */,
 				9DF84E9F27052F55003906F6 /* ScaledFont.swift in Sources */,
@@ -527,9 +527,9 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 1.9.0;
+				CURRENT_PROJECT_VERSION = 1.9.1;
 				DEVELOPMENT_TEAM = 4ZRJ2HBKYL;
-				MARKETING_VERSION = 1.9.0;
+				MARKETING_VERSION = 1.9.1;
 				PRODUCT_BUNDLE_IDENTIFIER = com.hebcal.HebcalHDate;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 5.0;
@@ -540,9 +540,9 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 1.9.0;
+				CURRENT_PROJECT_VERSION = 1.9.1;
 				DEVELOPMENT_TEAM = 4ZRJ2HBKYL;
-				MARKETING_VERSION = 1.9.0;
+				MARKETING_VERSION = 1.9.1;
 				PRODUCT_BUNDLE_IDENTIFIER = com.hebcal.HebcalHDate;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 5.0;

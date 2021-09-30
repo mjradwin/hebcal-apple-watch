@@ -55,6 +55,10 @@ final class ModelData: ObservableObject {
         }
     }
 
+    public var lg: TranslationLang {
+        TranslationLang(rawValue: self.lang) ?? TranslationLang.en
+    }
+
     private let gregCalendar = Calendar(identifier: .gregorian)
     public func makeHDate(date: Date) -> HDate {
         var hdate = HDate(date: date)
@@ -73,10 +77,9 @@ final class ModelData: ObservableObject {
 
     public func getHebDateString(hdate: HDate, showYear: Bool) -> String {
         let monthName = hdate.monthName()
-        let lang = TranslationLang(rawValue: lang) ?? TranslationLang.en
-        if lang == .he {
+        if lg == .he {
             var str = hebnumToString(number: hdate.dd) + " " +
-                lookupTranslation(str: monthName, lang: lang)
+                lookupTranslation(str: monthName, lang: lg)
             if showYear {
                 str += " " + hebnumToString(number: hdate.yy)
             }
@@ -122,8 +125,7 @@ final class ModelData: ObservableObject {
             sedra = Sedra(year: year, il: il)
             sedraCache[year] = sedra
         }
-        let lang0 = TranslationLang(rawValue: lang) ?? TranslationLang.en
-        let lang = heNikud && lang0 == .he ? .heNikud : lang0
+        let lang = heNikud && lg == .he ? .heNikud : lg
         let parsha0 = sedra!.lookup(hdate: hdate, lang: lang)
         if parsha0 == nil && !fallbackToHoliday {
             return nil
@@ -233,7 +235,6 @@ final class ModelData: ObservableObject {
     }
 
     private func translateHolidayName(ev: HEvent) -> String {
-        let lg = TranslationLang(rawValue: lang) ?? TranslationLang.en
         if ev.flags.contains(.ROSH_CHODESH) {
             let rch = lookupTranslation(str: "Rosh Chodesh", lang: lg)
             let start = ev.desc.index(ev.desc.startIndex, offsetBy: 13)
@@ -292,17 +293,17 @@ final class ModelData: ObservableObject {
         }
     }
 
-    private func omerStr(hdate: HDate, lang: TranslationLang) -> String? {
+    private func omerStr(hdate: HDate) -> String? {
         let omer = omerDay(hdate: hdate)
         if omer == -1 {
             return nil
         }
         let o = String(omer)
-        return lang == .he ? "עומר" + " " + o :
+        return lg == .he ? "עומר" + " " + o :
             "Omer: " + o + enNumSuffix(omer) + " day"
     }
 
-    private func parshaStr(hdate: HDate, lang: TranslationLang) -> String? {
+    private func parshaStr(hdate: HDate) -> String? {
         let parshaName = self.getParshaString(hdate: hdate, fallbackToHoliday: false, heNikud: false)
         return parshaName
         /*
@@ -318,8 +319,7 @@ final class ModelData: ObservableObject {
         let hdate = HDate(date: date)
         let showYear0 = (hdate.mm == .TISHREI && hdate.dd == 1) || showYear
         let hdateStr = self.getHebDateString(hdate: hdate, showYear: showYear0)
-        let lang = TranslationLang(rawValue: lang) ?? TranslationLang.en
-        let parsha = (forceParsha || weekday == 7) ? parshaStr(hdate: hdate, lang: lang) : nil
+        let parsha = (forceParsha || weekday == 7) ? parshaStr(hdate: hdate) : nil
         let events = self.getHolidaysOnDate(hdate: hdate)
         var holidays = [String]()
         for ev in events {
@@ -327,11 +327,11 @@ final class ModelData: ObservableObject {
             holidays.append(holiday)
         }
         let emoji = pickEmoji(events: events)
-        let gregMonth = lang == .he ? shortMonthHe[dateComponents.month!] : shortMonth[dateComponents.month!]
-        let dow = lang == .he ? dayOfWeekHe[weekday] : dayOfWeek[weekday]
+        let gregMonth = lg == .he ? shortMonthHe[dateComponents.month!] : shortMonth[dateComponents.month!]
+        let dow = lg == .he ? dayOfWeekHe[weekday] : dayOfWeek[weekday]
         return DateItem(
             id: ((hdate.yy * 10000) + (hdate.mm.rawValue * 100) + hdate.dd),
-            lang: lang,
+            lang: lg,
             weekday: weekday,
             dow: dow,
             gregDay: dateComponents.day!, gregMonth: gregMonth,
@@ -339,7 +339,7 @@ final class ModelData: ObservableObject {
             parsha: parsha,
             holidays: holidays,
             emoji: emoji,
-            omer: omerStr(hdate: hdate, lang: lang)
+            omer: omerStr(hdate: hdate)
         )
     }
 
@@ -347,19 +347,21 @@ final class ModelData: ObservableObject {
 
     private func makeDateItems(date: Date) -> [DateItem] {
         var entries = [DateItem]()
-        // Show everything daily for the next 30 days
-        var current = date
+        let first = self.makeDateItem(date: date, showYear: true, forceParsha: true)
+        entries.append(first)
+        // Show everything daily for the next 2 weeks
+        var current = date.addingTimeInterval(twentyFourHours)
         let endDate = date.addingTimeInterval(14.0 * twentyFourHours)
-        var isFirst = true // show year only for first item in the list
         while (current.compare(endDate) == .orderedAscending) {
-            let item = self.makeDateItem(date: current, showYear: isFirst, forceParsha: isFirst)
+            let item = self.makeDateItem(date: current, showYear: false, forceParsha: false)
             entries.append(item)
             current = current.addingTimeInterval(twentyFourHours)
-            isFirst = false
         }
         // Then show Shabbat and holidays for the next 4 months
-        let startAbs = greg2abs(date: endDate) + 1
-        let endAbs = startAbs + 180
+        let today = HDate(date: date)
+        let numDays = daysInYear(year: today.yy)
+        let startAbs = greg2abs(date: current)
+        let endAbs = today.abs() + Int64(numDays)
         for abs in startAbs...endAbs {
             let hdate = HDate(absdate: abs)
             if hdate.dow() == .SAT {

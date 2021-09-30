@@ -31,20 +31,20 @@ struct TodayView: View {
                     .foregroundColor(.gray)
                     .scaledFont(size: 16, weight: .regular, design: .default)
                     .scaledToFill()
-                    .minimumScaleFactor(0.5)
+                    .minimumScaleFactor(0.6)
                     .lineLimit(1)
                 Text(item.hdate)
                     .foregroundColor(.white)
                     .scaledFont(size: 18, weight: .regular, design: .default)
                     .scaledToFill()
-                    .minimumScaleFactor(0.5)
+                    .minimumScaleFactor(0.6)
                     .lineLimit(1)
                 ForEach(item.holidays, id: \.self) { holiday in
                     Text(holiday)
                         .foregroundColor(.yellow)
                         .scaledFont(size: 18, weight: .regular, design: .default)
                         .scaledToFill()
-                        .minimumScaleFactor(0.5)
+                        .minimumScaleFactor(0.6)
                         .lineLimit(1)
                 }
                 item.omer.map({
@@ -52,7 +52,7 @@ struct TodayView: View {
                         .foregroundColor(.gray)
                         .scaledFont(size: 16, weight: .regular, design: .default)
                         .scaledToFill()
-                        .minimumScaleFactor(0.5)
+                        .minimumScaleFactor(0.6)
                         .lineLimit(1)
                 })
                 if item.parsha != nil {
@@ -65,7 +65,7 @@ struct TodayView: View {
                             .foregroundColor(Color(red: 1.0, green: 0.75, blue: 0.0))
                             .scaledFont(size: 18, weight: .regular, design: .default)
                             .scaledToFill()
-                            .minimumScaleFactor(0.5)
+                            .minimumScaleFactor(0.6)
                             .lineLimit(1)
                     }
                 }
