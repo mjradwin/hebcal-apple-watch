@@ -22,6 +22,8 @@
 		9D9A028C26CC6A480055160C /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 9D9A028B26CC6A480055160C /* Preview Assets.xcassets */; };
 		9DA5666626EEBFF10074F100 /* ExtensionDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9DA5666526EEBFF10074F100 /* ExtensionDelegate.swift */; };
 		9DC2BBE426D421A300A248EB /* ModelData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9DC2BBE326D421A300A248EB /* ModelData.swift */; };
+		9DE0D4BC2703936B00486082 /* TodayView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9DE0D4BB2703936B00486082 /* TodayView.swift */; };
+		9DF84E9F27052F55003906F6 /* ScaledFont.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9DF84E9E27052F55003906F6 /* ScaledFont.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -84,6 +86,8 @@
 		9D9A028D26CC6A480055160C /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		9DA5666526EEBFF10074F100 /* ExtensionDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExtensionDelegate.swift; sourceTree = "<group>"; };
 		9DC2BBE326D421A300A248EB /* ModelData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ModelData.swift; sourceTree = "<group>"; };
+		9DE0D4BB2703936B00486082 /* TodayView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TodayView.swift; sourceTree = "<group>"; };
+		9DF84E9E27052F55003906F6 /* ScaledFont.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScaledFont.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -132,6 +136,8 @@
 				9D9A028226CC6A460055160C /* ContentView.swift */,
 				9D35F48226E6698400EC5AAD /* SettingsView.swift */,
 				9D35F47A26E5792700EC5AAD /* HDateRow.swift */,
+				9DE0D4BB2703936B00486082 /* TodayView.swift */,
+				9DF84E9E27052F55003906F6 /* ScaledFont.swift */,
 				9D35F48026E5809100EC5AAD /* HDateList.swift */,
 				9D35F47E26E57B3200EC5AAD /* DateItem.swift */,
 				9DC2BBE326D421A300A248EB /* ModelData.swift */,
@@ -289,10 +295,12 @@
 				9D35F47B26E5792700EC5AAD /* HDateRow.swift in Sources */,
 				9DA5666626EEBFF10074F100 /* ExtensionDelegate.swift in Sources */,
 				9D35F48326E6698400EC5AAD /* SettingsView.swift in Sources */,
+				9DF84E9F27052F55003906F6 /* ScaledFont.swift in Sources */,
 				9DC2BBE426D421A300A248EB /* ModelData.swift in Sources */,
 				9D35F48126E5809100EC5AAD /* HDateList.swift in Sources */,
 				9D9A028526CC6A460055160C /* HebcalHDateApp.swift in Sources */,
 				9D9A028726CC6A460055160C /* ComplicationController.swift in Sources */,
+				9DE0D4BC2703936B00486082 /* TodayView.swift in Sources */,
 				9D35F47F26E57B3200EC5AAD /* DateItem.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -519,9 +527,9 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 1.8.0;
+				CURRENT_PROJECT_VERSION = 1.9.0;
 				DEVELOPMENT_TEAM = 4ZRJ2HBKYL;
-				MARKETING_VERSION = 1.8.0;
+				MARKETING_VERSION = 1.9.0;
 				PRODUCT_BUNDLE_IDENTIFIER = com.hebcal.HebcalHDate;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 5.0;
@@ -532,9 +540,9 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 1.8.0;
+				CURRENT_PROJECT_VERSION = 1.9.0;
 				DEVELOPMENT_TEAM = 4ZRJ2HBKYL;
-				MARKETING_VERSION = 1.8.0;
+				MARKETING_VERSION = 1.9.0;
 				PRODUCT_BUNDLE_IDENTIFIER = com.hebcal.HebcalHDate;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 5.0;

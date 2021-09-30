@@ -20,6 +20,13 @@ struct HDateRow: View {
     var stackAlignment: HorizontalAlignment {
         (item.lang == .he) ? .trailing : .leading
     }
+    var hdateStr: String {
+        var s = item.hdate
+        if item.emoji != nil {
+            s += "  " + item.emoji!
+        }
+        return s
+    }
 
     var body: some View {
         HStack {
@@ -28,7 +35,7 @@ struct HDateRow: View {
                     .font(.system(size: 12, weight: .regular, design: .default))
                     .foregroundColor(.white)
                 Text(String(item.gregDay))
-                    .font(.system(size: 20, weight: .semibold, design: .monospaced))
+                    .font(.system(size: 18, weight: .semibold, design: .monospaced))
                     .foregroundColor(.orange)
                 Text(item.gregMonth)
                     .font(.system(size: 12, weight: .regular, design: .default))
@@ -39,7 +46,7 @@ struct HDateRow: View {
                 Spacer()
             }
             VStack(alignment: stackAlignment) {
-                Text(item.hdate)
+                Text(hdateStr)
                     .font(.system(size: 16, weight: .regular, design: .default))
                     .multilineTextAlignment(textAlignment)
                 item.parsha.map({

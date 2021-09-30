@@ -167,7 +167,12 @@ final class ModelData: ObservableObject {
     }
     public func getHolidayString(date: Date) -> String? {
         if let ev = pickHolidayToDisplay(date: date) {
-            return translateHolidayName(ev: ev)
+            var str = translateHolidayName(ev: ev)
+            let emoji = pickEmoji(events: [ev])
+            if emoji != nil {
+                str += " " + emoji!
+            }
+            return str
         }
         return nil // today isn't a holiday and no special shabbat
     }
@@ -293,20 +298,28 @@ final class ModelData: ObservableObject {
             return nil
         }
         let o = String(omer)
-        return lang == .he ? "עוֹמֶר" + " " + o :
+        return lang == .he ? "עומר" + " " + o :
             "Omer: " + o + enNumSuffix(omer) + " day"
     }
 
-    private func makeDateItem(date: Date, showYear: Bool) -> DateItem {
+    private func parshaStr(hdate: HDate, lang: TranslationLang) -> String? {
+        let parshaName = self.getParshaString(hdate: hdate, fallbackToHoliday: false, heNikud: false)
+        return parshaName
+        /*
+        let parshaPrefix = parshaName != nil ? lookupTranslation(str: "Parashat", lang: lang) : nil
+        let parsha = parshaName != nil ? parshaPrefix! + " " + parshaName! : nil
+        return parsha
+        */
+    }
+
+    public func makeDateItem(date: Date, showYear: Bool, forceParsha: Bool) -> DateItem {
         let dateComponents = gregCalendar.dateComponents([.weekday, .month, .day], from: date)
         let weekday = dateComponents.weekday!
         let hdate = HDate(date: date)
         let showYear0 = (hdate.mm == .TISHREI && hdate.dd == 1) || showYear
-        var hdateStr = self.getHebDateString(hdate: hdate, showYear: showYear0)
-        let parshaName = (weekday == 7) ? self.getParshaString(hdate: hdate, fallbackToHoliday: false, heNikud: false) : nil
+        let hdateStr = self.getHebDateString(hdate: hdate, showYear: showYear0)
         let lang = TranslationLang(rawValue: lang) ?? TranslationLang.en
-        let parshaPrefix = parshaName != nil ? lookupTranslation(str: "Parashat", lang: lang) : nil
-        let parsha = parshaName != nil ? parshaPrefix! + " " + parshaName! : nil
+        let parsha = (forceParsha || weekday == 7) ? parshaStr(hdate: hdate, lang: lang) : nil
         let events = self.getHolidaysOnDate(hdate: hdate)
         var holidays = [String]()
         for ev in events {
@@ -314,9 +327,6 @@ final class ModelData: ObservableObject {
             holidays.append(holiday)
         }
         let emoji = pickEmoji(events: events)
-        if emoji != nil {
-            hdateStr += "  " + emoji!
-        }
         let gregMonth = lang == .he ? shortMonthHe[dateComponents.month!] : shortMonth[dateComponents.month!]
         let dow = lang == .he ? dayOfWeekHe[weekday] : dayOfWeek[weekday]
         return DateItem(
@@ -328,6 +338,7 @@ final class ModelData: ObservableObject {
             hdate: hdateStr,
             parsha: parsha,
             holidays: holidays,
+            emoji: emoji,
             omer: omerStr(hdate: hdate, lang: lang)
         )
     }
@@ -338,26 +349,26 @@ final class ModelData: ObservableObject {
         var entries = [DateItem]()
         // Show everything daily for the next 30 days
         var current = date
-        let endDate = date.addingTimeInterval(30.0 * twentyFourHours)
+        let endDate = date.addingTimeInterval(14.0 * twentyFourHours)
         var isFirst = true // show year only for first item in the list
         while (current.compare(endDate) == .orderedAscending) {
-            let item = self.makeDateItem(date: current, showYear: isFirst)
+            let item = self.makeDateItem(date: current, showYear: isFirst, forceParsha: isFirst)
             entries.append(item)
             current = current.addingTimeInterval(twentyFourHours)
             isFirst = false
         }
         // Then show Shabbat and holidays for the next 4 months
         let startAbs = greg2abs(date: endDate) + 1
-        let endAbs = startAbs + 120
+        let endAbs = startAbs + 180
         for abs in startAbs...endAbs {
             let hdate = HDate(absdate: abs)
             if hdate.dow() == .SAT {
-                let item = self.makeDateItem(date: hdate.greg(), showYear: false)
+                let item = self.makeDateItem(date: hdate.greg(), showYear: false, forceParsha: true)
                 entries.append(item)
             } else {
                 let events = self.getHolidaysOnDate(hdate: hdate)
                 if events.count > 0 {
-                    let item = self.makeDateItem(date: hdate.greg(), showYear: false)
+                    let item = self.makeDateItem(date: hdate.greg(), showYear: false, forceParsha: false)
                     entries.append(item)
                 }
             }

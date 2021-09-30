@@ -1,0 +1,16 @@
+{
+  "object": {
+    "pins": [
+      {
+        "package": "Hebcal",
+        "repositoryURL": "https://github.com/hebcal/hebcal-swift.git",
+        "state": {
+          "branch": "main",
+          "revision": "e24a0265f7778d578146add971544fc79758a809",
+          "version": null
+        }
+      }
+    ]
+  },
+  "version": 1
+}

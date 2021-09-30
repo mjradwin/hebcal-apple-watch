@@ -448,49 +448,47 @@ class ComplicationController: NSObject, CLKComplicationDataSource {
             line2TextProvider: simpleTextProviders[1])
     }
 
+    private func create3lineTextProviders(date: Date) -> [CLKSimpleTextProvider] {
+        let hebDateStr = settings.getHebDateString(date: date, showYear: true)
+        let headerTextProvider = CLKSimpleTextProvider(text: hebDateStr)
+        headerTextProvider.tintColor = tintColor
+
+        let lang = TranslationLang(rawValue: settings.lang)!
+        let parshaName = settings.getParshaString(date: date, heNikud: false)
+        let parshaPrefix = lookupTranslation(str: "Parashat", lang: lang)
+        let parsha = parshaPrefix + " " + parshaName
+        let parshaProvider = CLKSimpleTextProvider(text: parsha)
+
+        let holidayToday = settings.getHolidayString(date: date)
+        let holidayProvider = CLKSimpleTextProvider(text: holidayToday ?? "")
+        return [
+            headerTextProvider,
+            holidayToday == nil ? parshaProvider : holidayProvider,
+            holidayToday != nil ? parshaProvider : holidayProvider,
+        ]
+    }
+
     // Return a modular large template.
     private func createModularLargeTemplate(forDate date: Date) -> CLKComplicationTemplate {
         // Create the data providers.
-        let hebDateStr = settings.getHebDateString(date: date, showYear: true)
-        let headerTextProvider = CLKSimpleTextProvider(text: hebDateStr)
-        headerTextProvider.tintColor = tintColor
-
-        let lang = TranslationLang(rawValue: settings.lang)!
-        let parshaName = settings.getParshaString(date: date, heNikud: false)
-        let parshaPrefix = lookupTranslation(str: "Parashat", lang: lang)
-        let parsha = parshaPrefix + " " + parshaName
-        let body1TextProvider = CLKSimpleTextProvider(text: parsha)
-
-        let holidayToday = settings.getHolidayString(date: date) ?? ""
-        let body2TextProvider = CLKSimpleTextProvider(text: holidayToday)
+        let textProviders = create3lineTextProviders(date: date)
 
         // Create the template using the providers.
         return CLKComplicationTemplateModularLargeStandardBody(
-            headerTextProvider: headerTextProvider,
-            body1TextProvider: body1TextProvider,
-            body2TextProvider: body2TextProvider)
+            headerTextProvider: textProviders[0],
+            body1TextProvider: textProviders[1],
+            body2TextProvider: textProviders[2])
     }
-    
+
     // Return a large rectangular graphic template.
     private func createGraphicRectangularTemplate(forDate date: Date) -> CLKComplicationTemplate {
         // Create the data providers.
-        let hebDateStr = settings.getHebDateString(date: date, showYear: true)
-        let headerTextProvider = CLKSimpleTextProvider(text: hebDateStr)
-        headerTextProvider.tintColor = tintColor
-
-        let lang = TranslationLang(rawValue: settings.lang)!
-        let parshaName = settings.getParshaString(date: date, heNikud: false)
-        let parshaPrefix = lookupTranslation(str: "Parashat", lang: lang)
-        let parsha = parshaPrefix + " " + parshaName
-        let body1TextProvider = CLKSimpleTextProvider(text: parsha)
-
-        let holidayToday = settings.getHolidayString(date: date) ?? ""
-        let body2TextProvider = CLKSimpleTextProvider(text: holidayToday)
+        let textProviders = create3lineTextProviders(date: date)
 
         // Create the template using the providers.
         return CLKComplicationTemplateGraphicRectangularStandardBody(
-            headerTextProvider: headerTextProvider,
-            body1TextProvider: body1TextProvider,
-            body2TextProvider: body2TextProvider)
+            headerTextProvider: textProviders[0],
+            body1TextProvider: textProviders[1],
+            body2TextProvider: textProviders[2])
     }
 }

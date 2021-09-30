@@ -11,19 +11,19 @@ import os
 struct ContentView: View {
     let logger = Logger(subsystem: "com.hebcal.HebcalHDate.watchkitapp.watchkitextension.ContentView", category: "Root View")
     @Environment(\.scenePhase) private var scenePhase
+    @EnvironmentObject var modelData: ModelData
 
     var body: some View {
         NavigationView {
-            VStack {
-                HDateList()
+            List {
+                NavigationLink(destination: HDateList()) {
+                    TodayView(item: modelData.dateItems[0])
+                }
                 NavigationLink(destination: SettingsView()) {
                     Label("Settings", systemImage: "gear")
-                        .font(.system(size: 12, weight: .regular, design: .default))
-                        .foregroundColor(.blue)
                 }
-                .buttonStyle(.plain)
-                .frame(maxHeight: 0, alignment: .top)
             }
+            .navigationTitle("Hebcal")
         }
         .onChange(of: scenePhase) { (phase) in
             switch phase {
@@ -31,6 +31,7 @@ struct ContentView: View {
                 logger.debug("Scene became inactive.")
             case .active:
                 logger.debug("Scene became active.")
+                modelData.updateDateItems()
             case .background:
                 logger.debug("Scene moved to the background.")
                 // Schedule a background refresh task
