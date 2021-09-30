@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		9D2E6CF92705F8CC002EC757 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 9D2E6CFB2705F8CC002EC757 /* Localizable.strings */; };
 		9D35F47F26E57B3200EC5AAD /* DateItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D35F47E26E57B3200EC5AAD /* DateItem.swift */; };
 		9D35F48126E5809100EC5AAD /* HDateList.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D35F48026E5809100EC5AAD /* HDateList.swift */; };
 		9D35F48326E6698400EC5AAD /* SettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D35F48226E6698400EC5AAD /* SettingsView.swift */; };
@@ -68,6 +69,11 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		9D2E6CFA2705F8CC002EC757 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Localizable.strings; sourceTree = "<group>"; };
+		9D2E6CFC2705F8D0002EC757 /* en-AU */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "en-AU"; path = "en-AU.lproj/Localizable.strings"; sourceTree = "<group>"; };
+		9D2E6CFD2705F8D6002EC757 /* en-IN */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "en-IN"; path = "en-IN.lproj/Localizable.strings"; sourceTree = "<group>"; };
+		9D2E6CFE2705F8D6002EC757 /* en-GB */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "en-GB"; path = "en-GB.lproj/Localizable.strings"; sourceTree = "<group>"; };
+		9D2E6CFF2705F920002EC757 /* he */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = he; path = he.lproj/Localizable.strings; sourceTree = "<group>"; };
 		9D35F47E26E57B3200EC5AAD /* DateItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DateItem.swift; sourceTree = "<group>"; };
 		9D35F48026E5809100EC5AAD /* HDateList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HDateList.swift; sourceTree = "<group>"; };
 		9D35F48226E6698400EC5AAD /* SettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsView.swift; sourceTree = "<group>"; };
@@ -131,6 +137,7 @@
 		9D9A028126CC6A460055160C /* HebcalHDate WatchKit Extension */ = {
 			isa = PBXGroup;
 			children = (
+				9D2E6CFB2705F8CC002EC757 /* Localizable.strings */,
 				9D9A028226CC6A460055160C /* ContentView.swift */,
 				9D35F48226E6698400EC5AAD /* SettingsView.swift */,
 				9DE0D4BB2703936B00486082 /* TodayView.swift */,
@@ -265,6 +272,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				9D2E6CF92705F8CC002EC757 /* Localizable.strings in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -319,6 +327,21 @@
 			targetProxy = 9D9A027F26CC6A460055160C /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
+
+/* Begin PBXVariantGroup section */
+		9D2E6CFB2705F8CC002EC757 /* Localizable.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				9D2E6CFA2705F8CC002EC757 /* en */,
+				9D2E6CFC2705F8D0002EC757 /* en-AU */,
+				9D2E6CFD2705F8D6002EC757 /* en-IN */,
+				9D2E6CFE2705F8D6002EC757 /* en-GB */,
+				9D2E6CFF2705F920002EC757 /* he */,
+			);
+			name = Localizable.strings;
+			sourceTree = "<group>";
+		};
+/* End PBXVariantGroup section */
 
 /* Begin XCBuildConfiguration section */
 		9D9A028E26CC6A480055160C /* Debug */ = {

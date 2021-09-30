@@ -49,5 +49,6 @@ struct ContentView_Previews: PreviewProvider {
     static var previews: some View {
         ContentView()
             .environmentObject(ModelData.shared)
+            .environment(\.locale, .init(identifier: "he"))
     }
 }

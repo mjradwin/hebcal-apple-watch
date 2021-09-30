@@ -25,8 +25,8 @@ struct SettingsView: View {
             return ""
         }
     }
-    var ilDescription: String {
-        return (modelData.il ? "Israel" : "Diaspora") + " schedule"
+    var ilDescription: LocalizedStringKey {
+        return modelData.il ? "Israel schedule" : "Diaspora schedule"
     }
 
     // Lay out the view's body.
@@ -57,5 +57,6 @@ struct SettingsView_Previews: PreviewProvider {
     static var previews: some View {
         SettingsView()
             .environmentObject(ModelData.shared)
+            .environment(\.locale, .init(identifier: "he"))
     }
 }

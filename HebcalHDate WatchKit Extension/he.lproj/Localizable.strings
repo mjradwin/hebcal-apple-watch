@@ -1,0 +1,14 @@
+/* 
+  Localizable.strings
+  HebcalHDate
+
+  Created by Michael Radwin on 9/30/21.
+  
+*/
+"Settings" = "כללי";
+"Language" = "שפה";
+"Hebrew" = "עברית";
+"Ashkenazi" = "אנגלית (אשכנזי)";
+"Sepharic" = "אנגלית (ספרדי)";
+"Israel schedule" = "תכנית ישראל";
+"Diaspora schedule" = "תכנית חוץ לארץ";
