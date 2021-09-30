@@ -8,6 +8,8 @@
 
 /* Begin PBXBuildFile section */
 		9D2E6CF92705F8CC002EC757 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 9D2E6CFB2705F8CC002EC757 /* Localizable.strings */; };
+		9D2E6D0427061957002EC757 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 9D2E6CFB2705F8CC002EC757 /* Localizable.strings */; };
+		9D2E6D0527061957002EC757 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 9D2E6CFB2705F8CC002EC757 /* Localizable.strings */; };
 		9D35F47F26E57B3200EC5AAD /* DateItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D35F47E26E57B3200EC5AAD /* DateItem.swift */; };
 		9D35F48126E5809100EC5AAD /* HDateList.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D35F48026E5809100EC5AAD /* HDateList.swift */; };
 		9D35F48326E6698400EC5AAD /* SettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D35F48226E6698400EC5AAD /* SettingsView.swift */; };
@@ -281,6 +283,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				9D9A027726CC6A460055160C /* Assets.xcassets in Resources */,
+				9D2E6D0427061957002EC757 /* Localizable.strings in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -289,6 +292,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				9D9A028C26CC6A480055160C /* Preview Assets.xcassets in Resources */,
+				9D2E6D0527061957002EC757 /* Localizable.strings in Resources */,
 				9D9A028926CC6A480055160C /* Assets.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -550,9 +554,9 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 1.9.1;
+				CURRENT_PROJECT_VERSION = 1.9.2;
 				DEVELOPMENT_TEAM = 4ZRJ2HBKYL;
-				MARKETING_VERSION = 1.9.1;
+				MARKETING_VERSION = 1.9.2;
 				PRODUCT_BUNDLE_IDENTIFIER = com.hebcal.HebcalHDate;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 5.0;
@@ -563,9 +567,9 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 1.9.1;
+				CURRENT_PROJECT_VERSION = 1.9.2;
 				DEVELOPMENT_TEAM = 4ZRJ2HBKYL;
-				MARKETING_VERSION = 1.9.1;
+				MARKETING_VERSION = 1.9.2;
 				PRODUCT_BUNDLE_IDENTIFIER = com.hebcal.HebcalHDate;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 5.0;

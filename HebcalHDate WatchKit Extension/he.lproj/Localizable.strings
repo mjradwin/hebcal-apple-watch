@@ -9,6 +9,8 @@
 "Language" = "שפה";
 "Hebrew" = "עברית";
 "Ashkenazi" = "אנגלית (אשכנזי)";
-"Sepharic" = "אנגלית (ספרדי)";
+"Sephardic" = "אנגלית (ספרדי)";
+"Israel" = "ישראל";
 "Israel schedule" = "תכנית ישראל";
 "Diaspora schedule" = "תכנית חוץ לארץ";
+"Calendar" = "לוח שנה";

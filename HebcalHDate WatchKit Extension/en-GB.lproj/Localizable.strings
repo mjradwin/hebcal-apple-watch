@@ -9,6 +9,8 @@
 "Language" = "Language";
 "Hebrew" = "Hebrew";
 "Ashkenazi" = "Ashkenazi";
-"Sepharic" = "Sephardic";
+"Sephardic" = "Sephardic";
+"Israel" = "Israel";
 "Israel schedule" = "Israel schedule";
 "Diaspora schedule" = "Diaspora schedule";
+"Calendar" = "Calendar";

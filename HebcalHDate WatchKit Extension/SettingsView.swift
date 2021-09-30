@@ -56,6 +56,7 @@ struct SettingsView: View {
 struct SettingsView_Previews: PreviewProvider {
     static var previews: some View {
         SettingsView()
+            .environment(\.sizeCategory, .medium)
             .environmentObject(ModelData.shared)
             .environment(\.locale, .init(identifier: "he"))
     }
