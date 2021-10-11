@@ -8,6 +8,7 @@
 import ClockKit
 import os
 import Hebcal
+import SwiftUI
 
 let monthAbbrev = [
     "Adar": nil,
@@ -87,6 +88,13 @@ let parshaHyphenate = [
     "Toldos": ["Tol-", "dos"],
     "Vaeschanan": ["Vaes-", "chanan"],
 ]
+
+struct OneLineTextView: View {
+    var text: String
+    var body: some View {
+        Text(text)
+    }
+}
 
 class ComplicationController: NSObject, CLKComplicationDataSource {
     lazy var settings = ModelData.shared
@@ -366,6 +374,16 @@ class ComplicationController: NSObject, CLKComplicationDataSource {
         // Create the data providers.
         let hdateProviders = makeHDateSimpleTextProviders(date: date)
         // Create the template using the providers.
+        let lang = TranslationLang(rawValue: settings.lang)!
+        if lang == .he {
+            return CLKComplicationTemplateGraphicCircularOpenGaugeSimpleText(
+                gaugeProvider: CLKSimpleGaugeProvider(
+                    style: .fill,
+                    gaugeColor: tintColor,
+                    fillFraction: CLKSimpleGaugeProviderFillFractionEmpty),
+                bottomTextProvider: hdateProviders[1],
+                centerTextProvider: hdateProviders[0])
+        }
         return CLKComplicationTemplateGraphicCircularStackText(
             line1TextProvider: hdateProviders[0],
             line2TextProvider: hdateProviders[1])
@@ -374,6 +392,10 @@ class ComplicationController: NSObject, CLKComplicationDataSource {
     // Return a modular small template.
     private func createParshaModularSmallTemplate(forDate date: Date) -> CLKComplicationTemplate {
         let simpleTextProviders = makeParshaSimpleTextProviders(date: date);
+        if simpleTextProviders.count == 1 {
+            return CLKComplicationTemplateModularSmallSimpleText(
+                textProvider: simpleTextProviders[0])
+        }
         return CLKComplicationTemplateModularSmallStackText(
             line1TextProvider: simpleTextProviders[0],
             line2TextProvider: simpleTextProviders[1])
@@ -406,8 +428,7 @@ class ComplicationController: NSObject, CLKComplicationDataSource {
         if let hyphenated = parshaHyphenate[parsha] {
             if hyphenated == nil {
                 return [
-                    CLKSimpleTextProvider(text: parsha),
-                    CLKSimpleTextProvider(text: "")
+                    CLKSimpleTextProvider(text: parsha)
                 ]
             }
             return [
@@ -416,14 +437,16 @@ class ComplicationController: NSObject, CLKComplicationDataSource {
             ]
         }
         return [
-            CLKSimpleTextProvider(text: parsha),
-            CLKSimpleTextProvider(text: "")
+            CLKSimpleTextProvider(text: parsha)
         ]
     }
 
     // Return a circular small template.
     private func createParshaCircularSmallTemplate(forDate date: Date) -> CLKComplicationTemplate {
         let simpleTextProviders = makeParshaSimpleTextProviders(date: date);
+        if simpleTextProviders.count == 1 {
+            return CLKComplicationTemplateCircularSmallSimpleText(textProvider: simpleTextProviders[0])
+        }
         return CLKComplicationTemplateCircularSmallStackText(
             line1TextProvider: simpleTextProviders[0],
             line2TextProvider: simpleTextProviders[1])
@@ -443,6 +466,10 @@ class ComplicationController: NSObject, CLKComplicationDataSource {
     // Return a graphic circle template.
     private func createParshaGraphicCircleTemplate(forDate date: Date) -> CLKComplicationTemplate {
         let simpleTextProviders = makeParshaSimpleTextProviders(date: date);
+        if simpleTextProviders.count == 1 {
+            return CLKComplicationTemplateGraphicCircularView(
+                OneLineTextView(text: simpleTextProviders[0].text))
+        }
         return CLKComplicationTemplateGraphicCircularStackText(
             line1TextProvider: simpleTextProviders[0],
             line2TextProvider: simpleTextProviders[1])

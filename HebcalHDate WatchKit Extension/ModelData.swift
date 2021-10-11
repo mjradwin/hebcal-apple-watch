@@ -20,6 +20,15 @@ final class ModelData: ObservableObject {
     // and from the complication controller.
     static let shared = ModelData()
 
+    private func reloadComplications() -> Void {
+        // Update any complications on active watch faces.
+        let server = CLKComplicationServer.sharedInstance()
+        for complication in server.activeComplications ?? [] {
+            logger.debug("reloadTimeline for \(complication.identifier) il=\(self.il) lang=\(self.lang)")
+            server.reloadTimeline(for: complication)
+        }
+    }
+
     @Published public var il: Bool {
         didSet {
             if !doingInit {
@@ -28,12 +37,7 @@ final class ModelData: ObservableObject {
                 sedraCache = [:]
                 currentDay = -1
                 updateDateItems()
-                // Update any complications on active watch faces.
-                let server = CLKComplicationServer.sharedInstance()
-                for complication in server.activeComplications ?? [] {
-                    server.reloadTimeline(for: complication)
-                }
-                logger.debug("il Finished reloadTimeline")
+                reloadComplications()
             }
         }
     }
@@ -45,12 +49,7 @@ final class ModelData: ObservableObject {
                 UserDefaults.standard.set(lang, forKey: "lang")
                 currentDay = -1
                 updateDateItems()
-                // Update any complications on active watch faces.
-                let server = CLKComplicationServer.sharedInstance()
-                for complication in server.activeComplications ?? [] {
-                    server.reloadTimeline(for: complication)
-                }
-                logger.debug("lang Finished reloadTimeline")
+                reloadComplications()
             }
         }
     }
