@@ -7,31 +7,36 @@
 
 import Foundation
 import SwiftUI
+import ClockKit
 
 struct HDateTextView: View {
+    @Environment(\.complicationRenderingMode) var renderingMode
+
     var day: String
     var month: String
     var body: some View {
         ZStack {
-            Circle()
-                .fill(Color(red: 0.08, green: 0.08, blue: 0.08))
+            if renderingMode == .fullColor {
+                Circle()
+                    .fill(Color(red: 0.08, green: 0.08, blue: 0.08))
+            }
             VStack(spacing: 0) {
                 Text(day)
                     .offset(x: 0, y: -2)
-                    .foregroundColor(Color(red: 1.0, green: 0.75, blue: 0.0))
+                    .foregroundColor(.primary)
                     .font(.system(size: 18, weight: .semibold, design: .default))
                     .scaledToFill()
                     .minimumScaleFactor(0.5)
                     .lineLimit(1)
                 Text(month)
                     .offset(x: 0, y: -2)
-                    .foregroundColor(.white)
-                    .font(.system(size: 10, weight: .semibold, design: .default))
+                    .foregroundColor(Color(red: 1.0, green: 0.75, blue: 0.0))
+                    .font(.system(size: 12, weight: .semibold, design: .default))
                     .scaledToFill()
                     .minimumScaleFactor(0.5)
                     .lineLimit(1)
-                }
-            .multilineTextAlignment(.center)
+            }
+            .complicationForeground()
         }
     }
 }
@@ -39,12 +44,13 @@ struct HDateTextView: View {
 struct HDateTextView_Previews: PreviewProvider {
     static var previews: some View {
         Group {
-            HDateTextView(day: "26", month: "Tishrei")
-            HDateTextView(day: "6", month: "Cheshv")
-            HDateTextView(day: "ט״ז", month: "אדר א׳")
-            HDateTextView(day: "ט״ז", month: "תמוז")
-            HDateTextView(day: "י״ד", month: "אב")
+            CLKComplicationTemplateGraphicCircularView(HDateTextView(day: "26", month: "Tishr")).previewContext()
+            CLKComplicationTemplateGraphicCircularView(HDateTextView(day: "30", month: "Chesh")).previewContext()
+            CLKComplicationTemplateGraphicCircularView(HDateTextView(day: "16", month: "Kislev")).previewContext()
+            CLKComplicationTemplateGraphicCircularView(HDateTextView(day: "3", month: "Adar2")).previewContext()
+            CLKComplicationTemplateGraphicCircularView(HDateTextView(day: "ט״ז", month: "אדר א׳")).previewContext()
+            CLKComplicationTemplateGraphicCircularView(HDateTextView(day: "ט״ז", month: "תמוז")).previewContext()
+            CLKComplicationTemplateGraphicCircularView(HDateTextView(day: "י״ד", month: "אב")).previewContext(faceColor: .red)
         }
-        .previewLayout(.fixed(width: 44, height: 44))
     }
 }

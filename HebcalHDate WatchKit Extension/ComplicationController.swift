@@ -18,13 +18,13 @@ let monthAbbrev = [
     "Cheshvan": "Chesh",
     "Elul": nil,
     "Iyyar": "Iyar",
-    "Kislev": "Kis",
+    "Kislev": nil,
     "Nisan": nil,
     "Sh'vat": "Shvat",
     "Sivan": nil,
     "Tamuz": nil,
     "Tevet": nil,
-    "Tishrei": "Tish",
+    "Tishrei": "Tishr",
 ]
 
 let parshaHyphenate = [
@@ -386,7 +386,11 @@ class ComplicationController: NSObject, CLKComplicationDataSource {
     private func createHDateGraphicCircleTemplate(forDate date: Date) -> CLKComplicationTemplate {
         // Create the data providers.
         let hdateProviders = makeHDateSimpleTextProviders(date: date)
-        let month = hdateProviders[1].text == "Cheshvan" ? "Cheshv" : hdateProviders[1].text
+        var month = hdateProviders[1].text
+        let abbrev = monthAbbrev[month] ?? nil
+        if abbrev != nil {
+            month = abbrev!
+        }
         // Create the template using the providers.
         return CLKComplicationTemplateGraphicCircularView(
             HDateTextView(day: hdateProviders[0].text,
