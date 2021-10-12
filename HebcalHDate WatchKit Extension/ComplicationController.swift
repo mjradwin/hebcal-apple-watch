@@ -386,20 +386,11 @@ class ComplicationController: NSObject, CLKComplicationDataSource {
     private func createHDateGraphicCircleTemplate(forDate date: Date) -> CLKComplicationTemplate {
         // Create the data providers.
         let hdateProviders = makeHDateSimpleTextProviders(date: date)
+        let month = hdateProviders[1].text == "Cheshvan" ? "Cheshv" : hdateProviders[1].text
         // Create the template using the providers.
-        let lang = TranslationLang(rawValue: settings.lang)!
-        if lang == .he {
-            return CLKComplicationTemplateGraphicCircularOpenGaugeSimpleText(
-                gaugeProvider: CLKSimpleGaugeProvider(
-                    style: .fill,
-                    gaugeColor: tintColor,
-                    fillFraction: CLKSimpleGaugeProviderFillFractionEmpty),
-                bottomTextProvider: hdateProviders[1],
-                centerTextProvider: hdateProviders[0])
-        }
-        return CLKComplicationTemplateGraphicCircularStackText(
-            line1TextProvider: hdateProviders[0],
-            line2TextProvider: hdateProviders[1])
+        return CLKComplicationTemplateGraphicCircularView(
+            HDateTextView(day: hdateProviders[0].text,
+                          month: month))
     }
 
     // Return a modular small template.
