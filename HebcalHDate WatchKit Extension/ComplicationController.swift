@@ -349,7 +349,16 @@ class ComplicationController: NSObject, CLKComplicationDataSource {
         let parshaName = settings.getParshaString(date: date, heNikud: false)
         let lang = TranslationLang(rawValue: settings.lang)!
         let format = lang == .he ? largeFlatFormatRTL : largeFlatFormatLTR
-        let combinedProvider = CLKTextProvider(format: format, hebDateStr, parshaName)
+        let text = String(format: format, hebDateStr, parshaName)
+        var shortText: String? = nil
+        let parts = hebDateStr.split(separator: " ")
+        let abbrev = monthAbbrev[String(parts[1])] ?? nil
+        if abbrev != nil {
+            let dayNumber = String(parts[0])
+            let shortDate = dayNumber + " " + abbrev!
+            shortText = String(format: format, shortDate, parshaName)
+        }
+        let combinedProvider = CLKSimpleTextProvider(text: text, shortText: shortText)
         // Create the template using the providers.
         return CLKComplicationTemplateUtilitarianLargeFlat(textProvider: combinedProvider)
     }
