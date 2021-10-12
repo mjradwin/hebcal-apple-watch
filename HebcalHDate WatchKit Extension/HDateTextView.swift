@@ -22,14 +22,13 @@ struct HDateTextView: View {
             }
             VStack(spacing: 0) {
                 Text(day)
-                    .offset(x: 0, y: -2)
                     .foregroundColor(.primary)
                     .font(.system(size: 18, weight: .semibold, design: .default))
                     .scaledToFill()
                     .minimumScaleFactor(0.5)
                     .lineLimit(1)
                 Text(month)
-                    .offset(x: 0, y: -2)
+                    .offset(x: 0, y: -3)
                     .foregroundColor(Color(red: 1.0, green: 0.75, blue: 0.0))
                     .font(.system(size: 12, weight: .semibold, design: .default))
                     .scaledToFill()
