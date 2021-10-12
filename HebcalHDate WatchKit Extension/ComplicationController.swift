@@ -144,16 +144,28 @@ class ComplicationController: NSObject, CLKComplicationDataSource {
         // Do any necessary work to support these newly shared complication descriptors
     }
 
-    let thirtyMinutes = 30.0 * 60.0
-    let sixtyMinutes = 60.0 * 60.0
-    let fortyEightFourHours = 48.0 * 60.0 * 60.0
+    func makeTimelineDates(date: Date) -> [Date] {
+        let dateComponents = gregCalendar.dateComponents([.hour], from: date)
+        if dateComponents.hour! < 20 {
+            let sevenFiftyNine = gregCalendar.date(bySettingHour: 19, minute: 59, second: 59, of: date)!
+            let eightPm = gregCalendar.date(bySettingHour: 20, minute: 0, second: 0, of: date)!
+            let midnight = eightPm.addingTimeInterval(4.0 * 60.0 * 60.0)
+            let endDate = gregCalendar.date(bySettingHour: 19, minute: 59, second: 59, of: midnight)!
+            return [date, sevenFiftyNine, eightPm, midnight, endDate]
+        } else {
+            let elevenFiftyNine = gregCalendar.date(bySettingHour: 23, minute: 59, second: 59, of: date)!
+            let midnight = elevenFiftyNine.addingTimeInterval(1.0)
+            let endDate = gregCalendar.date(bySettingHour: 19, minute: 59, second: 59, of: midnight)!
+            return [date, elevenFiftyNine, midnight, endDate]
+        }
+    }
 
     // MARK: - Timeline Configuration
 
     // Define how far into the future the app can provide data.
     func getTimelineEndDate(for complication: CLKComplication, withHandler handler: @escaping (Date?) -> Void) {
-        // Indicate that the app can provide timeline entries for the next 48h
-        let endDate = Date().addingTimeInterval(fortyEightFourHours)
+        let dates = makeTimelineDates(date: Date())
+        let endDate = dates[dates.count - 1]
         logger.debug("getTimelineEndDate \(complication.identifier) \(endDate)")
         handler(endDate)
     }
@@ -169,26 +181,18 @@ class ComplicationController: NSObject, CLKComplicationDataSource {
         // Call the handler with the current timeline entry
         handler(createTimelineEntry(forComplication: complication, date: Date()))
     }
-    
+
     // Return future timeline entries.
     func getTimelineEntries(for complication: CLKComplication,
                             after date: Date,
                             limit: Int,
                             withHandler handler: @escaping ([CLKComplicationTimelineEntry]?) -> Void) {
         logger.debug("getTimelineEntries \(complication.identifier) \(date) \(limit)")
-
+        let dates = makeTimelineDates(date: date)
         // Create an array to hold the timeline entries.
         var entries = [CLKComplicationTimelineEntry]()
-        
-        // Calculate the start and end dates.
-        var current = date.addingTimeInterval(thirtyMinutes)
-        let endDate = date.addingTimeInterval(fortyEightFourHours)
-    
-        // Create a timeline entry for every hour from the starting time.
-        // Stop once you reach the limit or the end date.
-        while (current.compare(endDate) == .orderedAscending) && (entries.count < limit) {
-            entries.append(createTimelineEntry(forComplication: complication, date: current))
-            current = current.addingTimeInterval(sixtyMinutes)
+        for dt in dates {
+            entries.append(createTimelineEntry(forComplication: complication, date: dt))
         }
         handler(entries)
     }
