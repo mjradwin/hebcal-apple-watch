@@ -27,6 +27,23 @@ let monthAbbrev = [
     "Tishrei": "Tishr",
 ]
 
+let monthAbbrevTiny = [
+    "Adar": "Adar",
+    "Adar I": "Ad 1",
+    "Adar II": "Ad 2",
+    "Av": "Av",
+    "Cheshvan": "Chsh",
+    "Elul": "Elul",
+    "Iyyar": "Iyar",
+    "Kislev": "Kis",
+    "Nisan": "Nis",
+    "Sh'vat": "Shvt",
+    "Sivan": "Siv",
+    "Tamuz": "Tam",
+    "Tevet": "Tev",
+    "Tishrei": "Tish",
+]
+
 let parshaHyphenate = [
     "Achrei Mot": nil,
     "Balak": nil,
@@ -121,7 +138,8 @@ class ComplicationController: NSObject, CLKComplicationDataSource {
                     .utilitarianSmall,
                     .utilitarianSmallFlat,
                     .graphicCorner,
-                    .graphicCircular
+                    .graphicCircular,
+                    .extraLarge,
                 ]),
             CLKComplicationDescriptor(
                 identifier: complicationParshaIdentifier,
@@ -144,19 +162,23 @@ class ComplicationController: NSObject, CLKComplicationDataSource {
         // Do any necessary work to support these newly shared complication descriptors
     }
 
+    let fourHours = 4.0 * 60.0 * 60.0
+
     func makeTimelineDates(date: Date) -> [Date] {
         let dateComponents = gregCalendar.dateComponents([.hour], from: date)
         if dateComponents.hour! < 20 {
-            let sevenFiftyNine = gregCalendar.date(bySettingHour: 19, minute: 59, second: 59, of: date)!
-            let eightPm = gregCalendar.date(bySettingHour: 20, minute: 0, second: 0, of: date)!
-            let midnight = eightPm.addingTimeInterval(4.0 * 60.0 * 60.0)
-            let endDate = gregCalendar.date(bySettingHour: 19, minute: 59, second: 59, of: midnight)!
-            return [date, sevenFiftyNine, eightPm, midnight, endDate]
+            let sevenFiftyNine = gregCalendar.date(bySettingHour: 19, minute: 59, second: 0, of: date)!
+            let eightPm = sevenFiftyNine.addingTimeInterval(60.0)
+            let midnight = eightPm.addingTimeInterval(fourHours)
+            let fourAm = midnight.addingTimeInterval(fourHours)
+            let endDate = gregCalendar.date(bySettingHour: 19, minute: 59, second: 0, of: fourAm)!
+            return [date, sevenFiftyNine, eightPm, midnight, fourAm, endDate]
         } else {
-            let elevenFiftyNine = gregCalendar.date(bySettingHour: 23, minute: 59, second: 59, of: date)!
-            let midnight = elevenFiftyNine.addingTimeInterval(1.0)
-            let endDate = gregCalendar.date(bySettingHour: 19, minute: 59, second: 59, of: midnight)!
-            return [date, elevenFiftyNine, midnight, endDate]
+            let elevenFiftyNine = gregCalendar.date(bySettingHour: 23, minute: 59, second: 0, of: date)!
+            let midnight = elevenFiftyNine.addingTimeInterval(60.0)
+            let fourAm = midnight.addingTimeInterval(fourHours)
+            let endDate = gregCalendar.date(bySettingHour: 19, minute: 59, second: 0, of: fourAm)!
+            return [date, elevenFiftyNine, midnight, fourAm, endDate]
         }
     }
 
@@ -298,7 +320,9 @@ class ComplicationController: NSObject, CLKComplicationDataSource {
             return createHDateGraphicCornerTemplate(forDate: date)
         case .graphicCircular:
             return createHDateGraphicCircleTemplate(forDate: date)
-        case .modularLarge, .utilitarianLarge, .extraLarge, .graphicRectangular, .graphicBezel, .graphicExtraLarge:
+        case .extraLarge:
+            return createHDateExtraLargeTemplate(forDate: date)
+        case .modularLarge, .utilitarianLarge, .graphicRectangular, .graphicBezel, .graphicExtraLarge:
             logger.error("Unsupported HDate Complication Family")
             return nil
         @unknown default:
@@ -525,5 +549,18 @@ class ComplicationController: NSObject, CLKComplicationDataSource {
             headerTextProvider: textProviders[0],
             body1TextProvider: textProviders[1],
             body2TextProvider: textProviders[2])
+    }
+
+    private func createHDateExtraLargeTemplate(forDate date: Date) -> CLKComplicationTemplate {
+        let hebDateStr = settings.getHebDateString(date: date, showYear: false)
+        let parts = hebDateStr.split(separator: " ")
+        let dayNumber = String(parts[0])
+        let monthName0 = String(parts[1])
+        let monthName = monthAbbrevTiny[monthName0] ?? monthName0
+        let dayNumberProvider = CLKSimpleTextProvider(text: dayNumber)
+        let monthNameProvider = CLKSimpleTextProvider(text: monthName)
+        return CLKComplicationTemplateExtraLargeStackText(
+            line1TextProvider: dayNumberProvider,
+            line2TextProvider: monthNameProvider)
     }
 }
