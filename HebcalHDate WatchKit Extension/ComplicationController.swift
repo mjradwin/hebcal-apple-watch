@@ -508,15 +508,19 @@ class ComplicationController: NSObject, CLKComplicationDataSource {
     }
 
     private func create3lineTextProviders(date: Date) -> [CLKSimpleTextProvider] {
-        let hebDateStr = settings.getHebDateString(date: date, showYear: true)
-        let headerTextProvider = CLKSimpleTextProvider(text: hebDateStr)
+        let hdate = settings.makeHDate(date: date)
+        let hdFull = settings.getHebDateString(hdate: hdate, showYear: true)
+        let hdShort = settings.getHebDateString(hdate: hdate, showYear: false)
+        let headerTextProvider = CLKSimpleTextProvider(text: hdFull, shortText: hdShort)
         headerTextProvider.tintColor = tintColor
 
         let lang = TranslationLang(rawValue: settings.lang)!
-        let parshaName = settings.getParshaString(date: date, heNikud: false)
+        let parshaName = settings.getParshaString(hdate: hdate, heNikud: false)
         let parshaPrefix = lookupTranslation(str: "Parashat", lang: lang)
         let parsha = parshaPrefix + " " + parshaName
-        let parshaProvider = CLKSimpleTextProvider(text: parsha)
+        let parshaProvider = parshaName.count > 15 ?
+            CLKSimpleTextProvider(text: parshaName) :
+            CLKSimpleTextProvider(text: parsha, shortText: parshaName)
 
         let holidayToday = settings.getHolidayString(date: date)
         let holidayProvider = CLKSimpleTextProvider(text: holidayToday ?? "")

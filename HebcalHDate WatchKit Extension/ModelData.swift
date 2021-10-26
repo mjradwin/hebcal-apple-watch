@@ -114,6 +114,10 @@ final class ModelData: ObservableObject {
 
     public func getParshaString(date: Date, heNikud: Bool) -> String {
         let hdate = makeHDate(date: date)
+        return self.getParshaString(hdate: hdate, heNikud: heNikud)
+    }
+
+    public func getParshaString(hdate: HDate, heNikud: Bool) -> String {
         return self.getParshaString(hdate: hdate, fallbackToHoliday: true, heNikud: heNikud) ?? "??"
     }
 
