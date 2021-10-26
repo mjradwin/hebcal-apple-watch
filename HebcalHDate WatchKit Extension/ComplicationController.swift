@@ -507,7 +507,7 @@ class ComplicationController: NSObject, CLKComplicationDataSource {
             line2TextProvider: simpleTextProviders[1])
     }
 
-    private func create3lineTextProviders(date: Date) -> [CLKSimpleTextProvider] {
+    private func create3lineTextProviders(date: Date) -> [CLKSimpleTextProvider?] {
         let hdate = settings.makeHDate(date: date)
         let hdFull = settings.getHebDateString(hdate: hdate, showYear: true)
         let hdShort = settings.getHebDateString(hdate: hdate, showYear: false)
@@ -523,11 +523,12 @@ class ComplicationController: NSObject, CLKComplicationDataSource {
             CLKSimpleTextProvider(text: parsha, shortText: parshaName)
 
         let holidayToday = settings.getHolidayString(date: date)
-        let holidayProvider = CLKSimpleTextProvider(text: holidayToday ?? "")
+        let noHoliday:Bool = holidayToday == nil
+        let holidayProvider = noHoliday ? nil : CLKSimpleTextProvider(text: holidayToday!)
         return [
             headerTextProvider,
-            holidayToday == nil ? parshaProvider : holidayProvider,
-            holidayToday != nil ? parshaProvider : holidayProvider,
+            noHoliday ? parshaProvider : holidayProvider,
+            !noHoliday ? parshaProvider : holidayProvider,
         ]
     }
 
@@ -538,8 +539,8 @@ class ComplicationController: NSObject, CLKComplicationDataSource {
 
         // Create the template using the providers.
         return CLKComplicationTemplateModularLargeStandardBody(
-            headerTextProvider: textProviders[0],
-            body1TextProvider: textProviders[1],
+            headerTextProvider: textProviders[0]!,
+            body1TextProvider: textProviders[1]!,
             body2TextProvider: textProviders[2])
     }
 
@@ -550,8 +551,8 @@ class ComplicationController: NSObject, CLKComplicationDataSource {
 
         // Create the template using the providers.
         return CLKComplicationTemplateGraphicRectangularStandardBody(
-            headerTextProvider: textProviders[0],
-            body1TextProvider: textProviders[1],
+            headerTextProvider: textProviders[0]!,
+            body1TextProvider: textProviders[1]!,
             body2TextProvider: textProviders[2])
     }
 
@@ -566,5 +567,46 @@ class ComplicationController: NSObject, CLKComplicationDataSource {
         return CLKComplicationTemplateExtraLargeStackText(
             line1TextProvider: dayNumberProvider,
             line2TextProvider: monthNameProvider)
+    }
+}
+
+
+struct ComplicationController_Previews: PreviewProvider {
+    static var previews: some View {
+        Group {
+            CLKComplicationTemplateGraphicRectangularStandardBody(
+                headerTextProvider: CLKSimpleTextProvider(text: "26 Iyyar 5785", shortText: "26 Iyyar"),
+                body1TextProvider: CLKSimpleTextProvider(text: "Parashat Behar-Bechukotai", shortText: "Behar-Bechukotai"),
+                body2TextProvider: CLKSimpleTextProvider(text: "Shabbat HaChodesh")
+            ).previewContext()
+            CLKComplicationTemplateModularLargeStandardBody(
+                headerTextProvider: CLKSimpleTextProvider(text: "29 Nissan 5782", shortText: "29 Nissan"),
+                body1TextProvider: CLKSimpleTextProvider(text: "Parshas Achrei Mot-Kedoshim", shortText: "Achrei Mot-Kedoshim"),
+                body2TextProvider: nil
+            ).previewContext()
+            CLKComplicationTemplateModularLargeStandardBody(
+                headerTextProvider: CLKSimpleTextProvider(text: "27 Iyyar 5785", shortText: "27 Iyyar"),
+                body1TextProvider: CLKSimpleTextProvider(text: "Parashat Behar-Bechukotai", shortText: "Behar-Bechukotai"),
+                body2TextProvider: CLKSimpleTextProvider(text: "Rosh Hashana LaBehemot")
+            ).previewContext()
+            CLKComplicationTemplateModularLargeStandardBody(
+                headerTextProvider: CLKSimpleTextProvider(text: "כ״ז אייר תשפ״ה", shortText: "כ״ז אייר"),
+                body1TextProvider: CLKSimpleTextProvider(text: "פָּרָשַׁת בְּהַר־בְּחֻקֹּתַי", shortText: "בְּהַר־בְּחֻקֹּתַי"),
+                body2TextProvider: CLKSimpleTextProvider(text: "רֹאשׁ הַשָּׁנָה לְמַעְשַׂר בְּהֵמָה")
+            ).previewContext()
+            CLKComplicationTemplateUtilitarianLargeFlat(
+                textProvider: CLKSimpleTextProvider(text: "26 Iyyar · Behar-Bechukotai")
+            ).previewContext()
+            CLKComplicationTemplateUtilitarianSmallFlat(
+                textProvider: CLKSimpleTextProvider(text: "Behar-Bechukotai")
+            ).previewContext()
+            CLKComplicationTemplateUtilitarianLargeFlat(
+                textProvider: CLKSimpleTextProvider(text: "כ״ט ניסן · אַחֲרֵי מוֹת־קְדשִׁים")
+            ).previewContext()
+            CLKComplicationTemplateUtilitarianSmallFlat(
+                textProvider: CLKSimpleTextProvider(text: "אַחֲרֵי מוֹת־קְדשִׁים")
+            ).previewContext()
+
+        }
     }
 }
