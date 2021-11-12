@@ -350,7 +350,7 @@ final class ModelData: ObservableObject {
 
     private func makeDateItems(date: Date) -> [DateItem] {
         var entries = [DateItem]()
-        let first = self.makeDateItem(date: date, showYear: true, forceParsha: true)
+        let first = self.makeDateItem(date: date, showYear: true, forceParsha: false)
         entries.append(first)
         // Show everything daily for the next 2 weeks
         var current = date.addingTimeInterval(twentyFourHours)
@@ -393,9 +393,11 @@ final class ModelData: ObservableObject {
         } else {
             logger.debug("updating dateItems; currentDay changed from \(self.currentDay) to \(today)")
             self.currentDay = today
+            self.todayDateItem = makeDateItem(date: now, showYear: true, forceParsha: true)
             self.dateItems = makeDateItems(date: now)
         }
     }
 
+    @Published public var todayDateItem: DateItem?
     @Published public var dateItems = [DateItem]()
 }

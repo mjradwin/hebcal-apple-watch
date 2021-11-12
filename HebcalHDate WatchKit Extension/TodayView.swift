@@ -26,7 +26,7 @@ struct TodayView: View {
             if isHebrew {
                 Spacer()
             }
-            VStack(alignment: isHebrew ? .trailing : .leading) {
+            VStack(alignment: isHebrew ? .trailing : .leading, spacing:0) {
                 Text(gregDate)
                     .foregroundColor(.gray)
                     .scaledFont(size: 16, weight: .regular, design: .default)
