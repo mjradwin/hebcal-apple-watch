@@ -139,11 +139,11 @@ final class ModelData: ObservableObject {
     }
 
     private let priortyFlags = HolidayFlags([.EREV, .CHAG, .MINOR_HOLIDAY])
-    private func pickHolidayToDisplay(date: Date) -> HEvent? {
+    public func pickHolidayToDisplay(date: Date) -> HEvent? {
         let hdate = makeHDate(date: date)
         return self.pickHolidayToDisplay(hdate: hdate)
     }
-    private func pickHolidayToDisplay(hdate: HDate) -> HEvent? {
+    public func pickHolidayToDisplay(hdate: HDate) -> HEvent? {
         let holidays = self.getHolidaysOnDate(hdate: hdate)
         if holidays.count == 0 {
             // if there are no holidays today, see if Shabbat is a special Shabbat
@@ -169,17 +169,6 @@ final class ModelData: ObservableObject {
                 return holidays[0]
             }
         }
-    }
-    public func getHolidayString(date: Date) -> String? {
-        if let ev = pickHolidayToDisplay(date: date) {
-            var str = translateHolidayName(ev: ev)
-            let emoji = pickEmoji(events: [ev])
-            if emoji != nil {
-                str += " " + emoji!
-            }
-            return str
-        }
-        return nil // today isn't a holiday and no special shabbat
     }
 
     private var doingInit = true
@@ -237,7 +226,7 @@ final class ModelData: ObservableObject {
         return Hebcal.getHolidaysOnDate(events: events, hdate: hdate, il: self.il)
     }
 
-    private func translateHolidayName(ev: HEvent) -> String {
+    public func translateHolidayName(ev: HEvent) -> String {
         if ev.flags.contains(.ROSH_CHODESH) {
             let rch = lookupTranslation(str: "Rosh Chodesh", lang: lg)
             let start = ev.desc.index(ev.desc.startIndex, offsetBy: 13)
@@ -253,7 +242,7 @@ final class ModelData: ObservableObject {
         return holiday
     }
 
-    private func pickEmoji(events: [HEvent]) -> String? {
+    public func pickEmoji(events: [HEvent]) -> String? {
         var isChag = false
         for ev in events {
             if ev.emoji != nil {

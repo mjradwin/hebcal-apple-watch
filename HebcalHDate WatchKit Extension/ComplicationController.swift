@@ -509,8 +509,17 @@ class ComplicationController: NSObject, CLKComplicationDataSource {
 
     private func create3lineTextProviders(date: Date) -> [CLKSimpleTextProvider?] {
         let hdate = settings.makeHDate(date: date)
-        let hdFull = settings.getHebDateString(hdate: hdate, showYear: true)
-        let hdShort = settings.getHebDateString(hdate: hdate, showYear: false)
+        var hdFull = settings.getHebDateString(hdate: hdate, showYear: true)
+        var hdShort = settings.getHebDateString(hdate: hdate, showYear: false)
+        let holidayEv = settings.pickHolidayToDisplay(hdate: hdate)
+        var holidayToday: String?
+        if holidayEv != nil {
+            holidayToday = settings.translateHolidayName(ev: holidayEv!);
+            if let emoji = settings.pickEmoji(events: [holidayEv!]) {
+                hdFull += " " + emoji
+                hdShort += " " + emoji
+            }
+        }
         let headerTextProvider = CLKSimpleTextProvider(text: hdFull, shortText: hdShort)
         headerTextProvider.tintColor = tintColor
 
@@ -522,7 +531,6 @@ class ComplicationController: NSObject, CLKComplicationDataSource {
             CLKSimpleTextProvider(text: parshaName) :
             CLKSimpleTextProvider(text: parsha, shortText: parshaName)
 
-        let holidayToday = settings.getHolidayString(date: date)
         let noHoliday:Bool = holidayToday == nil
         let holidayProvider = noHoliday ? nil : CLKSimpleTextProvider(text: holidayToday!)
         return [
