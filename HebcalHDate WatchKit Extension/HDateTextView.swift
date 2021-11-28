@@ -18,17 +18,18 @@ struct HDateTextView: View {
         ZStack {
             if renderingMode == .fullColor {
                 Circle()
-                    .fill(Color(red: 0.08, green: 0.08, blue: 0.08))
+                    .fill(Color(red: 0.11, green: 0.10, blue: 0.08))
             }
             VStack(spacing: 0) {
                 Text(day)
+                    .offset(x: 0, y: -1)
                     .foregroundColor(.primary)
-                    .font(.system(size: 18, weight: .semibold, design: .default))
+                    .font(.system(size: 21, weight: .semibold, design: .default))
                     .scaledToFill()
                     .minimumScaleFactor(0.5)
                     .lineLimit(1)
                 Text(month)
-                    .offset(x: 0, y: -3)
+                    .offset(x: 0, y: -4)
                     .foregroundColor(Color(red: 1.0, green: 0.75, blue: 0.0))
                     .font(.system(size: 12, weight: .semibold, design: .default))
                     .scaledToFill()
