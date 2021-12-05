@@ -84,7 +84,8 @@ final class ModelData: ObservableObject {
             }
             return str
         } else {
-            var str = String(hdate.dd) + " " + monthName
+            var str = String(hdate.dd) + " " +
+                lookupTranslation(str: monthName, lang: lg)
             if showYear {
                 str += " " + String(hdate.yy)
             }
