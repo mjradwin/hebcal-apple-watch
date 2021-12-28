@@ -164,7 +164,11 @@ class ComplicationController: NSObject, CLKComplicationDataSource {
 
     let fourHours = 4.0 * 60.0 * 60.0
 
+    // MARK: - Timeline Configuration
+
     func makeTimelineDates(date: Date) -> [Date] {
+        var gregCalendar = Calendar(identifier: .gregorian)
+        gregCalendar.timeZone = .autoupdatingCurrent
         let dateComponents = gregCalendar.dateComponents([.hour], from: date)
         if dateComponents.hour! < 20 {
             let sevenFiftyNine = gregCalendar.date(bySettingHour: 19, minute: 59, second: 0, of: date)!
@@ -181,8 +185,6 @@ class ComplicationController: NSObject, CLKComplicationDataSource {
             return [date, elevenFiftyNine, midnight, fourAm, endDate]
         }
     }
-
-    // MARK: - Timeline Configuration
 
     // Define how far into the future the app can provide data.
     func getTimelineEndDate(for complication: CLKComplication, withHandler handler: @escaping (Date?) -> Void) {
@@ -219,8 +221,6 @@ class ComplicationController: NSObject, CLKComplicationDataSource {
         handler(entries)
     }
 
-    private let gregCalendar = Calendar(identifier: .gregorian)
-
     // MARK: - Sample Templates
     
     func getLocalizableSampleTemplate(for complication: CLKComplication, withHandler handler: @escaping (CLKComplicationTemplate?) -> Void) {
@@ -229,7 +229,7 @@ class ComplicationController: NSObject, CLKComplicationDataSource {
         dateComponents.year = 2020
         dateComponents.month = 1
         dateComponents.day = 1
-        let date = gregCalendar.date(from: dateComponents)!
+        let date = Calendar.current.date(from: dateComponents)!
 
         var template: CLKComplicationTemplate?
         if complication.identifier == complicationHebcalIdentifier {

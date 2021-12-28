@@ -13,7 +13,6 @@
 		9D35F47F26E57B3200EC5AAD /* DateItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D35F47E26E57B3200EC5AAD /* DateItem.swift */; };
 		9D35F48126E5809100EC5AAD /* HDateList.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D35F48026E5809100EC5AAD /* HDateList.swift */; };
 		9D35F48326E6698400EC5AAD /* SettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D35F48226E6698400EC5AAD /* SettingsView.swift */; };
-		9D3F0F6D26D03C8E002B41F2 /* Hebcal in Frameworks */ = {isa = PBXBuildFile; productRef = 9D3F0F6C26D03C8E002B41F2 /* Hebcal */; };
 		9D47334D2715E23B001A439C /* HDateTextView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D47334C2715E23B001A439C /* HDateTextView.swift */; };
 		9D9A027226CC6A420055160C /* HebcalHDate WatchKit App.app in Embed Watch Content */ = {isa = PBXBuildFile; fileRef = 9D9A027126CC6A420055160C /* HebcalHDate WatchKit App.app */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 		9D9A027726CC6A460055160C /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 9D9A027626CC6A460055160C /* Assets.xcassets */; };
@@ -25,6 +24,7 @@
 		9D9A028C26CC6A480055160C /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 9D9A028B26CC6A480055160C /* Preview Assets.xcassets */; };
 		9DA5666626EEBFF10074F100 /* ExtensionDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9DA5666526EEBFF10074F100 /* ExtensionDelegate.swift */; };
 		9DC2BBE426D421A300A248EB /* ModelData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9DC2BBE326D421A300A248EB /* ModelData.swift */; };
+		9DC90C5A277B9A470022537C /* Hebcal in Frameworks */ = {isa = PBXBuildFile; productRef = 9DC90C59277B9A470022537C /* Hebcal */; };
 		9DE0D4BC2703936B00486082 /* TodayView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9DE0D4BB2703936B00486082 /* TodayView.swift */; };
 		9DF84E9F27052F55003906F6 /* ScaledFont.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9DF84E9E27052F55003906F6 /* ScaledFont.swift */; };
 /* End PBXBuildFile section */
@@ -103,7 +103,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				9D3F0F6D26D03C8E002B41F2 /* Hebcal in Frameworks */,
+				9DC90C5A277B9A470022537C /* Hebcal in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -116,6 +116,7 @@
 				9D9A027526CC6A420055160C /* HebcalHDate WatchKit App */,
 				9D9A028126CC6A460055160C /* HebcalHDate WatchKit Extension */,
 				9D9A026E26CC6A410055160C /* Products */,
+				9DC90C58277B9A470022537C /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -168,6 +169,13 @@
 			path = "Preview Content";
 			sourceTree = "<group>";
 		};
+		9DC90C58277B9A470022537C /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -184,6 +192,9 @@
 				9D9A027426CC6A420055160C /* PBXTargetDependency */,
 			);
 			name = HebcalHDate;
+			packageProductDependencies = (
+				9DC90C57277B97B80022537C /* Hebcal */,
+			);
 			productName = HebcalHDate;
 			productReference = 9D9A026D26CC6A410055160C /* HebcalHDate.app */;
 			productType = "com.apple.product-type.application.watchapp2-container";
@@ -219,7 +230,7 @@
 			);
 			name = "HebcalHDate WatchKit Extension";
 			packageProductDependencies = (
-				9D3F0F6C26D03C8E002B41F2 /* Hebcal */,
+				9DC90C59277B9A470022537C /* Hebcal */,
 			);
 			productName = "HebcalHDate WatchKit Extension";
 			productReference = 9D9A027D26CC6A460055160C /* HebcalHDate WatchKit Extension.appex */;
@@ -259,7 +270,7 @@
 			);
 			mainGroup = 9D9A026626CC6A410055160C;
 			packageReferences = (
-				9D3F0F6B26D03C8E002B41F2 /* XCRemoteSwiftPackageReference "hebcal-swift" */,
+				9DC90C56277B97B80022537C /* XCRemoteSwiftPackageReference "hebcal-swift" */,
 			);
 			productRefGroup = 9D9A026E26CC6A410055160C /* Products */;
 			projectDirPath = "";
@@ -560,9 +571,9 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 1.12.1;
+				CURRENT_PROJECT_VERSION = 1.13.0;
 				DEVELOPMENT_TEAM = 4ZRJ2HBKYL;
-				MARKETING_VERSION = 1.12.1;
+				MARKETING_VERSION = 1.13.0;
 				PRODUCT_BUNDLE_IDENTIFIER = com.hebcal.HebcalHDate;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 5.0;
@@ -573,9 +584,9 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 1.12.1;
+				CURRENT_PROJECT_VERSION = 1.13.0;
 				DEVELOPMENT_TEAM = 4ZRJ2HBKYL;
-				MARKETING_VERSION = 1.12.1;
+				MARKETING_VERSION = 1.13.0;
 				PRODUCT_BUNDLE_IDENTIFIER = com.hebcal.HebcalHDate;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 5.0;
@@ -624,7 +635,7 @@
 /* End XCConfigurationList section */
 
 /* Begin XCRemoteSwiftPackageReference section */
-		9D3F0F6B26D03C8E002B41F2 /* XCRemoteSwiftPackageReference "hebcal-swift" */ = {
+		9DC90C56277B97B80022537C /* XCRemoteSwiftPackageReference "hebcal-swift" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/hebcal/hebcal-swift.git";
 			requirement = {
@@ -635,9 +646,14 @@
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
-		9D3F0F6C26D03C8E002B41F2 /* Hebcal */ = {
+		9DC90C57277B97B80022537C /* Hebcal */ = {
 			isa = XCSwiftPackageProductDependency;
-			package = 9D3F0F6B26D03C8E002B41F2 /* XCRemoteSwiftPackageReference "hebcal-swift" */;
+			package = 9DC90C56277B97B80022537C /* XCRemoteSwiftPackageReference "hebcal-swift" */;
+			productName = Hebcal;
+		};
+		9DC90C59277B9A470022537C /* Hebcal */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 9DC90C56277B97B80022537C /* XCRemoteSwiftPackageReference "hebcal-swift" */;
 			productName = Hebcal;
 		};
 /* End XCSwiftPackageProductDependency section */
