@@ -58,7 +58,7 @@ final class ModelData: ObservableObject {
         TranslationLang(rawValue: self.lang) ?? TranslationLang.en
     }
 
-    private let gregCalendar = Calendar(identifier: .gregorian)
+    private let gregCalendar = Calendar.autoupdatingCurrent
     public func makeHDate(date: Date) -> HDate {
         var hdate = HDate(date: date)
         let hour = gregCalendar.dateComponents([.hour], from: date).hour!
