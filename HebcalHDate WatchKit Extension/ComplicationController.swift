@@ -175,14 +175,12 @@ class ComplicationController: NSObject, CLKComplicationDataSource {
             let eightPm = sevenFiftyNine.addingTimeInterval(60.0)
             let midnight = eightPm.addingTimeInterval(fourHours)
             let fourAm = midnight.addingTimeInterval(fourHours)
-            let endDate = gregCalendar.date(bySettingHour: 19, minute: 59, second: 0, of: fourAm)!
-            return [date, sevenFiftyNine, eightPm, midnight, fourAm, endDate]
+            return [date, sevenFiftyNine, eightPm, midnight, fourAm]
         } else {
             let elevenFiftyNine = gregCalendar.date(bySettingHour: 23, minute: 59, second: 0, of: date)!
             let midnight = elevenFiftyNine.addingTimeInterval(60.0)
             let fourAm = midnight.addingTimeInterval(fourHours)
-            let endDate = gregCalendar.date(bySettingHour: 19, minute: 59, second: 0, of: fourAm)!
-            return [date, elevenFiftyNine, midnight, fourAm, endDate]
+            return [date, elevenFiftyNine, midnight, fourAm]
         }
     }
 
