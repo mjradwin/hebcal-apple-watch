@@ -26,6 +26,7 @@ class ExtensionDelegate: NSObject, WKExtensionDelegate {
             // Handle background refresh tasks.
             case let backgroundTask as WKApplicationRefreshBackgroundTask:
                 let model = ModelData.shared
+                model.checkTimeZone()
                 model.updateDateItems()
                 // Schedule the next background update.
                 scheduleBackgroundRefreshTasks()
@@ -54,7 +55,7 @@ let scheduleLogger = Logger(
     subsystem: "com.hebcal.HebcalHDate.watchkitapp.watchkitextension.scheduleLogger",
     category: "Scheduler")
 
-private let backgroundRefreshInterval = 6.0 * 60.0 * 60.0
+private let backgroundRefreshInterval = 2.0 * 60.0 * 60.0
 func scheduleBackgroundRefreshTasks() {
     let refreshTime = Date().advanced(by: backgroundRefreshInterval)
     WKExtension.shared().scheduleBackgroundRefresh(

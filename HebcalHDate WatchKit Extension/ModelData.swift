@@ -388,6 +388,17 @@ final class ModelData: ObservableObject {
         }
     }
 
+    private var currentTimezone: TimeZone = TimeZone.current
+
+    public func checkTimeZone() -> Void {
+        if self.currentTimezone != TimeZone.current {
+            logger.debug("reloading complications; timezone changed from \(self.currentTimezone.identifier) to \(TimeZone.current.identifier)")
+            self.currentTimezone = TimeZone.current
+            self.currentDay = -1
+            self.reloadComplications()
+        }
+    }
+
     @Published public var todayDateItem: DateItem?
     @Published public var dateItems = [DateItem]()
 }
