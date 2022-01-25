@@ -49,7 +49,7 @@ struct TodayView: View {
                 })
                 if item.parsha != nil {
                     HStack {
-                        Image("torah-orange")
+                        Image("torah-235339")
                             .resizable()
                             .scaledToFit()
                             .frame(width: 16, height: 16)
