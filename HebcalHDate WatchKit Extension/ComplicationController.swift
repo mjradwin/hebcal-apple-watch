@@ -331,10 +331,9 @@ class ComplicationController: NSObject, CLKComplicationDataSource {
     private var tintColor: UIColor = UIColor(
         red: 1.0, green: 0.75, blue: 0.0, alpha: 1.0)
     private func makeHDateSimpleTextProviders(date: Date) -> [CLKSimpleTextProvider] {
-        let hebDateStr = settings.getHebDateString(date: date, showYear: false)
-        let parts = hebDateStr.split(separator: " ")
-        let dayNumber = String(parts[0])
-        let monthName = String(parts[1])
+        let parts = settings.getHebDateStringParts(date: date, showYear: false)
+        let dayNumber = parts[0]
+        let monthName = parts[1]
         let dayNumberProvider = CLKSimpleTextProvider(text: dayNumber)
         dayNumberProvider.tintColor = .white
         let monthNameProvider = CLKSimpleTextProvider(text: monthName, shortText: monthAbbrev[monthName] ?? nil)
@@ -367,16 +366,16 @@ class ComplicationController: NSObject, CLKComplicationDataSource {
     // Return a utilitarian large template.
     private func createUtilitarianLargeTemplate(forDate date: Date) -> CLKComplicationTemplate {
         // Create the data providers.
-        let hebDateStr = settings.getHebDateString(date: date, showYear: false)
+        let parts = settings.getHebDateStringParts(date: date, showYear: false)
+        let hebDateStr = parts.joined(separator: " ")
         let parshaName = settings.getParshaString(date: date, heNikud: false)
         let lang = TranslationLang(rawValue: settings.lang)!
         let format = lang == .he ? largeFlatFormatRTL : largeFlatFormatLTR
         let text = String(format: format, hebDateStr, parshaName)
         var shortText: String? = nil
-        let parts = hebDateStr.split(separator: " ")
-        let abbrev = monthAbbrev[String(parts[1])] ?? nil
+        let abbrev = monthAbbrev[parts[1]] ?? nil
         if abbrev != nil {
-            let dayNumber = String(parts[0])
+            let dayNumber = parts[0]
             let shortDate = dayNumber + " " + abbrev!
             shortText = String(format: format, shortDate, parshaName)
         }
@@ -563,10 +562,9 @@ class ComplicationController: NSObject, CLKComplicationDataSource {
     }
 
     private func createHDateExtraLargeTemplate(forDate date: Date) -> CLKComplicationTemplate {
-        let hebDateStr = settings.getHebDateString(date: date, showYear: false)
-        let parts = hebDateStr.split(separator: " ")
-        let dayNumber = String(parts[0])
-        let monthName0 = String(parts[1])
+        let parts = settings.getHebDateStringParts(date: date, showYear: false)
+        let dayNumber = parts[0]
+        let monthName0 = parts[1]
         let monthName = monthAbbrevTiny[monthName0] ?? monthName0
         let dayNumberProvider = CLKSimpleTextProvider(text: dayNumber)
         let monthNameProvider = CLKSimpleTextProvider(text: monthName)

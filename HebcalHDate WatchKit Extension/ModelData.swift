@@ -75,22 +75,26 @@ final class ModelData: ObservableObject {
     }
 
     public func getHebDateString(hdate: HDate, showYear: Bool) -> String {
-        let monthName = hdate.monthName()
-        if lg == .he {
-            var str = hebnumToString(number: hdate.dd) + " " +
-                lookupTranslation(str: monthName, lang: lg)
-            if showYear {
-                str += " " + hebnumToString(number: hdate.yy)
-            }
-            return str
-        } else {
-            var str = String(hdate.dd) + " " +
-                lookupTranslation(str: monthName, lang: lg)
-            if showYear {
-                str += " " + String(hdate.yy)
-            }
-            return str
+        let parts = getHebDateStringParts(hdate: hdate, showYear: showYear)
+        return parts.joined(separator: " ")
+    }
+
+    public func getHebDateStringParts(date: Date, showYear: Bool) -> [String] {
+        let hdate = makeHDate(date: date)
+        return self.getHebDateStringParts(hdate: hdate, showYear: showYear)
+    }
+
+    public func getHebDateStringParts(hdate: HDate, showYear: Bool) -> [String] {
+        var parts = [String]()
+        let isHebrew = lg == .he
+        let day = isHebrew ? hebnumToString(number: hdate.dd) : String(hdate.dd)
+        parts.append(day)
+        parts.append(lookupTranslation(str: hdate.monthName(), lang: lg))
+        if showYear {
+            let year = isHebrew ? hebnumToString(number: hdate.yy) : String(hdate.yy)
+            parts.append(year)
         }
+        return parts
     }
 
     public func getHolidayNameForParsha(hdate: HDate) -> String {
