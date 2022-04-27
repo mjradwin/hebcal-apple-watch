@@ -290,13 +290,13 @@ final class ModelData: ObservableObject {
         }
     }
 
-    private func omerStr(hdate: HDate) -> String? {
+    public func omerStr(hdate: HDate) -> String? {
         let omer = omerDay(hdate: hdate)
         if omer == -1 {
             return nil
         }
         let o = String(omer)
-        return lg == .he ? "עומר" + " " + o :
+        return lg == .he ? "עומר יום" + " " + o :
             "Omer: " + o + enNumSuffix(omer) + " day"
     }
 

@@ -528,12 +528,15 @@ class ComplicationController: NSObject, CLKComplicationDataSource {
             CLKSimpleTextProvider(text: parshaName) :
             CLKSimpleTextProvider(text: parsha, shortText: parshaName)
 
-        let noHoliday:Bool = holidayToday == nil
-        let holidayProvider = noHoliday ? nil : CLKSimpleTextProvider(text: holidayToday!)
+        let omer = settings.omerStr(hdate: hdate)
+        let omerProvider = omer == nil ? nil : CLKSimpleTextProvider(text: omer!)
+
+        let line2 = holidayToday == nil ? parshaProvider : CLKSimpleTextProvider(text: holidayToday!)
+        let line3 = holidayToday == nil ? omerProvider : parshaProvider
         return [
             headerTextProvider,
-            noHoliday ? parshaProvider : holidayProvider,
-            !noHoliday ? parshaProvider : holidayProvider,
+            line2,
+            line3,
         ]
     }
 
