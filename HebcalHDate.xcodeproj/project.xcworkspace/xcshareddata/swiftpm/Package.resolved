@@ -1,16 +1,14 @@
 {
-  "object": {
-    "pins": [
-      {
-        "package": "Hebcal",
-        "repositoryURL": "https://github.com/hebcal/hebcal-swift.git",
-        "state": {
-          "branch": "main",
-          "revision": "72e471e100923690283a20b63bf8e597c11b0332",
-          "version": null
-        }
+  "pins" : [
+    {
+      "identity" : "hebcal-swift",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/hebcal/hebcal-swift.git",
+      "state" : {
+        "branch" : "main",
+        "revision" : "7330a236f7a9da60efc84f020282552854888260"
       }
-    ]
-  },
-  "version": 1
+    }
+  ],
+  "version" : 2
 }

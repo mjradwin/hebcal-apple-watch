@@ -58,10 +58,10 @@ final class ModelData: ObservableObject {
         TranslationLang(rawValue: self.lang) ?? TranslationLang.en
     }
 
-    private let gregCalendar = Calendar.autoupdatingCurrent
     public func makeHDate(date: Date) -> HDate {
-        var hdate = HDate(date: date)
-        let hour = gregCalendar.dateComponents([.hour], from: date).hour!
+        let calendar = Calendar.current
+        var hdate = HDate(date: date, calendar: calendar)
+        let hour = calendar.dateComponents([.hour], from: date).hour!
         if (hour > 19) {
             hdate = hdate.next()
         }
@@ -310,10 +310,10 @@ final class ModelData: ObservableObject {
         */
     }
 
-    public func makeDateItem(date: Date, showYear: Bool, forceParsha: Bool) -> DateItem {
-        let dateComponents = gregCalendar.dateComponents([.weekday, .month, .day], from: date)
+    public func makeDateItem(date: Date, calendar: Calendar, showYear: Bool, forceParsha: Bool) -> DateItem {
+        let dateComponents = calendar.dateComponents([.weekday, .month, .day], from: date)
         let weekday = dateComponents.weekday!
-        let hdate = HDate(date: date)
+        let hdate = HDate(date: date, calendar: calendar)
         let showYear0 = (hdate.mm == .TISHREI && hdate.dd == 1) || showYear
         let hdateStr = self.getHebDateString(hdate: hdate, showYear: showYear0)
         let parsha = (forceParsha || weekday == 7) ? parshaStr(hdate: hdate) : nil
@@ -342,32 +342,36 @@ final class ModelData: ObservableObject {
 
     let twentyFourHours = 24.0 * 60.0 * 60.0
 
-    private func makeDateItems(date: Date) -> [DateItem] {
+    private func makeDateItems(date: Date, calendar: Calendar) -> [DateItem] {
         var entries = [DateItem]()
-        let first = self.makeDateItem(date: date, showYear: true, forceParsha: false)
+        let first = self.makeDateItem(date: date, calendar: calendar,
+                                      showYear: true, forceParsha: false)
         entries.append(first)
         // Show everything daily for the next 2 weeks
         var current = date.addingTimeInterval(twentyFourHours)
         let endDate = date.addingTimeInterval(14.0 * twentyFourHours)
         while (current.compare(endDate) == .orderedAscending) {
-            let item = self.makeDateItem(date: current, showYear: false, forceParsha: false)
+            let item = self.makeDateItem(date: current, calendar: calendar,
+                                         showYear: false, forceParsha: false)
             entries.append(item)
             current = current.addingTimeInterval(twentyFourHours)
         }
         // Then show Shabbat and holidays for the next 4 months
-        let today = HDate(date: date)
+        let today = HDate(date: date, calendar: calendar)
         let numDays = daysInYear(year: today.yy)
         let startAbs = greg2abs(date: current)
         let endAbs = today.abs() + Int64(numDays)
         for abs in startAbs...endAbs {
             let hdate = HDate(absdate: abs)
             if hdate.dow() == .SAT {
-                let item = self.makeDateItem(date: hdate.greg(), showYear: false, forceParsha: true)
+                let item = self.makeDateItem(date: hdate.greg(), calendar: calendar,
+                                             showYear: false, forceParsha: true)
                 entries.append(item)
             } else {
                 let events = self.getHolidaysOnDate(hdate: hdate)
                 if events.count > 0 {
-                    let item = self.makeDateItem(date: hdate.greg(), showYear: false, forceParsha: false)
+                    let item = self.makeDateItem(date: hdate.greg(), calendar: calendar,
+                                                 showYear: false, forceParsha: false)
                     entries.append(item)
                 }
             }
@@ -380,15 +384,16 @@ final class ModelData: ObservableObject {
 
     public func updateDateItems() -> Void {
         let now = Date()
-        let dateComponents = gregCalendar.dateComponents([.day], from: now)
+        let cal = Calendar.current
+        let dateComponents = cal.dateComponents([.day], from: now)
         let today = dateComponents.day!
         if self.currentDay == today {
             logger.debug("dateItems are already up to date; refresh skipped")
         } else {
             logger.debug("updating dateItems; currentDay changed from \(self.currentDay) to \(today)")
             self.currentDay = today
-            self.todayDateItem = makeDateItem(date: now, showYear: true, forceParsha: true)
-            self.dateItems = makeDateItems(date: now)
+            self.todayDateItem = makeDateItem(date: now, calendar: cal, showYear: true, forceParsha: true)
+            self.dateItems = makeDateItems(date: now, calendar: cal)
         }
     }
 
