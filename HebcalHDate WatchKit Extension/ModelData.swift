@@ -311,7 +311,7 @@ final class ModelData: ObservableObject {
     }
 
     public func makeDateItem(date: Date, calendar: Calendar, showYear: Bool, forceParsha: Bool) -> DateItem {
-        let dateComponents = calendar.dateComponents([.weekday, .month, .day], from: date)
+        let dateComponents = calendar.dateComponents([.weekday, .month, .day, .year], from: date)
         let weekday = dateComponents.weekday!
         let hdate = HDate(date: date, calendar: calendar)
         let showYear0 = (hdate.mm == .TISHREI && hdate.dd == 1) || showYear
@@ -326,12 +326,16 @@ final class ModelData: ObservableObject {
         let emoji = pickEmoji(events: events)
         let gregMonth = lg == .he ? shortMonthHe[dateComponents.month!] : shortMonth[dateComponents.month!]
         let dow = lg == .he ? dayOfWeekHe[weekday] : dayOfWeek[weekday]
+        let yearNow = calendar.dateComponents([.year], from: Date()).year!
+        let gregYear0 = dateComponents.year!
+        let gregYear = showYear ? gregYear0 : yearNow == gregYear0 ? 0 : gregYear0
         return DateItem(
             id: ((hdate.yy * 10000) + (hdate.mm.rawValue * 100) + hdate.dd),
             lang: lg,
             weekday: weekday,
             dow: dow,
             gregDay: dateComponents.day!, gregMonth: gregMonth,
+            gregYear: gregYear,
             hdate: hdateStr,
             parsha: parsha,
             holidays: holidays,

@@ -15,6 +15,7 @@ struct DateItem: Hashable, Codable, Identifiable {
     var dow: String
     var gregDay: Int
     var gregMonth: String
+    var gregYear: Int
     var hdate: String
     var parsha: String?
     var holidays: [String]

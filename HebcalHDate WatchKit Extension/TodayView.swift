@@ -13,6 +13,9 @@ struct TodayView: View {
     var item: DateItem
     var gregDate: String {
         var s = item.dow + ", " + String(item.gregDay) + " " + item.gregMonth
+        if item.gregYear != 0 {
+            s += " " + String(item.gregYear)
+        }
         if item.emoji != nil {
             s += "  " + item.emoji!
         }
@@ -72,6 +75,7 @@ struct TodayView_Previews: PreviewProvider {
          id: 1,
          lang: .en,
          weekday: 1, dow: "Wed", gregDay: 28, gregMonth: "Apr",
+         gregYear: 2021,
          hdate: "16 Iyyar 5782", parsha: "Emor",
          holidays: ["Lag BaOmer"],
          emoji: "😀",
