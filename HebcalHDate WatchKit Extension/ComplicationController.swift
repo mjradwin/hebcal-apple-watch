@@ -366,18 +366,22 @@ class ComplicationController: NSObject, CLKComplicationDataSource {
     // Return a utilitarian large template.
     private func createUtilitarianLargeTemplate(forDate date: Date) -> CLKComplicationTemplate {
         // Create the data providers.
-        let parts = settings.getHebDateStringParts(date: date, showYear: false)
+        let hdate = settings.makeHDate(date: date)
+        let parts = settings.getHebDateStringParts(hdate: hdate, showYear: false)
         let hebDateStr = parts.joined(separator: " ")
-        let parshaName = settings.getParshaString(date: date, heNikud: false)
+        let holidayEv = settings.pickHolidayToDisplay(hdate: hdate, specialShabbat: false)
+        let holidayOrParsha = holidayEv != nil ?
+            settings.translateHolidayName(ev: holidayEv!, abbrev: true) :
+            settings.getParshaString(date: date, heNikud: false)
         let lang = TranslationLang(rawValue: settings.lang)!
         let format = lang == .he ? largeFlatFormatRTL : largeFlatFormatLTR
-        let text = String(format: format, hebDateStr, parshaName)
+        let text = String(format: format, hebDateStr, holidayOrParsha)
         var shortText: String? = nil
         let abbrev = monthAbbrev[parts[1]] ?? nil
         if abbrev != nil {
             let dayNumber = parts[0]
             let shortDate = dayNumber + " " + abbrev!
-            shortText = String(format: format, shortDate, parshaName)
+            shortText = String(format: format, shortDate, holidayOrParsha)
         }
         let combinedProvider = CLKSimpleTextProvider(text: text, shortText: shortText)
         // Create the template using the providers.
@@ -508,10 +512,10 @@ class ComplicationController: NSObject, CLKComplicationDataSource {
         let hdate = settings.makeHDate(date: date)
         var hdFull = settings.getHebDateString(hdate: hdate, showYear: true)
         var hdShort = settings.getHebDateString(hdate: hdate, showYear: false)
-        let holidayEv = settings.pickHolidayToDisplay(hdate: hdate)
+        let holidayEv = settings.pickHolidayToDisplay(hdate: hdate, specialShabbat: true)
         var holidayToday: String?
         if holidayEv != nil {
-            holidayToday = settings.translateHolidayName(ev: holidayEv!);
+            holidayToday = settings.translateHolidayName(ev: holidayEv!, abbrev: false);
             if let emoji = settings.pickEmoji(events: [holidayEv!]) {
                 hdFull += " " + emoji
                 hdShort += " " + emoji

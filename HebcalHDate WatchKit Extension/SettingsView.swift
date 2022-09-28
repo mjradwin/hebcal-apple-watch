@@ -46,6 +46,11 @@ struct SettingsView: View {
                     Text("Israel")
                 }
             })
+            Section(content: {
+                Toggle(isOn: $modelData.dafyomi) {
+                    Text("Daf Yomi")
+                }
+            })
         }
         .navigationTitle("Settings")
     }

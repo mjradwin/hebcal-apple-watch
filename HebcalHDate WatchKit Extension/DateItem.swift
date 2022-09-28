@@ -21,4 +21,5 @@ struct DateItem: Hashable, Codable, Identifiable {
     var holidays: [String]
     var emoji: String?
     var omer: String?
+    var dafyomi: String?
 }
