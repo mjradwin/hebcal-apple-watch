@@ -228,16 +228,19 @@ final class ModelData: ObservableObject {
 
     let holidayAbbrev = [
         "Rosh Chodesh": "R.Ch.",
+        "Erev Rosh Hashana": "Erev R.H.",
         "Rosh Hashana": "R.H.",
         "Rosh Hashana II": "R.H. II",
         "Rosh Hashana LaBehemot": "R.H. LaBehemot",
+        "Erev Yom Kippur": "Erev Y.K.",
         "Yom Kippur": "Y.K.",
         "ראש חודש": "ר״ח",
+        "ערב ראש השנה": "ערב ראה״ש",
         "ראש השנה": "ראה״ש",
+        "ערב יום כפור": "ערב יוה״כ",
         "יום כפור": "יוה״כ",
-        "ראש השנה למעשר בהמה": "ראה״ש לבהמות‎",
+        "ראש השנה למעשר בהמה": "ראה״ש לבהמות",
     ]
-
 
     var yearCache: [Int: [HEvent]] = [:]
     var sedraCache: [Int: Sedra] = [:]
@@ -274,7 +277,7 @@ final class ModelData: ObservableObject {
         if abbrev {
             if holidayAbbrev[holiday] != nil {
                 return holidayAbbrev[holiday]!
-            } else if holiday.hasSuffix(" (CH''M)") || holiday.hasSuffix("(חוה״מ)") {
+            } else if holiday.hasSuffix(" (CH''M)") || holiday.hasSuffix(" (חוה״מ)") {
                 return String(holiday[..<holiday.index(holiday.endIndex, offsetBy: -8)])
             }
         }
