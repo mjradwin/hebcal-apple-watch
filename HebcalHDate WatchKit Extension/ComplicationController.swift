@@ -514,8 +514,10 @@ class ComplicationController: NSObject, CLKComplicationDataSource {
         var hdShort = settings.getHebDateString(hdate: hdate, showYear: false)
         let holidayEv = settings.pickHolidayToDisplay(hdate: hdate, specialShabbat: true)
         var holidayToday: String?
+        var holidayShort: String?
         if holidayEv != nil {
             holidayToday = settings.translateHolidayName(ev: holidayEv!, abbrev: false);
+            holidayShort = settings.translateHolidayName(ev: holidayEv!, abbrev: true);
             if let emoji = settings.pickEmoji(events: [holidayEv!]) {
                 hdFull += " " + emoji
                 hdShort += " " + emoji
@@ -535,7 +537,7 @@ class ComplicationController: NSObject, CLKComplicationDataSource {
         let omer = settings.omerStr(hdate: hdate)
         let omerProvider = omer == nil ? nil : CLKSimpleTextProvider(text: omer!)
 
-        let line2 = holidayToday == nil ? parshaProvider : CLKSimpleTextProvider(text: holidayToday!)
+        let line2 = holidayToday == nil ? parshaProvider : CLKSimpleTextProvider(text: holidayToday!, shortText: holidayShort)
         let line3 = holidayToday == nil ? omerProvider : parshaProvider
         return [
             headerTextProvider,
@@ -598,12 +600,12 @@ struct ComplicationController_Previews: PreviewProvider {
             CLKComplicationTemplateModularLargeStandardBody(
                 headerTextProvider: CLKSimpleTextProvider(text: "27 Iyyar 5785", shortText: "27 Iyyar"),
                 body1TextProvider: CLKSimpleTextProvider(text: "Parashat Behar-Bechukotai", shortText: "Behar-Bechukotai"),
-                body2TextProvider: CLKSimpleTextProvider(text: "Rosh Hashana LaBehemot")
+                body2TextProvider: CLKSimpleTextProvider(text: "Rosh Hashana LaBehemot", shortText: "R.H. LaBehemot")
             ).previewContext()
             CLKComplicationTemplateModularLargeStandardBody(
                 headerTextProvider: CLKSimpleTextProvider(text: "כ״ז אייר תשפ״ה", shortText: "כ״ז אייר"),
                 body1TextProvider: CLKSimpleTextProvider(text: "פָּרָשַׁת בְּהַר־בְּחֻקֹּתַי", shortText: "בְּהַר־בְּחֻקֹּתַי"),
-                body2TextProvider: CLKSimpleTextProvider(text: "רֹאשׁ הַשָּׁנָה לְמַעְשַׂר בְּהֵמָה")
+                body2TextProvider: CLKSimpleTextProvider(text: "רֹאשׁ הַשָּׁנָה לְמַעְשַׂר בְּהֵמָה", shortText: "ראה״ש לבהמות")
             ).previewContext()
             CLKComplicationTemplateUtilitarianLargeFlat(
                 textProvider: CLKSimpleTextProvider(text: "26 Iyyar · Behar-Bechukotai")

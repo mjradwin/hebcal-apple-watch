@@ -233,6 +233,13 @@ final class ModelData: ObservableObject {
         "Rosh Hashana II": "R.H. II",
         "Rosh Hashana LaBehemot": "R.H. LaBehemot",
         "Erev Yom Kippur": "Erev Y.K.",
+        "Simchat Torah": "Sim. Torah",
+        "Simchas Torah": "Sim. Torah",
+        "Sukkot VII (Hoshana Raba)": "Hoshana Raba",
+        "Sukkos VII (Hoshana Raba)": "Hoshana Raba",
+        "Shmini Atzeres": "Shmini Atz.",
+        "Shmini Atzeret": "Shmini Atz.",
+        "Tish'a B'Av (observed)": "Tish'a B'Av (obs.)",
         "Yom Kippur": "Y.K.",
         "ראש חודש": "ר״ח",
         "ערב ראש השנה": "ערב ראה״ש",
@@ -240,6 +247,7 @@ final class ModelData: ObservableObject {
         "ערב יום כפור": "ערב יוה״כ",
         "יום כפור": "יוה״כ",
         "ראש השנה למעשר בהמה": "ראה״ש לבהמות",
+        "סוכות ז׳ (הושענא רבה)": "הושענא רבה",
     ]
 
     var yearCache: [Int: [HEvent]] = [:]
