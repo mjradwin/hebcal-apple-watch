@@ -170,17 +170,22 @@ class ComplicationController: NSObject, CLKComplicationDataSource {
         var gregCalendar = Calendar(identifier: .gregorian)
         gregCalendar.timeZone = .autoupdatingCurrent
         let dateComponents = gregCalendar.dateComponents([.hour], from: date)
-        if dateComponents.hour! < 20 {
+        let hour = dateComponents.hour!
+        if hour < 2 {
+            let oneFiftyNine = gregCalendar.date(bySettingHour: 1, minute: 59, second: 59, of: date)!
+            return [date, oneFiftyNine]
+        } else if hour < 10 {
+            let tenAm = gregCalendar.date(bySettingHour: 10, minute: 0, second: 0, of: date)!
+            return [date, tenAm]
+        } else if hour < 20 {
             let sevenFiftyNine = gregCalendar.date(bySettingHour: 19, minute: 59, second: 0, of: date)!
             let eightPm = sevenFiftyNine.addingTimeInterval(60.0)
-            let midnight = eightPm.addingTimeInterval(fourHours)
-            let fourAm = midnight.addingTimeInterval(fourHours)
-            return [date, sevenFiftyNine, eightPm, midnight, fourAm]
+            let elevenFiftyNine = sevenFiftyNine.addingTimeInterval(fourHours)
+            return [date, sevenFiftyNine, eightPm, elevenFiftyNine]
         } else {
             let elevenFiftyNine = gregCalendar.date(bySettingHour: 23, minute: 59, second: 0, of: date)!
-            let midnight = elevenFiftyNine.addingTimeInterval(60.0)
-            let fourAm = midnight.addingTimeInterval(fourHours)
-            return [date, elevenFiftyNine, midnight, fourAm]
+            let oneFiftyNineAm = elevenFiftyNine.addingTimeInterval(fourHours)
+            return [date, elevenFiftyNine, oneFiftyNineAm]
         }
     }
 

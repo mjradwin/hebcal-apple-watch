@@ -22,9 +22,9 @@ struct HDateTextView: View {
             }
             VStack(spacing: 0) {
                 Text(day)
-                    .offset(x: 0, y: -1)
+                    .offset(x: 0, y: -2)
                     .foregroundColor(.primary)
-                    .font(.system(size: 21, weight: .semibold, design: .default))
+                    .font(.system(size: day.count == 1 ? 27.5 : 23, weight: .semibold, design: .default))
                     .scaledToFill()
                     .minimumScaleFactor(0.5)
                     .lineLimit(1)
@@ -44,11 +44,13 @@ struct HDateTextView: View {
 struct HDateTextView_Previews: PreviewProvider {
     static var previews: some View {
         Group {
-            CLKComplicationTemplateGraphicCircularView(HDateTextView(day: "26", month: "Tishr")).previewContext()
+            CLKComplicationTemplateGraphicCircularView(HDateTextView(day: "29", month: "Tishr")).previewContext()
             CLKComplicationTemplateGraphicCircularView(HDateTextView(day: "30", month: "Chesh")).previewContext()
             CLKComplicationTemplateGraphicCircularView(HDateTextView(day: "16", month: "Kislev")).previewContext()
             CLKComplicationTemplateGraphicCircularView(HDateTextView(day: "3", month: "Adar2")).previewContext()
+            CLKComplicationTemplateGraphicCircularView(HDateTextView(day: "7", month: "Shvat")).previewContext()
             CLKComplicationTemplateGraphicCircularView(HDateTextView(day: "ט״ז", month: "אדר א׳")).previewContext()
+            CLKComplicationTemplateGraphicCircularView(HDateTextView(day: "ז", month: "אדר א׳")).previewContext()
             CLKComplicationTemplateGraphicCircularView(HDateTextView(day: "ט״ז", month: "תמוז")).previewContext()
             CLKComplicationTemplateGraphicCircularView(HDateTextView(day: "י״ד", month: "אב")).previewContext(faceColor: .red)
         }
