@@ -241,24 +241,6 @@ final class ModelData: ObservableObject {
         "Shmini Atzeret": "Shmini Atz.",
         "Tish'a B'Av (observed)": "Tish'a B'Av (obs.)",
         "Yom Kippur": "Y.K.",
-        "Shabbat Chazon": "Sh. Chazon",
-        "Shabbat HaChodesh": "Sh. HaChodesh",
-        "Shabbat HaGadol": "Sh. HaGadol",
-        "Shabbat Nachamu": "Sh. Nachamu",
-        "Shabbat Parah": "Sh. Parah",
-        "Shabbat Shekalim": "Sh. Shekalim",
-        "Shabbat Shuva": "Sh. Shuvah",
-        "Shabbat Zachor": "Sh. Zachor",
-        "Shabbat Shirah": "Sh. Shirah",
-        "Shabbos Chazon": "Sh. Chazon",
-        "Shabbos HaChodesh": "Sh. HaChodesh",
-        "Shabbos HaGadol": "Sh. HaGadol",
-        "Shabbos Nachamu": "Sh. Nachamu",
-        "Shabbos Parah": "Sh. Parah",
-        "Shabbos Shekalim": "Sh. Shekalim",
-        "Shabbos Shuva": "Sh. Shuvah",
-        "Shabbos Zachor": "Sh. Zachor",
-        "Shabbos Shirah": "Sh. Shirah",
         "ראש חודש": "ר״ח",
         "ערב ראש השנה": "ערב ראה״ש",
         "ראש השנה": "ראה״ש",
@@ -301,6 +283,12 @@ final class ModelData: ObservableObject {
         }
         let holiday = lookupTranslation(str: ev.desc, lang: lg)
         if abbrev {
+            if ev.flags.contains(.SPECIAL_SHABBAT) {
+                if let idx = holiday.firstIndex(of: " ") {
+                    let remainder = String(holiday[idx...])
+                    return "Sh." + remainder
+                }
+            }
             if holidayAbbrev[holiday] != nil {
                 return holidayAbbrev[holiday]!
             } else if holiday.hasSuffix(" (CH''M)") || holiday.hasSuffix(" (חוה״מ)") {
