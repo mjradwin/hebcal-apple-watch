@@ -248,9 +248,11 @@ class ComplicationController: NSObject, CLKComplicationDataSource {
                     createHDateTemplate(forComplication: complication, date: date) :
                     nil
             default:
+                logger.debug("getLocalizableSampleTemplate \(complication.identifier) UNKNOWN")
                 template = nil
             }
         }
+
         handler(template)
     }
 
