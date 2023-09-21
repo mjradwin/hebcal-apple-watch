@@ -3,7 +3,7 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 52;
+	objectVersion = 54;
 	objects = {
 
 /* Begin PBXBuildFile section */
@@ -488,7 +488,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_COMPLICATION_NAME = Complication;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 1.16.4;
+				CURRENT_PROJECT_VERSION = 1.16.5;
 				DEVELOPMENT_ASSET_PATHS = "\"HebcalHDate WatchKit Extension/Preview Content\"";
 				DEVELOPMENT_TEAM = 4ZRJ2HBKYL;
 				ENABLE_PREVIEWS = YES;
@@ -499,7 +499,7 @@
 					"@executable_path/Frameworks",
 					"@executable_path/../../Frameworks",
 				);
-				MARKETING_VERSION = 1.16.4;
+				MARKETING_VERSION = 1.16.5;
 				PRODUCT_BUNDLE_IDENTIFIER = com.hebcal.HebcalHDate.watchkitapp.watchkitextension;
 				PRODUCT_NAME = "${TARGET_NAME}";
 				SDKROOT = watchos;
@@ -515,7 +515,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_COMPLICATION_NAME = Complication;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 1.16.4;
+				CURRENT_PROJECT_VERSION = 1.16.5;
 				DEVELOPMENT_ASSET_PATHS = "\"HebcalHDate WatchKit Extension/Preview Content\"";
 				DEVELOPMENT_TEAM = 4ZRJ2HBKYL;
 				ENABLE_PREVIEWS = YES;
@@ -526,7 +526,7 @@
 					"@executable_path/Frameworks",
 					"@executable_path/../../Frameworks",
 				);
-				MARKETING_VERSION = 1.16.4;
+				MARKETING_VERSION = 1.16.5;
 				PRODUCT_BUNDLE_IDENTIFIER = com.hebcal.HebcalHDate.watchkitapp.watchkitextension;
 				PRODUCT_NAME = "${TARGET_NAME}";
 				SDKROOT = watchos;
@@ -544,12 +544,12 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 1.16.4;
+				CURRENT_PROJECT_VERSION = 1.16.5;
 				DEVELOPMENT_TEAM = 4ZRJ2HBKYL;
 				IBSC_MODULE = HebcalHDate_WatchKit_Extension;
 				INFOPLIST_FILE = "HebcalHDate WatchKit App/Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 13.1;
-				MARKETING_VERSION = 1.16.4;
+				MARKETING_VERSION = 1.16.5;
 				PRODUCT_BUNDLE_IDENTIFIER = com.hebcal.HebcalHDate.watchkitapp;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = watchos;
@@ -567,12 +567,12 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 1.16.4;
+				CURRENT_PROJECT_VERSION = 1.16.5;
 				DEVELOPMENT_TEAM = 4ZRJ2HBKYL;
 				IBSC_MODULE = HebcalHDate_WatchKit_Extension;
 				INFOPLIST_FILE = "HebcalHDate WatchKit App/Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 13.1;
-				MARKETING_VERSION = 1.16.4;
+				MARKETING_VERSION = 1.16.5;
 				PRODUCT_BUNDLE_IDENTIFIER = com.hebcal.HebcalHDate.watchkitapp;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = watchos;
@@ -587,9 +587,9 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 1.16.4;
+				CURRENT_PROJECT_VERSION = 1.16.5;
 				DEVELOPMENT_TEAM = 4ZRJ2HBKYL;
-				MARKETING_VERSION = 1.16.4;
+				MARKETING_VERSION = 1.16.5;
 				PRODUCT_BUNDLE_IDENTIFIER = com.hebcal.HebcalHDate;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 5.0;
@@ -601,9 +601,9 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 1.16.4;
+				CURRENT_PROJECT_VERSION = 1.16.5;
 				DEVELOPMENT_TEAM = 4ZRJ2HBKYL;
-				MARKETING_VERSION = 1.16.4;
+				MARKETING_VERSION = 1.16.5;
 				PRODUCT_BUNDLE_IDENTIFIER = com.hebcal.HebcalHDate;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 5.0;
