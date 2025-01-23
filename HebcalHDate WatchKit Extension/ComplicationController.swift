@@ -379,16 +379,18 @@ class ComplicationController: NSObject, CLKComplicationDataSource {
         let holidayEv = settings.pickHolidayToDisplay(hdate: hdate, specialShabbat: false)
         let holidayOrParsha = holidayEv != nil ?
             settings.translateHolidayName(ev: holidayEv!, abbrev: true) :
-            settings.getParshaString(date: date, heNikud: false)
+            settings.getParshaString(hdate: hdate, fallbackToHoliday: false, heNikud: false)
         let lang = TranslationLang(rawValue: settings.lang)!
         let format = lang == .he ? largeFlatFormatRTL : largeFlatFormatLTR
-        let text = String(format: format, hebDateStr, holidayOrParsha)
+        let text = holidayOrParsha == nil ?
+            hebDateStr :
+            String(format: format, hebDateStr, holidayOrParsha!)
         var shortText: String? = nil
         let abbrev = monthAbbrev[parts[1]] ?? nil
-        if abbrev != nil {
+        if abbrev != nil && holidayOrParsha != nil {
             let dayNumber = parts[0]
             let shortDate = dayNumber + " " + abbrev!
-            shortText = String(format: format, shortDate, holidayOrParsha)
+            shortText = String(format: format, shortDate, holidayOrParsha!)
         }
         let combinedProvider = CLKSimpleTextProvider(text: text, shortText: shortText)
         // Create the template using the providers.

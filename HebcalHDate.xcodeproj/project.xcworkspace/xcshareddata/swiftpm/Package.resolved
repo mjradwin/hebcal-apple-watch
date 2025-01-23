@@ -1,4 +1,5 @@
 {
+  "originHash" : "978349a241df49651d23043adb4fdd194a64993669bfb4b343fb7f3e069d9128",
   "pins" : [
     {
       "identity" : "hebcal-swift",
@@ -6,9 +7,9 @@
       "location" : "https://github.com/hebcal/hebcal-swift.git",
       "state" : {
         "branch" : "main",
-        "revision" : "43b18e9914c2dd02052efc757e764db850f72dc5"
+        "revision" : "f56e78b0aea1bb62d416fc9efaa5080fe4003324"
       }
     }
   ],
-  "version" : 2
+  "version" : 3
 }

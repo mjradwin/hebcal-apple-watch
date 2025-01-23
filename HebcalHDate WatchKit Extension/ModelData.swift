@@ -138,7 +138,7 @@ final class ModelData: ObservableObject {
         return self.getParshaString(hdate: hdate, fallbackToHoliday: true, heNikud: heNikud) ?? "??"
     }
 
-    private func getParshaString(hdate: HDate, fallbackToHoliday: Bool, heNikud: Bool) -> String? {
+    public func getParshaString(hdate: HDate, fallbackToHoliday: Bool, heNikud: Bool) -> String? {
         let year = hdate.yy
         var sedra = sedraCache[year]
         if sedra == nil {
@@ -241,6 +241,15 @@ final class ModelData: ObservableObject {
         "Shmini Atzeret": "Shmini Atz.",
         "Tish'a B'Av (observed)": "Tish'a B'Av (obs.)",
         "Yom Kippur": "Y.K.",
+        "Chanukah: 1 Candle": "🕎 1️⃣ 🕯️",
+        "Chanukah: 2 Candles": "🕎 Day 1️⃣",
+        "Chanukah: 3 Candles": "🕎 Day 2️⃣",
+        "Chanukah: 4 Candles": "🕎 Day 3️⃣",
+        "Chanukah: 5 Candles": "🕎 Day 4️⃣",
+        "Chanukah: 6 Candles": "🕎 Day 5️⃣",
+        "Chanukah: 7 Candles": "🕎 Day 6️⃣",
+        "Chanukah: 8 Candles": "🕎 Day 7️⃣",
+        "Chanukah: 8th Day": "🕎 Day 8️⃣ ",
         "ראש חודש": "ר״ח",
         "ערב ראש השנה": "ערב ראה״ש",
         "ראש השנה": "ראה״ש",
