@@ -50,7 +50,7 @@ struct HDateTextView: View {
             VStack(spacing: 0) {
                 Text(day)
                     .offset(x: 0, y: -2)
-                    .foregroundColor(.primary)
+                    .foregroundColor(.white)
                     .font(.system(size: dayFontSize, weight: .semibold, design: .default))
                     .scaledToFill()
                     .minimumScaleFactor(0.5)

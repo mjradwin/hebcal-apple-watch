@@ -35,7 +35,7 @@ struct TodayView: View {
                     .scaledFont(size: 16, weight: .regular, design: .default)
                     .lineLimit(1)
                 Text(item.hdate)
-                    .foregroundColor(.primary)
+                    .foregroundColor(.white)
                     .scaledFont(size: 18, weight: .regular, design: .default)
                     .lineLimit(1)
                 ForEach(item.holidays, id: \.self) { holiday in
