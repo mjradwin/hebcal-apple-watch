@@ -9,31 +9,44 @@ import Foundation
 import Combine
 import os
 import Hebcal
-import ClockKit
+import WidgetKit
 
 final class ModelData: ObservableObject {
     let logger = Logger(
         subsystem: "com.hebcal.HebcalHDate.watchkitapp.watchkitextension.ModelData",
         category: "Model")
 
-    // The data model needs to be accessed both from the app extension
-    // and from the complication controller.
+    // The data model is shared between the watch app and the
+    // WidgetKit widget extension. The two processes don't share
+    // memory, so each builds its own ModelData and they coordinate
+    // through the App Group UserDefaults suite below.
     static let shared = ModelData()
 
-    private func reloadComplications() -> Void {
-        // Update any complications on active watch faces.
-        let server = CLKComplicationServer.sharedInstance()
-        for complication in server.activeComplications ?? [] {
-            logger.debug("reloadTimeline for \(complication.identifier) il=\(self.il) lang=\(self.lang)")
-            server.reloadTimeline(for: complication)
+    static let appGroupSuiteName = "group.com.hebcal.HebcalHDate"
+    static let defaults: UserDefaults = {
+        let shared = UserDefaults(suiteName: ModelData.appGroupSuiteName) ?? .standard
+        // First launch after migrating off ClockKit: existing users
+        // had their settings in UserDefaults.standard. Copy them into
+        // the shared suite once so the widget process sees them.
+        let standard = UserDefaults.standard
+        if shared.object(forKey: "lang") == nil && standard.object(forKey: "lang") != nil {
+            shared.set(standard.bool(forKey: "israel"), forKey: "israel")
+            shared.set(standard.integer(forKey: "lang"), forKey: "lang")
+            shared.set(standard.bool(forKey: "dafyomi"), forKey: "dafyomi")
         }
+        return shared
+    }()
+
+    private func reloadComplications() -> Void {
+        logger.debug("reloadAllTimelines il=\(self.il) lang=\(self.lang)")
+        WidgetCenter.shared.reloadAllTimelines()
     }
 
     @Published public var il: Bool {
         didSet {
             if !doingInit {
                 logger.debug("il=\(self.il)")
-                UserDefaults.standard.set(il, forKey: "israel")
+                ModelData.defaults.set(il, forKey: "israel")
                 sedraCache = [:]
                 currentDay = -1
                 updateDateItems()
@@ -46,7 +59,7 @@ final class ModelData: ObservableObject {
         didSet {
             if !doingInit {
                 logger.debug("lang=\(self.lang)")
-                UserDefaults.standard.set(lang, forKey: "lang")
+                ModelData.defaults.set(lang, forKey: "lang")
                 currentDay = -1
                 updateDateItems()
                 reloadComplications()
@@ -58,7 +71,7 @@ final class ModelData: ObservableObject {
         didSet {
             if !doingInit {
                 logger.debug("dafyomi=\(self.dafyomi)")
-                UserDefaults.standard.set(dafyomi, forKey: "dafyomi")
+                ModelData.defaults.set(dafyomi, forKey: "dafyomi")
                 currentDay = -1
                 updateDateItems()
                 reloadComplications()
@@ -186,9 +199,9 @@ final class ModelData: ObservableObject {
     private var doingInit = true
     private init() {
         logger.debug("ModelData init")
-        self.il = UserDefaults.standard.bool(forKey: "israel")
-        self.lang = UserDefaults.standard.integer(forKey: "lang")
-        self.dafyomi = UserDefaults.standard.bool(forKey: "dafyomi")
+        self.il = ModelData.defaults.bool(forKey: "israel")
+        self.lang = ModelData.defaults.integer(forKey: "lang")
+        self.dafyomi = ModelData.defaults.bool(forKey: "dafyomi")
         updateDateItems()
         logger.debug("il=\(self.il), lang=\(self.lang)")
         doingInit = false
