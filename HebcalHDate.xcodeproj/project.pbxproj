@@ -15,7 +15,6 @@
 		9D35F48326E6698400EC5AAD /* SettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D35F48226E6698400EC5AAD /* SettingsView.swift */; };
 		9D9A027226CC6A420055160C /* HebcalHDate WatchKit App.app in Embed Watch Content */ = {isa = PBXBuildFile; fileRef = 9D9A027126CC6A420055160C /* HebcalHDate WatchKit App.app */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 		9D9A027726CC6A460055160C /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 9D9A027626CC6A460055160C /* Assets.xcassets */; };
-		9D9A027E26CC6A460055160C /* HebcalHDate WatchKit Extension.appex in Embed App Extensions */ = {isa = PBXBuildFile; fileRef = 9D9A027D26CC6A460055160C /* HebcalHDate WatchKit Extension.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 		9D9A028326CC6A460055160C /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D9A028226CC6A460055160C /* ContentView.swift */; };
 		9D9A028526CC6A460055160C /* HebcalHDateApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D9A028426CC6A460055160C /* HebcalHDateApp.swift */; };
 		9D9A028926CC6A480055160C /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 9D9A028826CC6A480055160C /* Assets.xcassets */; };
@@ -34,7 +33,7 @@
 		D000000000000000000000B7 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = D000000000000000000000A7 /* Assets.xcassets */; };
 		D000000000000000000000B8 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 9D2E6CFB2705F8CC002EC757 /* Localizable.strings */; };
 		D000000000000000000000B9 /* Hebcal in Frameworks */ = {isa = PBXBuildFile; productRef = D000000000000000000000F2 /* Hebcal */; };
-		D000000000000000000000BA /* HebcalHDate Widgets.appex in Embed App Extensions */ = {isa = PBXBuildFile; fileRef = D000000000000000000000A1 /* HebcalHDate Widgets.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
+		D000000000000000000000BA /* HebcalHDate Widgets.appex in Embed Foundation Extensions */ = {isa = PBXBuildFile; fileRef = D000000000000000000000A1 /* HebcalHDate Widgets.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -44,13 +43,6 @@
 			proxyType = 1;
 			remoteGlobalIDString = 9D9A027026CC6A420055160C;
 			remoteInfo = "HebcalHDate WatchKit App";
-		};
-		9D9A027F26CC6A460055160C /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 9D9A026726CC6A410055160C /* Project object */;
-			proxyType = 1;
-			remoteGlobalIDString = 9D9A027C26CC6A460055160C;
-			remoteInfo = "HebcalHDate WatchKit Extension";
 		};
 		D000000000000000000000E1 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
@@ -62,16 +54,15 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXCopyFilesBuildPhase section */
-		9D9A029326CC6A480055160C /* Embed App Extensions */ = {
+		9D9A029326CC6A480055160C /* Embed Foundation Extensions */ = {
 			isa = PBXCopyFilesBuildPhase;
 			buildActionMask = 2147483647;
 			dstPath = "";
 			dstSubfolderSpec = 13;
 			files = (
-				9D9A027E26CC6A460055160C /* HebcalHDate WatchKit Extension.appex in Embed App Extensions */,
-				D000000000000000000000BA /* HebcalHDate Widgets.appex in Embed App Extensions */,
+				D000000000000000000000BA /* HebcalHDate Widgets.appex in Embed Foundation Extensions */,
 			);
-			name = "Embed App Extensions";
+			name = "Embed Foundation Extensions";
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 		9D9A029726CC6A480055160C /* Embed Watch Content */ = {
@@ -100,7 +91,6 @@
 		9D9A027126CC6A420055160C /* HebcalHDate WatchKit App.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "HebcalHDate WatchKit App.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		9D9A027626CC6A460055160C /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		9D9A027826CC6A460055160C /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		9D9A027D26CC6A460055160C /* HebcalHDate WatchKit Extension.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = "HebcalHDate WatchKit Extension.appex"; sourceTree = BUILT_PRODUCTS_DIR; };
 		9D9A028226CC6A460055160C /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
 		9D9A028426CC6A460055160C /* HebcalHDateApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HebcalHDateApp.swift; sourceTree = "<group>"; };
 		9D9A028826CC6A480055160C /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -152,26 +142,11 @@
 			);
 			sourceTree = "<group>";
 		};
-		D000000000000000000000F1 /* HebcalHDate Widgets */ = {
-			isa = PBXGroup;
-			children = (
-				D000000000000000000000A2 /* HebcalWidgetBundle.swift */,
-				D000000000000000000000A3 /* HebcalProvider.swift */,
-				D000000000000000000000A4 /* HebcalWidgetViews.swift */,
-				D000000000000000000000A5 /* WidgetTextHelpers.swift */,
-				D000000000000000000000A7 /* Assets.xcassets */,
-				D000000000000000000000A6 /* Info.plist */,
-				D000000000000000000000A8 /* HebcalHDate_Widgets.entitlements */,
-			);
-			path = "HebcalHDate Widgets";
-			sourceTree = "<group>";
-		};
 		9D9A026E26CC6A410055160C /* Products */ = {
 			isa = PBXGroup;
 			children = (
 				9D9A026D26CC6A410055160C /* HebcalHDate.app */,
 				9D9A027126CC6A420055160C /* HebcalHDate WatchKit App.app */,
-				9D9A027D26CC6A460055160C /* HebcalHDate WatchKit Extension.appex */,
 				D000000000000000000000A1 /* HebcalHDate Widgets.appex */,
 			);
 			name = Products;
@@ -222,6 +197,20 @@
 			name = Frameworks;
 			sourceTree = "<group>";
 		};
+		D000000000000000000000F1 /* HebcalHDate Widgets */ = {
+			isa = PBXGroup;
+			children = (
+				D000000000000000000000A2 /* HebcalWidgetBundle.swift */,
+				D000000000000000000000A3 /* HebcalProvider.swift */,
+				D000000000000000000000A4 /* HebcalWidgetViews.swift */,
+				D000000000000000000000A5 /* WidgetTextHelpers.swift */,
+				D000000000000000000000A7 /* Assets.xcassets */,
+				D000000000000000000000A6 /* Info.plist */,
+				D000000000000000000000A8 /* HebcalHDate_Widgets.entitlements */,
+			);
+			path = "HebcalHDate Widgets";
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -250,38 +239,19 @@
 			buildConfigurationList = 9D9A029426CC6A480055160C /* Build configuration list for PBXNativeTarget "HebcalHDate WatchKit App" */;
 			buildPhases = (
 				9D9A026F26CC6A420055160C /* Resources */,
-				9D9A029326CC6A480055160C /* Embed App Extensions */,
+				9D9A029326CC6A480055160C /* Embed Foundation Extensions */,
+				9D9A027926CC6A460055160C /* Sources */,
+				9D9A027A26CC6A460055160C /* Frameworks */,
 			);
 			buildRules = (
 			);
 			dependencies = (
-				9D9A028026CC6A460055160C /* PBXTargetDependency */,
 				D000000000000000000000E2 /* PBXTargetDependency */,
 			);
 			name = "HebcalHDate WatchKit App";
 			productName = "HebcalHDate WatchKit App";
 			productReference = 9D9A027126CC6A420055160C /* HebcalHDate WatchKit App.app */;
-			productType = "com.apple.product-type.application.watchapp2";
-		};
-		9D9A027C26CC6A460055160C /* HebcalHDate WatchKit Extension */ = {
-			isa = PBXNativeTarget;
-			buildConfigurationList = 9D9A029026CC6A480055160C /* Build configuration list for PBXNativeTarget "HebcalHDate WatchKit Extension" */;
-			buildPhases = (
-				9D9A027926CC6A460055160C /* Sources */,
-				9D9A027A26CC6A460055160C /* Frameworks */,
-				9D9A027B26CC6A460055160C /* Resources */,
-			);
-			buildRules = (
-			);
-			dependencies = (
-			);
-			name = "HebcalHDate WatchKit Extension";
-			packageProductDependencies = (
-				9DC90C59277B9A470022537C /* Hebcal */,
-			);
-			productName = "HebcalHDate WatchKit Extension";
-			productReference = 9D9A027D26CC6A460055160C /* HebcalHDate WatchKit Extension.appex */;
-			productType = "com.apple.product-type.watchkit2-extension";
+			productType = "com.apple.product-type.application";
 		};
 		D000000000000000000000D1 /* HebcalHDate Widgets */ = {
 			isa = PBXNativeTarget;
@@ -309,16 +279,14 @@
 		9D9A026726CC6A410055160C /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
+				BuildIndependentTargetsInParallel = YES;
 				LastSwiftUpdateCheck = 1250;
-				LastUpgradeCheck = 1300;
+				LastUpgradeCheck = 2650;
 				TargetAttributes = {
 					9D9A026C26CC6A410055160C = {
 						CreatedOnToolsVersion = 12.5.1;
 					};
 					9D9A027026CC6A420055160C = {
-						CreatedOnToolsVersion = 12.5.1;
-					};
-					9D9A027C26CC6A460055160C = {
 						CreatedOnToolsVersion = 12.5.1;
 					};
 				};
@@ -345,7 +313,6 @@
 			targets = (
 				9D9A026C26CC6A410055160C /* HebcalHDate */,
 				9D9A027026CC6A420055160C /* HebcalHDate WatchKit App */,
-				9D9A027C26CC6A460055160C /* HebcalHDate WatchKit Extension */,
 				D000000000000000000000D1 /* HebcalHDate Widgets */,
 			);
 		};
@@ -365,16 +332,9 @@
 			buildActionMask = 2147483647;
 			files = (
 				9D9A027726CC6A460055160C /* Assets.xcassets in Resources */,
-				9D2E6D0427061957002EC757 /* Localizable.strings in Resources */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		9D9A027B26CC6A460055160C /* Resources */ = {
-			isa = PBXResourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				9D9A028C26CC6A480055160C /* Preview Assets.xcassets in Resources */,
 				9D2E6D0527061957002EC757 /* Localizable.strings in Resources */,
+				9D9A028C26CC6A480055160C /* Preview Assets.xcassets in Resources */,
+				9D2E6D0427061957002EC757 /* Localizable.strings in Resources */,
 				9D9A028926CC6A480055160C /* Assets.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -427,11 +387,6 @@
 			isa = PBXTargetDependency;
 			target = 9D9A027026CC6A420055160C /* HebcalHDate WatchKit App */;
 			targetProxy = 9D9A027326CC6A420055160C /* PBXContainerItemProxy */;
-		};
-		9D9A028026CC6A460055160C /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			target = 9D9A027C26CC6A460055160C /* HebcalHDate WatchKit Extension */;
-			targetProxy = 9D9A027F26CC6A460055160C /* PBXContainerItemProxy */;
 		};
 		D000000000000000000000E2 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
@@ -492,8 +447,10 @@
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				COPY_PHASE_STRIP = NO;
 				DEBUG_INFORMATION_FORMAT = dwarf;
+				DEVELOPMENT_TEAM = 4ZRJ2HBKYL;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				ENABLE_TESTABILITY = YES;
+				ENABLE_USER_SCRIPT_SANDBOXING = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu11;
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_NO_COMMON_BLOCKS = YES;
@@ -513,6 +470,7 @@
 				MTL_FAST_MATH = YES;
 				ONLY_ACTIVE_ARCH = YES;
 				SDKROOT = iphoneos;
+				STRING_CATALOG_GENERATE_SYMBOLS = YES;
 				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				WATCHOS_DEPLOYMENT_TARGET = 9.0;
@@ -555,8 +513,10 @@
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				COPY_PHASE_STRIP = NO;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				DEVELOPMENT_TEAM = 4ZRJ2HBKYL;
 				ENABLE_NS_ASSERTIONS = NO;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_USER_SCRIPT_SANDBOXING = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu11;
 				GCC_NO_COMMON_BLOCKS = YES;
 				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
@@ -569,6 +529,7 @@
 				MTL_ENABLE_DEBUG_INFO = NO;
 				MTL_FAST_MATH = YES;
 				SDKROOT = iphoneos;
+				STRING_CATALOG_GENERATE_SYMBOLS = YES;
 				SWIFT_COMPILATION_MODE = wholemodule;
 				SWIFT_OPTIMIZATION_LEVEL = "-O";
 				VALIDATE_PRODUCT = YES;
@@ -576,163 +537,55 @@
 			};
 			name = Release;
 		};
-		9D9A029126CC6A480055160C /* Debug */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				ASSETCATALOG_COMPILER_COMPLICATION_NAME = Complication;
-				CODE_SIGN_ENTITLEMENTS = "HebcalHDate WatchKit Extension/HebcalHDate_WatchKit_Extension.entitlements";
-				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 1.17.2;
-				DEVELOPMENT_ASSET_PATHS = "\"HebcalHDate WatchKit Extension/Preview Content\"";
-				DEVELOPMENT_TEAM = 4ZRJ2HBKYL;
-				ENABLE_PREVIEWS = YES;
-				INFOPLIST_FILE = "HebcalHDate WatchKit Extension/Info.plist";
-				IPHONEOS_DEPLOYMENT_TARGET = 13.1;
-				LD_RUNPATH_SEARCH_PATHS = (
-					"$(inherited)",
-					"@executable_path/Frameworks",
-					"@executable_path/../../Frameworks",
-				);
-				MARKETING_VERSION = 1.17.2;
-				PRODUCT_BUNDLE_IDENTIFIER = com.hebcal.HebcalHDate.watchkitapp.watchkitextension;
-				PRODUCT_NAME = "${TARGET_NAME}";
-				SDKROOT = watchos;
-				SKIP_INSTALL = YES;
-				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = 4;
-				WATCHOS_DEPLOYMENT_TARGET = 9.0;
-			};
-			name = Debug;
-		};
-		9D9A029226CC6A480055160C /* Release */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				ASSETCATALOG_COMPILER_COMPLICATION_NAME = Complication;
-				CODE_SIGN_ENTITLEMENTS = "HebcalHDate WatchKit Extension/HebcalHDate_WatchKit_Extension.entitlements";
-				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 1.17.2;
-				DEVELOPMENT_ASSET_PATHS = "\"HebcalHDate WatchKit Extension/Preview Content\"";
-				DEVELOPMENT_TEAM = 4ZRJ2HBKYL;
-				ENABLE_PREVIEWS = YES;
-				INFOPLIST_FILE = "HebcalHDate WatchKit Extension/Info.plist";
-				IPHONEOS_DEPLOYMENT_TARGET = 13.1;
-				LD_RUNPATH_SEARCH_PATHS = (
-					"$(inherited)",
-					"@executable_path/Frameworks",
-					"@executable_path/../../Frameworks",
-				);
-				MARKETING_VERSION = 1.17.2;
-				PRODUCT_BUNDLE_IDENTIFIER = com.hebcal.HebcalHDate.watchkitapp.watchkitextension;
-				PRODUCT_NAME = "${TARGET_NAME}";
-				SDKROOT = watchos;
-				SKIP_INSTALL = YES;
-				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = 4;
-				WATCHOS_DEPLOYMENT_TARGET = 9.0;
-			};
-			name = Release;
-		};
-		D000000000000000000000D2 /* Debug */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
-				CODE_SIGN_ENTITLEMENTS = "HebcalHDate Widgets/HebcalHDate_Widgets.entitlements";
-				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 1.17.2;
-				DEVELOPMENT_TEAM = 4ZRJ2HBKYL;
-				ENABLE_PREVIEWS = YES;
-				GENERATE_INFOPLIST_FILE = NO;
-				INFOPLIST_FILE = "HebcalHDate Widgets/Info.plist";
-				INFOPLIST_KEY_CFBundleDisplayName = "Hebcal Widgets";
-				IPHONEOS_DEPLOYMENT_TARGET = 13.1;
-				LD_RUNPATH_SEARCH_PATHS = (
-					"$(inherited)",
-					"@executable_path/Frameworks",
-					"@executable_path/../../Frameworks",
-				);
-				MARKETING_VERSION = 1.17.2;
-				PRODUCT_BUNDLE_IDENTIFIER = "com.hebcal.HebcalHDate.watchkitapp.widgets";
-				PRODUCT_NAME = "${TARGET_NAME}";
-				SDKROOT = watchos;
-				SKIP_INSTALL = YES;
-				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = 4;
-				WATCHOS_DEPLOYMENT_TARGET = 9.0;
-			};
-			name = Debug;
-		};
-		D000000000000000000000D3 /* Release */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
-				CODE_SIGN_ENTITLEMENTS = "HebcalHDate Widgets/HebcalHDate_Widgets.entitlements";
-				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 1.17.2;
-				DEVELOPMENT_TEAM = 4ZRJ2HBKYL;
-				ENABLE_PREVIEWS = YES;
-				GENERATE_INFOPLIST_FILE = NO;
-				INFOPLIST_FILE = "HebcalHDate Widgets/Info.plist";
-				INFOPLIST_KEY_CFBundleDisplayName = "Hebcal Widgets";
-				IPHONEOS_DEPLOYMENT_TARGET = 13.1;
-				LD_RUNPATH_SEARCH_PATHS = (
-					"$(inherited)",
-					"@executable_path/Frameworks",
-					"@executable_path/../../Frameworks",
-				);
-				MARKETING_VERSION = 1.17.2;
-				PRODUCT_BUNDLE_IDENTIFIER = "com.hebcal.HebcalHDate.watchkitapp.widgets";
-				PRODUCT_NAME = "${TARGET_NAME}";
-				SDKROOT = watchos;
-				SKIP_INSTALL = YES;
-				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = 4;
-				WATCHOS_DEPLOYMENT_TARGET = 9.0;
-			};
-			name = Release;
-		};
 		9D9A029526CC6A480055160C /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_COMPLICATION_NAME = Complication;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_ENTITLEMENTS = "HebcalHDate WatchKit Extension/HebcalHDate_WatchKit_Extension.entitlements";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 1.17.2;
-				DEVELOPMENT_TEAM = 4ZRJ2HBKYL;
-				IBSC_MODULE = HebcalHDate_WatchKit_Extension;
+				CURRENT_PROJECT_VERSION = 2.0.1;
 				INFOPLIST_FILE = "HebcalHDate WatchKit App/Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 13.1;
-				MARKETING_VERSION = 1.17.2;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"@executable_path/Frameworks",
+					"@executable_path/../../Frameworks",
+				);
+				MARKETING_VERSION = 2.0.1;
 				PRODUCT_BUNDLE_IDENTIFIER = com.hebcal.HebcalHDate.watchkitapp;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = watchos;
 				SKIP_INSTALL = YES;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = 4;
-				WATCHOS_DEPLOYMENT_TARGET = 9.0;
+				WATCHOS_DEPLOYMENT_TARGET = 10.6;
 			};
 			name = Debug;
 		};
 		9D9A029626CC6A480055160C /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_COMPLICATION_NAME = Complication;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_ENTITLEMENTS = "HebcalHDate WatchKit Extension/HebcalHDate_WatchKit_Extension.entitlements";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 1.17.2;
-				DEVELOPMENT_TEAM = 4ZRJ2HBKYL;
-				IBSC_MODULE = HebcalHDate_WatchKit_Extension;
+				CURRENT_PROJECT_VERSION = 2.0.1;
 				INFOPLIST_FILE = "HebcalHDate WatchKit App/Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 13.1;
-				MARKETING_VERSION = 1.17.2;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"@executable_path/Frameworks",
+					"@executable_path/../../Frameworks",
+				);
+				MARKETING_VERSION = 2.0.1;
 				PRODUCT_BUNDLE_IDENTIFIER = com.hebcal.HebcalHDate.watchkitapp;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = watchos;
 				SKIP_INSTALL = YES;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = 4;
-				WATCHOS_DEPLOYMENT_TARGET = 9.0;
+				WATCHOS_DEPLOYMENT_TARGET = 10.6;
 			};
 			name = Release;
 		};
@@ -740,9 +593,9 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 1.17.2;
-				DEVELOPMENT_TEAM = 4ZRJ2HBKYL;
-				MARKETING_VERSION = 1.17.2;
+				CURRENT_PROJECT_VERSION = 2.0.1;
+				IPHONEOS_DEPLOYMENT_TARGET = 15.6;
+				MARKETING_VERSION = 2.0.1;
 				PRODUCT_BUNDLE_IDENTIFIER = com.hebcal.HebcalHDate;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 5.0;
@@ -754,13 +607,69 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 1.17.2;
-				DEVELOPMENT_TEAM = 4ZRJ2HBKYL;
-				MARKETING_VERSION = 1.17.2;
+				CURRENT_PROJECT_VERSION = 2.0.1;
+				IPHONEOS_DEPLOYMENT_TARGET = 15.6;
+				MARKETING_VERSION = 2.0.1;
 				PRODUCT_BUNDLE_IDENTIFIER = com.hebcal.HebcalHDate;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 5.0;
 				WATCHOS_DEPLOYMENT_TARGET = 9.0;
+			};
+			name = Release;
+		};
+		D000000000000000000000D2 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_ENTITLEMENTS = "HebcalHDate Widgets/HebcalHDate_Widgets.entitlements";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 2.0.1;
+				ENABLE_PREVIEWS = YES;
+				GENERATE_INFOPLIST_FILE = NO;
+				INFOPLIST_FILE = "HebcalHDate Widgets/Info.plist";
+				INFOPLIST_KEY_CFBundleDisplayName = "Hebcal Widgets";
+				IPHONEOS_DEPLOYMENT_TARGET = 13.1;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@executable_path/../../Frameworks",
+				);
+				MARKETING_VERSION = 2.0.1;
+				PRODUCT_BUNDLE_IDENTIFIER = com.hebcal.HebcalHDate.watchkitapp.widgets;
+				PRODUCT_NAME = "${TARGET_NAME}";
+				SDKROOT = watchos;
+				SKIP_INSTALL = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = 4;
+				WATCHOS_DEPLOYMENT_TARGET = 10.6;
+			};
+			name = Debug;
+		};
+		D000000000000000000000D3 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_ENTITLEMENTS = "HebcalHDate Widgets/HebcalHDate_Widgets.entitlements";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 2.0.1;
+				ENABLE_PREVIEWS = YES;
+				GENERATE_INFOPLIST_FILE = NO;
+				INFOPLIST_FILE = "HebcalHDate Widgets/Info.plist";
+				INFOPLIST_KEY_CFBundleDisplayName = "Hebcal Widgets";
+				IPHONEOS_DEPLOYMENT_TARGET = 13.1;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@executable_path/../../Frameworks",
+				);
+				MARKETING_VERSION = 2.0.1;
+				PRODUCT_BUNDLE_IDENTIFIER = com.hebcal.HebcalHDate.watchkitapp.widgets;
+				PRODUCT_NAME = "${TARGET_NAME}";
+				SDKROOT = watchos;
+				SKIP_INSTALL = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = 4;
+				WATCHOS_DEPLOYMENT_TARGET = 10.6;
 			};
 			name = Release;
 		};
@@ -772,15 +681,6 @@
 			buildConfigurations = (
 				9D9A028E26CC6A480055160C /* Debug */,
 				9D9A028F26CC6A480055160C /* Release */,
-			);
-			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Release;
-		};
-		9D9A029026CC6A480055160C /* Build configuration list for PBXNativeTarget "HebcalHDate WatchKit Extension" */ = {
-			isa = XCConfigurationList;
-			buildConfigurations = (
-				9D9A029126CC6A480055160C /* Debug */,
-				9D9A029226CC6A480055160C /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
