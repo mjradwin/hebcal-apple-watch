@@ -57,18 +57,27 @@ struct HDateCircularView: View {
     }
 }
 
-/// Accessory corner: month text near the centre with the day number
+/// Accessory corner: large day number near the centre with the month
 /// curving along the bezel via `.widgetLabel`.
 struct HDateCornerView: View {
     let day: String
     let month: String
 
+    private var dayFontSize: CGFloat {
+        if day.hasSuffix("׳") { return 26 }
+        return day.count == 1 ? 24 : 20
+    }
+
     var body: some View {
-        Text(month)
-            .font(.system(size: 14, weight: .semibold))
+        Text(day)
+            .font(.system(size: dayFontSize, weight: .semibold))
+            .foregroundColor(.white)
             .minimumScaleFactor(0.5)
             .lineLimit(1)
-            .widgetLabel(day)
+            .widgetLabel {
+                Text(month)
+                    .foregroundColor(goldTint)
+            }
     }
 }
 
@@ -159,7 +168,7 @@ struct HDateWidgetEntryView: View {
         case .accessoryCircular:
             HDateCircularView(day: entry.hebDayNumber, month: entry.hebMonthAbbrev)
         case .accessoryCorner:
-            HDateCornerView(day: entry.hebDayNumber, month: entry.hebMonthAbbrev)
+            HDateCornerView(day: entry.hebDayNumber, month: entry.hebMonthName)
         case .accessoryInline:
             Text(entry.hebDateShort)
         default:

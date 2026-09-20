@@ -42,6 +42,36 @@ final class ModelData: ObservableObject {
         WidgetCenter.shared.reloadAllTimelines()
     }
 
+    // Pull the App Group settings back into this process's in-memory
+    // copy. The widget extension keeps ModelData.shared alive across
+    // timeline reloads, so when the app changes a setting and calls
+    // WidgetCenter.reloadAllTimelines(), the widget process re-runs
+    // getTimeline() but still holds the language/schedule it read at
+    // launch. Without this re-sync the watch face keeps rendering the
+    // old setting (e.g. Ashkenazi even after switching to Hebrew).
+    // doingInit is raised so the property observers don't write back
+    // to defaults or trigger another timeline reload.
+    public func refreshFromDefaults() -> Void {
+        let newIl = ModelData.defaults.bool(forKey: "israel")
+        let newLang = ModelData.defaults.integer(forKey: "lang")
+        let newDafyomi = ModelData.defaults.bool(forKey: "dafyomi")
+        guard newIl != il || newLang != lang || newDafyomi != dafyomi else {
+            return
+        }
+        logger.debug("refreshFromDefaults il=\(newIl) lang=\(newLang) dafyomi=\(newDafyomi)")
+        let ilChanged = newIl != il
+        doingInit = true
+        il = newIl
+        lang = newLang
+        dafyomi = newDafyomi
+        doingInit = false
+        if ilChanged {
+            sedraCache = [:]
+        }
+        currentDay = -1
+        updateDateItems()
+    }
+
     @Published public var il: Bool {
         didSet {
             if !doingInit {

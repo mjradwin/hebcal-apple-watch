@@ -96,6 +96,9 @@ struct HebcalProvider: TimelineProvider {
 
     static func makeEntry(for date: Date) -> HebcalEntry {
         let settings = ModelData.shared
+        // The widget process reuses ModelData.shared across reloads, so
+        // pick up any setting the app changed since this process started.
+        settings.refreshFromDefaults()
         let hdate = settings.makeHDate(date: date)
 
         let parts = settings.getHebDateStringParts(hdate: hdate, showYear: false)
