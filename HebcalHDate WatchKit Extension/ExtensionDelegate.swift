@@ -10,7 +10,7 @@ import WatchKit
 import os
 
 // The app's extension delegate.
-class ExtensionDelegate: NSObject, WKExtensionDelegate {
+class ExtensionDelegate: NSObject, WKApplicationDelegate {
     let logger = Logger(subsystem: "com.hebcal.HebcalHDate.watchkitapp.watchkitextension.ExtensionDelegate",
                         category: "Extension Delegate")
 
@@ -19,7 +19,7 @@ class ExtensionDelegate: NSObject, WKExtensionDelegate {
     // Called when a background task occurs.
     func handle(_ backgroundTasks: Set<WKRefreshBackgroundTask>) {
         logger.debug("Handling a background task...")
-        logger.debug("App State: \(WKExtension.shared().applicationState.rawValue)")
+        logger.debug("App State: \(WKApplication.shared().applicationState.rawValue)")
         for task in backgroundTasks {
             logger.debug("Task: \(task)")
             switch task {
@@ -58,7 +58,7 @@ let scheduleLogger = Logger(
 private let backgroundRefreshInterval = 2.0 * 60.0 * 60.0
 func scheduleBackgroundRefreshTasks() {
     let refreshTime = Date().advanced(by: backgroundRefreshInterval)
-    WKExtension.shared().scheduleBackgroundRefresh(
+    WKApplication.shared().scheduleBackgroundRefresh(
         withPreferredDate: refreshTime,
         userInfo: nil
     ) { (error) in

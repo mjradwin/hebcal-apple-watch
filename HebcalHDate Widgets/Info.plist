@@ -20,14 +20,10 @@
 	<string>$(MARKETING_VERSION)</string>
 	<key>CFBundleVersion</key>
 	<string>$(CURRENT_PROJECT_VERSION)</string>
-	<key>UISupportedInterfaceOrientations</key>
-	<array>
-		<string>UIInterfaceOrientationPortrait</string>
-		<string>UIInterfaceOrientationPortraitUpsideDown</string>
-	</array>
-	<key>WKApplication</key>
-	<true/>
-	<key>WKWatchOnly</key>
-	<true/>
+	<key>NSExtension</key>
+	<dict>
+		<key>NSExtensionPointIdentifier</key>
+		<string>com.apple.widgetkit-extension</string>
+	</dict>
 </dict>
 </plist>
