@@ -63,16 +63,10 @@ struct HDateCornerView: View {
     let day: String
     let month: String
 
-    private var dayFontSize: CGFloat {
-        if day.hasSuffix("׳") { return 26 }
-        return day.count == 1 ? 24 : 20
-    }
-
     var body: some View {
         Text(day)
-            .font(.system(size: dayFontSize, weight: .semibold))
+            .widgetCurvesContent()
             .foregroundColor(.white)
-            .minimumScaleFactor(0.5)
             .lineLimit(1)
             .widgetLabel {
                 Text(month)

@@ -7,7 +7,11 @@
 
 import Foundation
 import WatchKit
+import ClockKit
 import os
+
+// Bundle identifier of the widget extension that hosts the migrated widgets.
+private let widgetExtensionBundleIdentifier = "com.hebcal.HebcalHDate.watchkitapp.widgets"
 
 // The app's extension delegate.
 class ExtensionDelegate: NSObject, WKApplicationDelegate {
@@ -46,6 +50,29 @@ class ExtensionDelegate: NSObject, WKApplicationDelegate {
                 task.setTaskCompletedWithSnapshot(false)
             }
         }
+    }
+}
+
+// MARK: - ClockKit -> WidgetKit complication migration
+//
+// watchOS calls this migrator once, when a user updates in place from a build
+// that still had ClockKit complications on a watch face to a build that provides
+// this conformance. The legacy CLKComplicationDescriptor identifiers were reused
+// verbatim as the WidgetKit `kind` strings (see HebcalWidgetBundle), so each old
+// complication maps 1:1 to its equivalent static widget.
+//
+// Note: this is a one-shot, in-place-upgrade event. Users who already updated to
+// a WidgetKit build that lacked this migrator have missed the window and must
+// re-add complications by hand; only users still on the old ClockKit version
+// benefit from this on their next update.
+extension ExtensionDelegate: CLKComplicationWidgetMigrator {
+    func widgetConfiguration(
+        from complicationDescriptor: CLKComplicationDescriptor
+    ) async -> CLKComplicationWidgetMigrationConfiguration? {
+        CLKComplicationStaticWidgetMigrationConfiguration(
+            kind: complicationDescriptor.identifier,
+            extensionBundleIdentifier: widgetExtensionBundleIdentifier
+        )
     }
 }
 
