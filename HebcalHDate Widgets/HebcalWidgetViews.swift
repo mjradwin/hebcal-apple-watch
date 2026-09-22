@@ -25,12 +25,11 @@ private let goldTint = Color(red: 1.0, green: 0.75, blue: 0.0)
 struct HDateCircularView: View {
     @Environment(\.widgetRenderingMode) private var renderingMode
 
-    let day: String
-    let month: String
+    let entry: HebcalEntry
 
     private var dayFontSize: CGFloat {
-        if day.hasSuffix("׳") { return 30 }
-        return day.count == 1 ? 27.5 : 23
+        if entry.hebDayNumber.hasSuffix("׳") { return 30 }
+        return entry.hebDayNumber.count == 1 ? 27.5 : 23
     }
 
     var body: some View {
@@ -39,13 +38,13 @@ struct HDateCircularView: View {
                 Circle().fill(Color(red: 0.11, green: 0.10, blue: 0.08))
             }
             VStack(spacing: 0) {
-                Text(day)
+                Text(entry.hebDayNumber)
                     .offset(x: 0, y: -2)
                     .foregroundColor(.white)
                     .font(.system(size: dayFontSize, weight: .semibold))
                     .minimumScaleFactor(0.5)
                     .lineLimit(1)
-                Text(month)
+                Text(entry.hebMonthAbbrev)
                     .offset(x: 0, y: -5)
                     .foregroundColor(goldTint)
                     .font(.system(size: 12, weight: .semibold))
@@ -60,16 +59,15 @@ struct HDateCircularView: View {
 /// Accessory corner: large day number near the centre with the month
 /// curving along the bezel via `.widgetLabel`.
 struct HDateCornerView: View {
-    let day: String
-    let month: String
+    let entry: HebcalEntry
 
     var body: some View {
-        Text(day)
+        Text(entry.hebDayNumber)
             .widgetCurvesContent()
             .foregroundColor(.white)
             .lineLimit(1)
             .widgetLabel {
-                Text(month)
+                Text(entry.hebMonthName)
                     .foregroundColor(goldTint)
             }
     }
@@ -106,9 +104,10 @@ struct HebcalRectangularView: View {
 
 /// Accessory circular for Torah portion: 1 or 2 stacked lines.
 struct ParshaCircularView: View {
-    let parts: [String]
+    let entry: HebcalEntry
 
     var body: some View {
+        let parts = entry.parshaParts
         if parts.count >= 2 {
             VStack(spacing: 0) {
                 Text(parts[0])
@@ -160,9 +159,9 @@ struct HDateWidgetEntryView: View {
     var body: some View {
         switch family {
         case .accessoryCircular:
-            HDateCircularView(day: entry.hebDayNumber, month: entry.hebMonthAbbrev)
+            HDateCircularView(entry: entry)
         case .accessoryCorner:
-            HDateCornerView(day: entry.hebDayNumber, month: entry.hebMonthName)
+            HDateCornerView(entry: entry)
         case .accessoryInline:
             Text(entry.hebDateShort)
         default:
@@ -179,7 +178,7 @@ struct ParshaWidgetEntryView: View {
     var body: some View {
         switch family {
         case .accessoryCircular:
-            ParshaCircularView(parts: entry.parshaParts)
+            ParshaCircularView(entry: entry)
         case .accessoryInline:
             Text(entry.parshaPrefixed)
         default:
@@ -187,3 +186,72 @@ struct ParshaWidgetEntryView: View {
         }
     }
 }
+
+// MARK: - Previews
+
+#if DEBUG
+/// Noon local time on the given Gregorian date, so `makeHDate`'s 8pm
+/// day-rollover never pushes the preview onto the next Hebrew day.
+private func previewNoon(year: Int, month: Int, day: Int) -> Date {
+    var components = DateComponents()
+    components.year = year
+    components.month = month
+    components.day = day
+    components.hour = 12
+    return Calendar(identifier: .gregorian).date(from: components)!
+}
+
+// Compares the ParshaCircularView fix directly: Sep 21, 2026 is Yom Kippur
+// (a holiday, not Shabbat) and used to wrongly show the upcoming
+// "Parashat Sukkot"; Sep 22 is an ordinary day between Yom Kippur and
+// Sukkot and still correctly shows the upcoming weekly parsha.
+#Preview("Yom Kippur — Sep 21, 2026", as: .accessoryCircular) {
+    ParshaWidget()
+} timeline: {
+    HebcalProvider.makeEntry(for: previewNoon(year: 2026, month: 9, day: 21))
+}
+
+#Preview("Day after — Sep 22, 2026", as: .accessoryCircular) {
+    ParshaWidget()
+} timeline: {
+    HebcalProvider.makeEntry(for: previewNoon(year: 2026, month: 9, day: 22))
+}
+
+// Oct 7, 2026 = 26 Tishrei 5787, an ordinary day just after Sukkot/Simchat
+// Torah — exercises the other two widgets' non-holiday rendering.
+#Preview("Oct 7, 2026 — Rectangular", as: .accessoryRectangular) {
+    HebcalWidget()
+} timeline: {
+    HebcalProvider.makeEntry(for: previewNoon(year: 2026, month: 10, day: 7))
+}
+
+#Preview("Oct 7, 2026 — Inline", as: .accessoryInline) {
+    HebcalWidget()
+} timeline: {
+    HebcalProvider.makeEntry(for: previewNoon(year: 2026, month: 10, day: 7))
+}
+
+#Preview("Oct 7, 2026 — HDate Circular", as: .accessoryCircular) {
+    HDateWidget()
+} timeline: {
+    HebcalProvider.makeEntry(for: previewNoon(year: 2026, month: 10, day: 7))
+}
+
+#Preview("Oct 7, 2026 — HDate Corner", as: .accessoryCorner) {
+    HDateWidget()
+} timeline: {
+    HebcalProvider.makeEntry(for: previewNoon(year: 2026, month: 10, day: 7))
+}
+
+#Preview("Oct 7, 2026 — HDate Inline", as: .accessoryInline) {
+    HDateWidget()
+} timeline: {
+    HebcalProvider.makeEntry(for: previewNoon(year: 2026, month: 10, day: 7))
+}
+
+#Preview("Oct 7, 2026 — Parsha Circular", as: .accessoryCircular) {
+    ParshaWidget()
+} timeline: {
+    HebcalProvider.makeEntry(for: previewNoon(year: 2026, month: 10, day: 7))
+}
+#endif

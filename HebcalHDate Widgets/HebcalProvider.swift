@@ -24,8 +24,13 @@ struct HebcalEntry: TimelineEntry {
 
     // Parsha
     let parshaName: String?         // "Behar-Bechukotai"
+
+    // What the Parsha widget should actually show for today: the weekly
+    // parsha, UNLESS today itself is a holiday (e.g. Yom Kippur), in which
+    // case the holiday name takes over so the widget doesn't show a
+    // confusing "upcoming Shabbat" parsha on a day that isn't Shabbat.
     let parshaParts: [String]       // 1 or 2 elements for stacked layouts
-    let parshaPrefixed: String      // "Parashat Behar-Bechukotai" (always set)
+    let parshaPrefixed: String      // "Parashat Behar-Bechukotai", or the holiday name on a holiday
 
     // Holiday picked for this date (specialShabbat included for the rich widget).
     let richHeaderLong: String      // header for rectangular widget (with year + emoji)
@@ -156,7 +161,13 @@ struct HebcalProvider: TimelineProvider {
         } else {
             richBody2 = omer
         }
-        _ = holidayShort  // currently unused; preserved for future short layouts
+        // The Parsha widget shows the holiday name instead of the weekly
+        // parsha when today itself is a holiday (e.g. Yom Kippur) — showing
+        // "Parashat Sukkot" (the upcoming Shabbat) on a non-Shabbat holiday
+        // reads as a mistake, since it's not today's parsha.
+        let parshaWidgetParts = holidayToday.map { splitParsha(parsha: holidayShort ?? $0) }
+            ?? (parshaParts.isEmpty ? [parshaForFallback] : parshaParts)
+        let parshaWidgetPrefixed = holidayToday ?? parshaPrefixed
 
         return HebcalEntry(
             date: date,
@@ -166,8 +177,8 @@ struct HebcalProvider: TimelineProvider {
             hebDateLong: hebDateLong,
             hebMonthAbbrev: monthShort,
             parshaName: parshaName,
-            parshaParts: parshaParts.isEmpty ? [parshaForFallback] : parshaParts,
-            parshaPrefixed: parshaPrefixed,
+            parshaParts: parshaWidgetParts,
+            parshaPrefixed: parshaWidgetPrefixed,
             richHeaderLong: richHeaderLong,
             richHeaderShort: richHeaderShort,
             richBody1: richBody1,
