@@ -7,7 +7,16 @@
       "location" : "https://github.com/hebcal/hebcal-swift.git",
       "state" : {
         "branch" : "main",
-        "revision" : "01d94e142f83e5a56898a610127eb32b8aa1baec"
+        "revision" : "9ae6f14ad10239c3cd033072c3aabfdbd9e6c654"
+      }
+    },
+    {
+      "identity" : "suncalc",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/Timac/SunCalc.git",
+      "state" : {
+        "revision" : "72931128f7f55fbf95d403ee7f02d263b8f62946",
+        "version" : "1.0.0"
       }
     }
   ],

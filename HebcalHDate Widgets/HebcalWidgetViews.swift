@@ -80,17 +80,50 @@ struct HebcalRectangularView: View {
 
     var body: some View {
         VStack(alignment: .leading, spacing: 0) {
-            Text(entry.richHeaderLong)
-                .font(.headline)
-                .foregroundColor(goldTint)
-                .widgetAccentable()
+            ViewThatFits(in: .horizontal) {
+                Text(entry.richHeaderLong)
+                Text(entry.richHeaderShort)
+            }
+            .font(.headline)
+            .foregroundColor(.primary)
+            .widgetAccentable()
+            .lineLimit(1)
+            .minimumScaleFactor(0.6)
+            if entry.holidayToday != nil {
+                ViewThatFits(in: .horizontal) {
+                    Text(entry.holidayToday!)
+                    Text(entry.holidayShort!)
+                }
+                .foregroundColor(.yellow)
                 .lineLimit(1)
                 .minimumScaleFactor(0.6)
-            Text(entry.richBody1)
-                .lineLimit(1)
-                .minimumScaleFactor(0.6)
-            if let body2 = entry.richBody2 {
-                Text(body2)
+            }
+            if entry.parshaName != nil {
+                HStack {
+                    Image("torah-235339")
+                        .resizable()
+                        .scaledToFit()
+                        .frame(width: 16, height: 16)
+                    Text(entry.parshaName!)
+                        .lineLimit(1)
+                        .minimumScaleFactor(0.6)
+                        .foregroundColor(goldTint)
+                }
+            } else if entry.holidayToday == nil {
+                // Show the Torah icon before upcoming Shabbat holiday
+                HStack {
+                    Image("torah-235339")
+                        .resizable()
+                        .scaledToFit()
+                        .frame(width: 16, height: 16)
+                    Text(entry.parshaForFallback)
+                        .lineLimit(1)
+                        .minimumScaleFactor(0.6)
+                        .foregroundColor(goldTint)
+                }
+            }
+            if entry.omerToday != nil {
+                Text(entry.omerToday!)
                     .lineLimit(1)
                     .minimumScaleFactor(0.6)
                     .foregroundColor(.secondary)
@@ -142,7 +175,10 @@ struct HebcalWidgetEntryView: View {
         case .accessoryRectangular:
             HebcalRectangularView(entry: entry)
         case .accessoryInline:
-            Text(entry.inlineText)
+            ViewThatFits(in: .horizontal) {
+                Text(entry.inlineText)
+                Text(entry.inlineShortText ?? entry.inlineText)
+            }
         default:
             // The Hebcal widget only declares rectangular+inline, but
             // be defensive for forward-compat.
@@ -180,7 +216,10 @@ struct ParshaWidgetEntryView: View {
         case .accessoryCircular:
             ParshaCircularView(entry: entry)
         case .accessoryInline:
-            Text(entry.parshaPrefixed)
+            ViewThatFits(in: .horizontal) {
+                Text(entry.parshaPrefixed)
+                Text(entry.parshaForFallback)
+            }
         default:
             Text(entry.parshaParts.first ?? "")
         }
@@ -209,6 +248,24 @@ private func previewNoon(year: Int, month: Int, day: Int) -> Date {
     ParshaWidget()
 } timeline: {
     HebcalProvider.makeEntry(for: previewNoon(year: 2026, month: 9, day: 21))
+}
+
+#Preview("YK — Rectangular", as: .accessoryRectangular) {
+    HebcalWidget()
+} timeline: {
+    HebcalProvider.makeEntry(for: previewNoon(year: 2026, month: 9, day: 21))
+}
+
+#Preview("RCh Chanukah weekday — Rectangular", as: .accessoryRectangular) {
+    HebcalWidget()
+} timeline: {
+    HebcalProvider.makeEntry(for: previewNoon(year: 2026, month: 12, day: 10))
+}
+
+#Preview("Pesach VI (CH’’M) — Rectangular", as: .accessoryRectangular) {
+    HebcalWidget()
+} timeline: {
+    HebcalProvider.makeEntry(for: previewNoon(year: 2027, month: 4, day: 27))
 }
 
 #Preview("Day after — Sep 22, 2026", as: .accessoryCircular) {

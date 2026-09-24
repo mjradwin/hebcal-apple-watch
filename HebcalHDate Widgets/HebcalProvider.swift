@@ -24,6 +24,7 @@ struct HebcalEntry: TimelineEntry {
 
     // Parsha
     let parshaName: String?         // "Behar-Bechukotai"
+    let parshaForFallback: String
 
     // What the Parsha widget should actually show for today: the weekly
     // parsha, UNLESS today itself is a holiday (e.g. Yom Kippur), in which
@@ -33,10 +34,11 @@ struct HebcalEntry: TimelineEntry {
     let parshaPrefixed: String      // "Parashat Behar-Bechukotai", or the holiday name on a holiday
 
     // Holiday picked for this date (specialShabbat included for the rich widget).
+    let holidayToday: String?
+    let holidayShort: String?
     let richHeaderLong: String      // header for rectangular widget (with year + emoji)
     let richHeaderShort: String     // shorter version (no year, with emoji)
-    let richBody1: String           // holiday-today OR parsha
-    let richBody2: String?          // parsha OR omer (may be nil)
+    let omerToday: String?
 
     // Inline (one-line) form, replaces utilitarian-large.
     let inlineText: String
@@ -154,13 +156,6 @@ struct HebcalProvider: TimelineProvider {
             }
         }
         let omer = settings.omerStr(hdate: hdate)
-        let richBody1 = holidayToday ?? (parshaName ?? parshaForFallback)
-        let richBody2: String?
-        if holidayToday != nil {
-            richBody2 = parshaName
-        } else {
-            richBody2 = omer
-        }
         // The Parsha widget shows the holiday name instead of the weekly
         // parsha when today itself is a holiday (e.g. Yom Kippur) — showing
         // "Parashat Sukkot" (the upcoming Shabbat) on a non-Shabbat holiday
@@ -177,12 +172,14 @@ struct HebcalProvider: TimelineProvider {
             hebDateLong: hebDateLong,
             hebMonthAbbrev: monthShort,
             parshaName: parshaName,
+            parshaForFallback: parshaForFallback,
             parshaParts: parshaWidgetParts,
             parshaPrefixed: parshaWidgetPrefixed,
+            holidayToday: holidayToday,
+            holidayShort: holidayShort,
             richHeaderLong: richHeaderLong,
             richHeaderShort: richHeaderShort,
-            richBody1: richBody1,
-            richBody2: richBody2,
+            omerToday: omer,
             inlineText: inlineText,
             inlineShortText: inlineShort,
             isHebrew: isHebrew
