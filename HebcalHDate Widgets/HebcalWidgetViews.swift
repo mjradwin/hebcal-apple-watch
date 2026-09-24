@@ -74,8 +74,12 @@ struct HDateCornerView: View {
     }
 }
 
-/// Accessory rectangular: header (date + emoji), body1 (holiday/parsha),
-/// body2 (parsha/omer). Matches the legacy graphic-rectangular layout.
+/// Accessory rectangular: up to four lines, each shown only when relevant:
+///   * header — Hebrew date (+ holiday emoji), shortened via ViewThatFits
+///   * holiday — today's holiday, long or abbreviated name
+///   * parsha — Torah icon + this week's parsha; when there's neither a
+///     parsha nor a holiday today, the upcoming Shabbat holiday instead
+///   * omer — the Omer count during the Omer period
 struct HebcalRectangularView: View {
     let entry: HebcalEntry
 
