@@ -36,8 +36,12 @@ struct HebcalEntry: TimelineEntry {
     // Holiday picked for this date (specialShabbat included for the rich widget).
     let holidayToday: String?
     let holidayShort: String?
-    let richHeaderLong: String      // header for rectangular widget (with year + emoji)
-    let richHeaderShort: String     // shorter version (no year, with emoji)
+    // Header tiers for the rectangular widget, widest to narrowest (each
+    // with the holiday emoji, if any).
+    let richHeaderLong: String      // "26 Tishrei 5787"
+    let richHeaderShort: String     // "26 Tishrei" (no year)
+    let richHeaderAbbrev: String    // "26 Tishr" (monthAbbrev)
+    let richHeaderTiny: String      // "26 Tish" (monthAbbrevTiny)
     let omerToday: String?
 
     // Inline (one-line) form, replaces utilitarian-large. Tiers from
@@ -139,13 +143,17 @@ struct HebcalProvider: TimelineProvider {
         }
         let inlineLongText = inline(hebDateLong)
         let inlineText = inline(hebDateShort)
-        let inlineAbbrevText = inline("\(dayNum) \(monthShort)")
-        let inlineTinyText = inline("\(dayNum) \(monthAbbrevTiny[monthName] ?? monthShort)")
+        let hebDateAbbrev = "\(dayNum) \(monthShort)"
+        let hebDateTiny = "\(dayNum) \(monthAbbrevTiny[monthName] ?? monthShort)"
+        let inlineAbbrevText = inline(hebDateAbbrev)
+        let inlineTinyText = inline(hebDateTiny)
 
         // Rich (rectangular) — specialShabbat: true, with emoji on the header.
         let holidayEvRich = settings.pickHolidayToDisplay(hdate: hdate, specialShabbat: true)
         var richHeaderLong = hebDateLong
         var richHeaderShort = hebDateShort
+        var richHeaderAbbrev = hebDateAbbrev
+        var richHeaderTiny = hebDateTiny
         var holidayToday: String? = nil
         var holidayShort: String? = nil
         if let ev = holidayEvRich {
@@ -154,6 +162,8 @@ struct HebcalProvider: TimelineProvider {
             if let emoji = settings.pickEmoji(events: [ev]) {
                 richHeaderLong += " " + emoji
                 richHeaderShort += " " + emoji
+                richHeaderAbbrev += " " + emoji
+                richHeaderTiny += " " + emoji
             }
         }
         let omer = settings.omerStr(hdate: hdate)
@@ -180,6 +190,8 @@ struct HebcalProvider: TimelineProvider {
             holidayShort: holidayShort,
             richHeaderLong: richHeaderLong,
             richHeaderShort: richHeaderShort,
+            richHeaderAbbrev: richHeaderAbbrev,
+            richHeaderTiny: richHeaderTiny,
             omerToday: omer,
             inlineLongText: inlineLongText,
             inlineText: inlineText,
