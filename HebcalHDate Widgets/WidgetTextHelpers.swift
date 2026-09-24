@@ -73,7 +73,7 @@ let parshaHyphenate: [String: [String]?] = [
     "Devarim": ["Deva-", "rim"],
     "Eikev": nil,
     "Emor": nil,
-    "Ha'Azinu": ["Ha-", "Azinu"],
+    "Ha'azinu": ["Ha’-", "azinu"],
     "Kedoshim": ["Kedo-", "shim"],
     "Ki Tavo": nil,
     "Ki Teitzei": nil,

@@ -381,7 +381,7 @@ private func previewNoon(year: Int, month: Int, day: Int) -> Date {
     HebcalProvider.makeEntry(for: previewNoon(year: 2026, month: 6, day: 10))
 }
 
-#Preview("Parsha circular Ha'Azinu", as: .accessoryCircular) {
+#Preview("Parsha circular Ha'azinu", as: .accessoryCircular) {
     ParshaWidget()
 } timeline: {
     HebcalProvider.makeEntry(for: previewNoon(year: 2026, month: 9, day: 16))
