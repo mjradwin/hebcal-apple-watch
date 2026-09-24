@@ -10,6 +10,8 @@ import SwiftUI
 import Hebcal
 
 struct TodayView: View {
+    @ScaledMetric private var smallFontSize: CGFloat = 16
+    @ScaledMetric private var largeFontSize: CGFloat = 18
     var item: DateItem
     var gregDate: String {
         var s = item.dow + ", " + String(item.gregDay) + " " + item.gregMonth
@@ -32,22 +34,22 @@ struct TodayView: View {
             VStack(alignment: isHebrew ? .trailing : .leading, spacing:0) {
                 Text(gregDate)
                     .foregroundColor(.secondary)
-                    .scaledFont(size: 16, weight: .regular, design: .default)
+                    .font(.system(size: smallFontSize, weight: .regular, design: .default))
                     .lineLimit(1)
                 Text(item.hdate)
                     .foregroundColor(.white)
-                    .scaledFont(size: 18, weight: .regular, design: .default)
+                    .font(.system(size: largeFontSize, weight: .regular, design: .default))
                     .lineLimit(1)
                 ForEach(item.holidays, id: \.self) { holiday in
                     Text(holiday)
                         .foregroundColor(.yellow)
-                        .scaledFont(size: 18, weight: .regular, design: .default)
+                        .font(.system(size: largeFontSize, weight: .regular, design: .default))
                         .lineLimit(holiday.count > 19 ? 2 : 1)
                 }
                 item.omer.map({
                     Text($0)
                         .foregroundColor(.secondary)
-                        .scaledFont(size: 16, weight: .regular, design: .default)
+                        .font(.system(size: smallFontSize, weight: .regular, design: .default))
                         .lineLimit(1)
                 })
                 if item.parsha != nil {
@@ -58,14 +60,14 @@ struct TodayView: View {
                             .frame(width: 16, height: 16)
                         Text(item.parsha!)
                             .foregroundColor(Color(red: 1.0, green: 0.75, blue: 0.0))
-                            .scaledFont(size: 18, weight: .regular, design: .default)
+                            .font(.system(size: largeFontSize, weight: .regular, design: .default))
                             .lineLimit(1)
                     }
                 }
                 if item.dafyomi != nil {
                     Text(item.dafyomi!)
                         .foregroundColor(.secondary)
-                        .scaledFont(size: 16, weight: .regular, design: .default)
+                        .font(.system(size: smallFontSize, weight: .regular, design: .default))
                         .lineLimit(1)
                 }
             }
