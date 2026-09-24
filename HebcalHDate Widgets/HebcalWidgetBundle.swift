@@ -5,7 +5,8 @@
 //  Three widgets, one for each of the original ClockKit complications:
 //
 //    complicationHebcal  -> rich rectangular + inline
-//    complicationHdate   -> small day/month (circular, corner, inline)
+//    complicationHdate   -> small day/month (circular, corner); its
+//                           inline slot shows the Hebcal inline text
 //    complicationParsha  -> Torah portion (circular, inline)
 //
 //  The `kind` strings are preserved from the legacy

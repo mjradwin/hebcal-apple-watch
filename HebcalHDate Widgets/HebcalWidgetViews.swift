@@ -195,6 +195,27 @@ struct ParshaCircularView: View {
     }
 }
 
+// MARK: - Inline
+
+/// Accessory inline, shared by the Hebcal and HDate widgets.
+/// Progressively shortens the date; the parsha/holiday is kept whole. If
+/// even the tiniest month doesn't fit, ViewThatFits falls back to its last
+/// child, so repeat the un-abbreviated month there and let the system
+/// truncate the parsha instead.
+struct HebcalInlineView: View {
+    let entry: HebcalEntry
+
+    var body: some View {
+        ViewThatFits(in: .horizontal) {
+            Text(entry.inlineLongText)
+            Text(entry.inlineText)
+            Text(entry.inlineAbbrevText)
+            Text(entry.inlineTinyText)
+            Text(entry.inlineText)
+        }
+    }
+}
+
 // MARK: - Container views
 
 struct HebcalWidgetEntryView: View {
@@ -207,17 +228,7 @@ struct HebcalWidgetEntryView: View {
         case .accessoryRectangular:
             HebcalRectangularView(entry: entry)
         case .accessoryInline:
-            // Progressively shorten the date; the parsha/holiday is kept
-            // whole. If even the tiniest month doesn't fit, ViewThatFits
-            // falls back to its last child, so repeat the un-abbreviated
-            // month there and let the system truncate the parsha instead.
-            ViewThatFits(in: .horizontal) {
-                Text(entry.inlineLongText)
-                Text(entry.inlineText)
-                Text(entry.inlineAbbrevText)
-                Text(entry.inlineTinyText)
-                Text(entry.inlineText)
-            }
+            HebcalInlineView(entry: entry)
         default:
             // The Hebcal widget only declares rectangular+inline, but
             // be defensive for forward-compat.
@@ -238,10 +249,10 @@ struct HDateWidgetEntryView: View {
         case .accessoryCorner:
             HDateCornerView(entry: entry)
         case .accessoryInline:
-            ViewThatFits(in: .horizontal) {
-                Text(entry.hebDateLong)
-                Text(entry.hebDateShort)
-            }
+            // No HDate-specific inline view: legacy ClockKit HDate
+            // complications in utilitarian-flat slots migrate to this
+            // kind, so show the same shortening Hebcal inline text.
+            HebcalInlineView(entry: entry)
         default:
             Text(entry.hebDateShort)
         }
