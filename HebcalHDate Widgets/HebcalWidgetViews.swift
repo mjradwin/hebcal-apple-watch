@@ -85,13 +85,12 @@ struct HebcalRectangularView: View {
 
     var body: some View {
         VStack(alignment: .leading, spacing: 0) {
-            // Shorten the month before minimumScaleFactor shrinks the
-            // text; the tiniest form is the last resort and gets scaled.
+            // Drop the year, then abbreviate the month, before
+            // minimumScaleFactor shrinks the text.
             ViewThatFits(in: .horizontal) {
                 Text(entry.richHeaderLong)
                 Text(entry.richHeaderShort)
                 Text(entry.richHeaderAbbrev)
-                Text(entry.richHeaderTiny)
             }
             .font(.headline)
             .foregroundColor(.primary)

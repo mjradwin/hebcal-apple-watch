@@ -9,6 +9,13 @@
 
 import Foundation
 
+/// `lookupTranslation` turns ASCII apostrophes into ’ for Sephardic and
+/// Ashkenazi, but the tables below are keyed with plain ' (e.g. "Sh'vat"),
+/// so normalize a translated name before looking it up.
+func tableKey(_ name: String) -> String {
+    return name.replacingOccurrences(of: "’", with: "'")
+}
+
 // Two-line stack abbreviations (graphic circular, modular small, etc.).
 // nil means "the full name fits, no abbreviation needed".
 let monthAbbrev: [String: String?] = [
@@ -26,6 +33,8 @@ let monthAbbrev: [String: String?] = [
     "Tamuz": nil,
     "Tevet": nil,
     "Tishrei": "Tishr",
+    // ashk
+    "Teves": nil,
 ]
 
 // Tighter abbreviations used by the extra-large equivalent
@@ -45,6 +54,8 @@ let monthAbbrevTiny: [String: String] = [
     "Tamuz": "Tam",
     "Tevet": "Tev",
     "Tishrei": "Tish",
+    // ashk
+    "Teves": "Tev",
 ]
 
 let parshaHyphenate: [String: [String]?] = [
