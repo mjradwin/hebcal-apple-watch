@@ -366,6 +366,27 @@ private func previewNoon(year: Int, month: Int, day: Int) -> Date {
     HebcalProvider.makeEntry(for: previewNoon(year: 2026, month: 12, day: 25))
 }
 
+// Parsha names with an apostrophe, which Sedra returns as ’ and which
+// must still match parshaHyphenate. The June dates assume the Diaspora
+// schedule; in Israel those weeks are Sh'lach and Korach instead.
+#Preview("Parsha circular Beha'alotcha (Diaspora)", as: .accessoryCircular) {
+    ParshaWidget()
+} timeline: {
+    HebcalProvider.makeEntry(for: previewNoon(year: 2026, month: 6, day: 3))
+}
+
+#Preview("Parsha circular Sh'lach (Diaspora)", as: .accessoryCircular) {
+    ParshaWidget()
+} timeline: {
+    HebcalProvider.makeEntry(for: previewNoon(year: 2026, month: 6, day: 10))
+}
+
+#Preview("Parsha circular Ha'Azinu", as: .accessoryCircular) {
+    ParshaWidget()
+} timeline: {
+    HebcalProvider.makeEntry(for: previewNoon(year: 2026, month: 9, day: 16))
+}
+
 #Preview("Parsha circular Erev Purim", as: .accessoryCircular) {
     ParshaWidget()
 } timeline: {
