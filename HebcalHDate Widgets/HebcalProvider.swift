@@ -40,9 +40,12 @@ struct HebcalEntry: TimelineEntry {
     let richHeaderShort: String     // shorter version (no year, with emoji)
     let omerToday: String?
 
-    // Inline (one-line) form, replaces utilitarian-large.
-    let inlineText: String
-    let inlineShortText: String?
+    // Inline (one-line) form, replaces utilitarian-large. Tiers from
+    // widest to narrowest; the view picks the first one that fits.
+    let inlineLongText: String      // "26 Tishrei 5787 · Bereshit"
+    let inlineText: String          // "26 Tishrei · Bereshit"
+    let inlineAbbrevText: String    // "26 Tishr · Bereshit" (monthAbbrev)
+    let inlineTinyText: String      // "26 Tish · Bereshit" (monthAbbrevTiny)
 
     let isHebrew: Bool
 }
@@ -130,16 +133,14 @@ struct HebcalProvider: TimelineProvider {
         let holidayInlineAbbrev = holidayEvForInline.map { settings.translateHolidayName(ev: $0, abbrev: true) }
         let inlineExtra = holidayInlineAbbrev ?? parshaName
         let inlineFormat = isHebrew ? largeFlatFormatRTL : largeFlatFormatLTR
-        let inlineText: String
-        if let extra = inlineExtra {
-            inlineText = String(format: inlineFormat, hebDateShort, extra)
-        } else {
-            inlineText = hebDateShort
+        func inline(_ hebDate: String) -> String {
+            guard let extra = inlineExtra else { return hebDate }
+            return String(format: inlineFormat, hebDate, extra)
         }
-        var inlineShort: String? = nil
-        if let extra = inlineExtra, let abbrev = monthAbbrev[monthName] ?? nil {
-            inlineShort = String(format: inlineFormat, "\(dayNum) \(abbrev)", extra)
-        }
+        let inlineLongText = inline(hebDateLong)
+        let inlineText = inline(hebDateShort)
+        let inlineAbbrevText = inline("\(dayNum) \(monthShort)")
+        let inlineTinyText = inline("\(dayNum) \(monthAbbrevTiny[monthName] ?? monthShort)")
 
         // Rich (rectangular) — specialShabbat: true, with emoji on the header.
         let holidayEvRich = settings.pickHolidayToDisplay(hdate: hdate, specialShabbat: true)
@@ -180,8 +181,10 @@ struct HebcalProvider: TimelineProvider {
             richHeaderLong: richHeaderLong,
             richHeaderShort: richHeaderShort,
             omerToday: omer,
+            inlineLongText: inlineLongText,
             inlineText: inlineText,
-            inlineShortText: inlineShort,
+            inlineAbbrevText: inlineAbbrevText,
+            inlineTinyText: inlineTinyText,
             isHebrew: isHebrew
         )
     }

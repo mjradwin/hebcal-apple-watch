@@ -71,3 +71,7 @@ ClockKit is otherwise gone; it survives only as the `CLKComplicationWidgetMigrat
 - Hebrew (`lg == .he`) renders right-aligned — many views branch on `isHebrew` to flip alignment / insert `Spacer`s.
 - Holiday abbreviations (`holidayAbbrev` in `ModelData`) and Chanukah emoji renderings are tuned for narrow complication families; changing them affects what shows on the watch face.
 - Dynamic Type scaling for fixed point sizes uses SwiftUI's built-in `@ScaledMetric` property wrapper (e.g. `TodayView`'s `smallFontSize`/`largeFontSize`), not a custom `UIFontMetrics` wrapper — `@ScaledMetric` has been available since watchOS 7, well under the 10.6 floor. A prior hand-rolled `ScaledFont` view modifier was removed in favor of this.
+
+## Open questions (parked)
+
+- **Parsha inline fallback on holidays — possible bug, unverified.** `ParshaWidgetEntryView`'s `.accessoryInline` does `ViewThatFits { Text(entry.parshaPrefixed); Text(entry.parshaForFallback) }`. In `HebcalProvider.makeEntry`, `parshaPrefixed` becomes the holiday name when today is a holiday (the Yom Kippur fix in e851ce6), but `parshaForFallback` is still the *upcoming Shabbat* parsha. If a long holiday name doesn't fit inline, the widget may fall back to showing the upcoming parsha on a non-Shabbat holiday — the very thing e851ce6 fixed for the circular view. A likely fix is a holiday-aware short field (e.g. `holidayShort ?? holidayToday ?? parshaForFallback`). Needs confirming on a device/preview with a long holiday name before changing.
