@@ -154,11 +154,18 @@ struct ParshaCircularView: View {
             }
             .widgetAccentable()
         } else {
-            Text(parts.first ?? "")
-                .font(.system(size: 14, weight: .semibold))
-                .lineLimit(1)
-                .minimumScaleFactor(0.5)
-                .widgetAccentable()
+            // Single-line parsha: fill the second line with a Torah icon
+            VStack(spacing: 1) {
+                Text(parts.first ?? "")
+                    .font(.system(size: 14, weight: .semibold))
+                    .lineLimit(1)
+                    .minimumScaleFactor(0.5)
+                Image("torah-235339")
+                    .resizable()
+                    .scaledToFit()
+                    .frame(width: 14, height: 14)
+            }
+            .widgetAccentable()
         }
     }
 }
