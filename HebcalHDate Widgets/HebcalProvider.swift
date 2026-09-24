@@ -31,7 +31,6 @@ struct HebcalEntry: TimelineEntry {
     // case the holiday name takes over so the widget doesn't show a
     // confusing "upcoming Shabbat" parsha on a day that isn't Shabbat.
     let parshaParts: [String]       // 1 or 2 elements for stacked layouts
-    let parshaPrefixed: String      // "Parashat Behar-Bechukotai", or the holiday name on a holiday
 
     // Holiday picked for this date (specialShabbat included for the rich widget).
     let holidayToday: String?
@@ -129,8 +128,6 @@ struct HebcalProvider: TimelineProvider {
         let parshaName = settings.getParshaString(hdate: hdate, fallbackToHoliday: false, heNikud: false)
         let parshaParts = parshaName.map { splitParsha(parsha: $0) } ?? []
         let parshaForFallback = settings.getParshaString(hdate: hdate, heNikud: false)
-        let parshaPrefix = lookupTranslation(str: "Parashat", lang: lang)
-        let parshaPrefixed = "\(parshaPrefix) \(parshaForFallback)"
 
         // Inline / utilitarian-large equivalent (specialShabbat: false).
         let holidayEvForInline = settings.pickHolidayToDisplay(hdate: hdate, specialShabbat: false)
@@ -170,7 +167,6 @@ struct HebcalProvider: TimelineProvider {
         // reads as a mistake, since it's not today's parsha.
         let parshaWidgetParts = holidayToday.map { splitParsha(parsha: holidayShort ?? $0) }
             ?? (parshaParts.isEmpty ? [parshaForFallback] : parshaParts)
-        let parshaWidgetPrefixed = holidayToday ?? parshaPrefixed
 
         return HebcalEntry(
             date: date,
@@ -182,7 +178,6 @@ struct HebcalProvider: TimelineProvider {
             parshaName: parshaName,
             parshaForFallback: parshaForFallback,
             parshaParts: parshaWidgetParts,
-            parshaPrefixed: parshaWidgetPrefixed,
             holidayToday: holidayToday,
             holidayShort: holidayShort,
             richHeaderLong: richHeaderLong,

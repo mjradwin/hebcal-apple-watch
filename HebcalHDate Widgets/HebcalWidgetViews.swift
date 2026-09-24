@@ -237,11 +237,6 @@ struct HDateWidgetEntryView: View {
             HDateCircularView(entry: entry)
         case .accessoryCorner:
             HDateCornerView(entry: entry)
-        case .accessoryInline:
-            ViewThatFits(in: .horizontal) {
-                Text(entry.hebDateLong)
-                Text(entry.hebDateShort)
-            }
         default:
             Text(entry.hebDateShort)
         }
@@ -257,11 +252,6 @@ struct ParshaWidgetEntryView: View {
         switch family {
         case .accessoryCircular:
             ParshaCircularView(entry: entry)
-        case .accessoryInline:
-            ViewThatFits(in: .horizontal) {
-                Text(entry.parshaPrefixed)
-                Text(entry.parshaForFallback)
-            }
         default:
             Text(entry.parshaParts.first ?? "")
         }
@@ -337,12 +327,6 @@ private func previewNoon(year: Int, month: Int, day: Int) -> Date {
 }
 
 #Preview("Oct 7, 2026 — HDate Corner", as: .accessoryCorner) {
-    HDateWidget()
-} timeline: {
-    HebcalProvider.makeEntry(for: previewNoon(year: 2026, month: 10, day: 7))
-}
-
-#Preview("Oct 7, 2026 — HDate Inline", as: .accessoryInline) {
     HDateWidget()
 } timeline: {
     HebcalProvider.makeEntry(for: previewNoon(year: 2026, month: 10, day: 7))

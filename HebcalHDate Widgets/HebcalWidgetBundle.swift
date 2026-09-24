@@ -50,7 +50,7 @@ struct HDateWidget: Widget {
         }
         .configurationDisplayName("Hebrew Date")
         .description("Today's date in the Hebrew calendar")
-        .supportedFamilies([.accessoryCircular, .accessoryCorner, .accessoryInline])
+        .supportedFamilies([.accessoryCircular, .accessoryCorner])
     }
 }
 
@@ -64,6 +64,6 @@ struct ParshaWidget: Widget {
         }
         .configurationDisplayName("Torah Portion")
         .description("Weekly Torah portion")
-        .supportedFamilies([.accessoryCircular, .accessoryInline])
+        .supportedFamilies([.accessoryCircular])
     }
 }
