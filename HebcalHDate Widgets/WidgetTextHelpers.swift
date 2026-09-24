@@ -91,7 +91,7 @@ let parshaHyphenate: [String: [String]?] = [
     "Pekudei": ["Peku-", "dei"],
     "Pinchas": ["Pin-", "chas"],
     "Re'eh": nil,
-    "Sh'lach": ["Sh'", "lach"],
+    "Sh'lach": ["Sh’", "lach"],
     "Shemot": nil,
     "Shmini": nil,
     "Shoftim": ["Shof-", "tim"],
@@ -143,7 +143,7 @@ func splitParsha(parsha: String) -> [String] {
             return splitFirstChar(str: parsha, char: delim)
         }
     }
-    if let hyphenated = parshaHyphenate[parsha] {
+    if let hyphenated = parshaHyphenate[tableKey(parsha)] {
         if let pair = hyphenated {
             return [pair[0], pair[1]]
         }
