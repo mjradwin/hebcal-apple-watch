@@ -52,7 +52,6 @@ struct HebcalEntry: TimelineEntry {
 
     // Inline (one-line) form, replaces utilitarian-large. Tiers from
     // widest to narrowest; the view picks the first one that fits.
-    let inlineLongText: String      // "26 Tishrei 5787 · Bereshit"
     let inlineText: String          // "26 Tishrei · Bereshit"
     let inlineAbbrevText: String    // "26 Tishr · Bereshit" (monthAbbrev)
     let inlineTinyText: String      // "26 Tish · Bereshit" (monthAbbrevTiny)
@@ -155,7 +154,6 @@ struct HebcalProvider: TimelineProvider {
             guard let extra = inlineExtra else { return hebDate }
             return String(format: inlineFormat, hebDate, extra)
         }
-        let inlineLongText = inline(hebDateLong)
         let inlineText = inline(hebDateShort)
         let hebDateAbbrev = "\(dayNum) \(monthShort)"
         let inlineAbbrevText = inline(hebDateAbbrev)
@@ -206,7 +204,6 @@ struct HebcalProvider: TimelineProvider {
             richHeaderShort: richHeaderShort,
             richHeaderAbbrev: richHeaderAbbrev,
             omerToday: omer,
-            inlineLongText: inlineLongText,
             inlineText: inlineText,
             inlineAbbrevText: inlineAbbrevText,
             inlineTinyText: inlineTinyText

@@ -212,7 +212,6 @@ struct HebcalWidgetEntryView: View {
             // falls back to its last child, so repeat the un-abbreviated
             // month there and let the system truncate the parsha instead.
             ViewThatFits(in: .horizontal) {
-                Text(entry.inlineLongText)
                 Text(entry.inlineText)
                 Text(entry.inlineAbbrevText)
                 Text(entry.inlineTinyText)
