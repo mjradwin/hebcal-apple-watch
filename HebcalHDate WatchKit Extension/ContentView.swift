@@ -25,7 +25,7 @@ struct ContentView: View {
             }
             .navigationTitle("Hebcal")
         }
-        .onChange(of: scenePhase) { (phase) in
+        .onChange(of: scenePhase) { _, phase in
             switch phase {
             case .inactive:
                 logger.debug("Scene became inactive.")
