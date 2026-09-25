@@ -82,7 +82,7 @@ struct TodayView_Previews: PreviewProvider {
     static var item = DateItem(
          id: 1,
          lang: .en,
-         weekday: 1, dow: "Wed", gregDay: 28, gregMonth: "Apr",
+         dow: "Wed", gregDay: 28, gregMonth: "Apr",
          gregYear: 2021,
          hdate: "16 Iyyar 5782", parsha: "Emor",
          holidays: ["Lag BaOmer"],

@@ -56,8 +56,6 @@ struct HebcalEntry: TimelineEntry {
     let inlineText: String          // "26 Tishrei · Bereshit"
     let inlineAbbrevText: String    // "26 Tishr · Bereshit" (monthAbbrev)
     let inlineTinyText: String      // "26 Tish · Bereshit" (monthAbbrevTiny)
-
-    let isHebrew: Bool
 }
 
 struct HebcalProvider: TimelineProvider {
@@ -133,9 +131,9 @@ struct HebcalProvider: TimelineProvider {
         let isHebrew = lang == .he
 
         // Parsha (independent of holiday)
-        let parshaName = settings.getParshaString(hdate: hdate, fallbackToHoliday: false, heNikud: false)
+        let parshaName = settings.getParshaString(hdate: hdate, fallbackToHoliday: false)
         let parshaParts = parshaName.map { splitParsha(parsha: $0) } ?? []
-        let parshaForFallback = settings.getParshaString(hdate: hdate, heNikud: false)
+        let parshaForFallback = settings.getParshaString(hdate: hdate)
         let parshaPrefix = lookupTranslation(str: "Parashat", lang: lang)
         let parshaPrefixed = "\(parshaPrefix) \(parshaForFallback)"
 
@@ -211,8 +209,7 @@ struct HebcalProvider: TimelineProvider {
             inlineLongText: inlineLongText,
             inlineText: inlineText,
             inlineAbbrevText: inlineAbbrevText,
-            inlineTinyText: inlineTinyText,
-            isHebrew: isHebrew
+            inlineTinyText: inlineTinyText
         )
     }
 }

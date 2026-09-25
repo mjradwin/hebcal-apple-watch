@@ -129,22 +129,11 @@ final class ModelData: ObservableObject {
             hdate = hdate.next()
         }
         return hdate
-        // return HDate(yy: 5795, mm: .TISHREI, dd: 8)
-    }
-
-    public func getHebDateString(date: Date, showYear: Bool) -> String {
-        let hdate = makeHDate(date: date)
-        return self.getHebDateString(hdate: hdate, showYear: showYear)
     }
 
     public func getHebDateString(hdate: HDate, showYear: Bool) -> String {
         let parts = getHebDateStringParts(hdate: hdate, showYear: showYear)
         return parts.joined(separator: " ")
-    }
-
-    public func getHebDateStringParts(date: Date, showYear: Bool) -> [String] {
-        let hdate = makeHDate(date: date)
-        return self.getHebDateStringParts(hdate: hdate, showYear: showYear)
     }
 
     public func getHebDateStringParts(hdate: HDate, showYear: Bool) -> [String] {
@@ -180,29 +169,23 @@ final class ModelData: ObservableObject {
         }
     }
 
-    public func getParshaString(date: Date, heNikud: Bool) -> String {
-        let hdate = makeHDate(date: date)
-        return self.getParshaString(hdate: hdate, heNikud: heNikud)
+    public func getParshaString(hdate: HDate) -> String {
+        return self.getParshaString(hdate: hdate, fallbackToHoliday: true) ?? "??"
     }
 
-    public func getParshaString(hdate: HDate, heNikud: Bool) -> String {
-        return self.getParshaString(hdate: hdate, fallbackToHoliday: true, heNikud: heNikud) ?? "??"
-    }
-
-    public func getParshaString(hdate: HDate, fallbackToHoliday: Bool, heNikud: Bool) -> String? {
+    public func getParshaString(hdate: HDate, fallbackToHoliday: Bool) -> String? {
         let year = hdate.yy
         var sedra = sedraCache[year]
         if sedra == nil {
             sedra = Sedra(year: year, il: il)
             sedraCache[year] = sedra
         }
-        let lang = heNikud && lg == .he ? .heNikud : lg
-        let parsha0 = sedra!.lookup(hdate: hdate, lang: lang)
+        let parsha0 = sedra!.lookup(hdate: hdate, lang: lg)
         if parsha0 == nil && !fallbackToHoliday {
             return nil
         }
         return parsha0 == nil ?
-            lookupTranslation(str: getHolidayNameForParsha(hdate: hdate), lang: lang) :
+            lookupTranslation(str: getHolidayNameForParsha(hdate: hdate), lang: lg) :
             parsha0!
     }
 
@@ -413,18 +396,13 @@ final class ModelData: ObservableObject {
             "Omer: " + o + enNumSuffix(omer) + " day"
     }
 
-    private func parshaStr(hdate: HDate) -> String? {
-        let parshaName = self.getParshaString(hdate: hdate, fallbackToHoliday: false, heNikud: false)
-        return parshaName
-    }
-
     public func makeDateItem(date: Date, calendar: Calendar, showYear: Bool, forceParsha: Bool) -> DateItem {
         let dateComponents = calendar.dateComponents([.weekday, .month, .day, .year], from: date)
         let weekday = dateComponents.weekday!
         let hdate = HDate(date: date, calendar: calendar)
         let showYear0 = (hdate.mm == .TISHREI && hdate.dd == 1) || showYear
         let hdateStr = self.getHebDateString(hdate: hdate, showYear: showYear0)
-        let parsha = (forceParsha || weekday == 7) ? parshaStr(hdate: hdate) : nil
+        let parsha = (forceParsha || weekday == 7) ? getParshaString(hdate: hdate, fallbackToHoliday: false) : nil
         let events = self.getHolidaysOnDate(hdate: hdate)
         var holidays = [String]()
         for ev in events {
@@ -451,7 +429,6 @@ final class ModelData: ObservableObject {
         return DateItem(
             id: ((hdate.yy * 10000) + (hdate.mm.rawValue * 100) + hdate.dd),
             lang: lg,
-            weekday: weekday,
             dow: dow,
             gregDay: dateComponents.day!, gregMonth: gregMonth,
             gregYear: gregYear,

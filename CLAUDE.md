@@ -67,7 +67,7 @@ ClockKit is otherwise gone; it survives only as the `CLKComplicationWidgetMigrat
 
 ## Conventions worth knowing
 
-- `TranslationLang` enum from the Hebcal package has cases `.en` (Sephardic), `.ashkenazi`, `.he`, `.heNikud`. UI exposes the first three. `getParshaString(…heNikud:)` can opt into `.heNikud` (vowel points) when `lg == .he`, but every current caller passes `heNikud: false`, so vowel points are effectively unused right now.
+- `TranslationLang` enum from the Hebcal package has cases `.en` (Sephardic), `.ashkenazi`, `.he`, `.heNikud`. UI exposes the first three; `.heNikud` (vowel points) is currently unused by the app.
 - Hebrew (`lg == .he`) renders right-aligned — many views branch on `isHebrew` to flip alignment / insert `Spacer`s.
 - Holiday abbreviations (`holidayAbbrev` in `ModelData`) and Chanukah emoji renderings are tuned for narrow complication families; changing them affects what shows on the watch face.
 - Dynamic Type scaling for fixed point sizes uses SwiftUI's built-in `@ScaledMetric` property wrapper (e.g. `TodayView`'s `smallFontSize`/`largeFontSize`), not a custom `UIFontMetrics` wrapper — `@ScaledMetric` has been available since watchOS 7, well under the 10.6 floor. A prior hand-rolled `ScaledFont` view modifier was removed in favor of this.

@@ -11,7 +11,6 @@ import Hebcal
 struct DateItem: Hashable, Codable, Identifiable {
     var id: Int
     var lang: TranslationLang
-    var weekday: Int
     var dow: String
     var gregDay: Int
     var gregMonth: String
