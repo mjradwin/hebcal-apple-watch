@@ -11,6 +11,14 @@ import os
 import Hebcal
 import WidgetKit
 
+/// `lookupTranslation` turns ASCII apostrophes into ’ for Sephardic and
+/// Ashkenazi, but the abbreviation tables (`holidayAbbrev` here, and the
+/// widget tables in WidgetTextHelpers) are keyed with plain ' (e.g.
+/// "Sh'vat"), so normalize a translated name before looking it up.
+func tableKey(_ name: String) -> String {
+    return name.replacingOccurrences(of: "’", with: "'")
+}
+
 final class ModelData: ObservableObject {
     let logger = Logger(
         subsystem: "com.hebcal.HebcalHDate.watchkitapp.watchkitextension.ModelData",
@@ -269,6 +277,7 @@ final class ModelData: ObservableObject {
         "דצמ",
     ]
 
+    // Keyed with plain ASCII ' like the widget tables; look up via tableKey().
     let holidayAbbrev = [
         "Rosh Chodesh": "R.Ch.",
         "Erev Rosh Hashana": "Erev R.H.",
@@ -282,7 +291,7 @@ final class ModelData: ObservableObject {
         "Sukkos VII (Hoshana Raba)": "Hoshana Raba",
         "Shmini Atzeres": "Shmini Atz.",
         "Shmini Atzeret": "Shmini Atz.",
-        "Tish'a B'Av (observed)": "Tish'a B'Av (obs.)",
+        "Tish'a B'Av (observed)": "Tish’a B’Av (obs.)",
         "Yom Kippur": "Y.K.",
         "Chanukah: 1 Candle": "🕎 1️⃣ 🕯️",
         "Chanukah: 2 Candles": "🕎 Day 1️⃣",
@@ -341,9 +350,10 @@ final class ModelData: ObservableObject {
                     return "Sh." + remainder
                 }
             }
-            if holidayAbbrev[holiday] != nil {
-                return holidayAbbrev[holiday]!
-            } else if holiday.hasSuffix(" (CH''M)") || holiday.hasSuffix(" (חוה״מ)") {
+            let key = tableKey(holiday)
+            if holidayAbbrev[key] != nil {
+                return holidayAbbrev[key]!
+            } else if key.hasSuffix(" (CH''M)") || key.hasSuffix(" (חוה״מ)") {
                 return String(holiday[..<holiday.index(holiday.endIndex, offsetBy: -8)])
             }
         }

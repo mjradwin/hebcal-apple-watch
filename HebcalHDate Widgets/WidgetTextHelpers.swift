@@ -9,12 +9,8 @@
 
 import Foundation
 
-/// `lookupTranslation` turns ASCII apostrophes into ’ for Sephardic and
-/// Ashkenazi, but the tables below are keyed with plain ' (e.g. "Sh'vat"),
-/// so normalize a translated name before looking it up.
-func tableKey(_ name: String) -> String {
-    return name.replacingOccurrences(of: "’", with: "'")
-}
+// The tables below are keyed with plain ASCII ' — look names up via
+// tableKey() (defined in ModelData.swift, shared with the watch app).
 
 // Two-line stack abbreviations (graphic circular, modular small, etc.).
 // nil means "the full name fits, no abbreviation needed".
