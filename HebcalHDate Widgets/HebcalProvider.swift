@@ -26,16 +26,23 @@ struct HebcalEntry: TimelineEntry {
     let parshaName: String?         // "Behar-Bechukotai"
     let parshaForFallback: String
 
-    // What the Parsha widget should actually show for today: the weekly
-    // parsha, UNLESS today itself is a holiday (e.g. Yom Kippur), in which
-    // case the holiday name takes over so the widget doesn't show a
-    // confusing "upcoming Shabbat" parsha on a day that isn't Shabbat.
+    // What the Parsha widget should actually show for today:
+    // - on a Shabbat with a regular weekly reading, that parsha, even if
+    //   the day is also a special Shabbat or Rosh Chodesh;
+    // - otherwise, if today itself is a holiday (e.g. Yom Kippur, or Rosh
+    //   Chodesh on a weekday), the holiday name;
+    // - otherwise the upcoming Shabbat's parsha, or the holiday that
+    //   displaces it (e.g. "Sukkot").
+    let parshaShowsHoliday: Bool    // true when a holiday of today replaces the parsha
     let parshaParts: [String]       // 1 or 2 elements for stacked layouts
     let parshaPrefixed: String      // "Parashat Behar-Bechukotai", or the holiday name on a holiday
+    let parshaShort: String         // "Behar-Bechukotai", or the abbreviated holiday name
 
-    // Holiday picked for this date (specialShabbat included for the rich widget).
-    let holidayToday: String?
-    let holidayShort: String?
+    // Holiday for the rectangular (rich) widget: today's holiday if any,
+    // else the upcoming Shabbat's special-Shabbat name (e.g. "Shabbat
+    // Shuva" all week long). Not strictly today's — see parshaShowsHoliday.
+    let richHoliday: String?
+    let richHolidayShort: String?
     // Header tiers for the rectangular widget, widest to narrowest (each
     // with the holiday emoji, if any).
     let richHeaderLong: String      // "26 Tishrei 5787"
@@ -132,10 +139,19 @@ struct HebcalProvider: TimelineProvider {
         let parshaPrefix = lookupTranslation(str: "Parashat", lang: lang)
         let parshaPrefixed = "\(parshaPrefix) \(parshaForFallback)"
 
-        // Inline / utilitarian-large equivalent (specialShabbat: false).
-        let holidayEvForInline = settings.pickHolidayToDisplay(hdate: hdate, specialShabbat: false)
-        let holidayInlineAbbrev = holidayEvForInline.map { settings.translateHolidayName(ev: $0, abbrev: true) }
-        let inlineExtra = holidayInlineAbbrev ?? parshaName
+        // Today's own holiday (specialShabbat: false, so a weekday before a
+        // special Shabbat doesn't pick up "Sh. Shuva"), shown instead of the
+        // parsha by the inline and Parsha widgets — except on a Shabbat with
+        // a regular reading (Shabbat Shuva, Shabbat Rosh Chodesh), which
+        // keeps its parsha.
+        let isShabbatWithParsha = hdate.dow() == .SAT && parshaName != nil
+        let holidayEvToday = isShabbatWithParsha ? nil
+            : settings.pickHolidayToDisplay(hdate: hdate, specialShabbat: false)
+        let holidayTodayName = holidayEvToday.map { settings.translateHolidayName(ev: $0, abbrev: false) }
+        let holidayTodayShort = holidayEvToday.map { settings.translateHolidayName(ev: $0, abbrev: true) }
+
+        // Inline / utilitarian-large equivalent.
+        let inlineExtra = holidayTodayShort ?? parshaName
         let inlineFormat = isHebrew ? largeFlatFormatRTL : largeFlatFormatLTR
         func inline(_ hebDate: String) -> String {
             guard let extra = inlineExtra else { return hebDate }
@@ -152,11 +168,11 @@ struct HebcalProvider: TimelineProvider {
         var richHeaderLong = hebDateLong
         var richHeaderShort = hebDateShort
         var richHeaderAbbrev = hebDateAbbrev
-        var holidayToday: String? = nil
-        var holidayShort: String? = nil
+        var richHoliday: String? = nil
+        var richHolidayShort: String? = nil
         if let ev = holidayEvRich {
-            holidayToday = settings.translateHolidayName(ev: ev, abbrev: false)
-            holidayShort = settings.translateHolidayName(ev: ev, abbrev: true)
+            richHoliday = settings.translateHolidayName(ev: ev, abbrev: false)
+            richHolidayShort = settings.translateHolidayName(ev: ev, abbrev: true)
             if let emoji = settings.pickEmoji(events: [ev]) {
                 richHeaderLong += " " + emoji
                 richHeaderShort += " " + emoji
@@ -167,10 +183,11 @@ struct HebcalProvider: TimelineProvider {
         // The Parsha widget shows the holiday name instead of the weekly
         // parsha when today itself is a holiday (e.g. Yom Kippur) — showing
         // "Parashat Sukkot" (the upcoming Shabbat) on a non-Shabbat holiday
-        // reads as a mistake, since it's not today's parsha.
-        let parshaWidgetParts = holidayToday.map { splitParsha(parsha: holidayShort ?? $0) }
+        // reads as a mistake, since it's not today's parsha. See
+        // holidayEvToday for the Shabbat exception.
+        let parshaWidgetParts = holidayTodayShort.map { splitParsha(parsha: $0) }
             ?? (parshaParts.isEmpty ? [parshaForFallback] : parshaParts)
-        let parshaWidgetPrefixed = holidayToday ?? parshaPrefixed
+        let parshaWidgetPrefixed = holidayTodayName ?? parshaPrefixed
 
         return HebcalEntry(
             date: date,
@@ -181,10 +198,12 @@ struct HebcalProvider: TimelineProvider {
             hebMonthAbbrev: monthShort,
             parshaName: parshaName,
             parshaForFallback: parshaForFallback,
+            parshaShowsHoliday: holidayEvToday != nil,
             parshaParts: parshaWidgetParts,
             parshaPrefixed: parshaWidgetPrefixed,
-            holidayToday: holidayToday,
-            holidayShort: holidayShort,
+            parshaShort: holidayTodayShort ?? parshaForFallback,
+            richHoliday: richHoliday,
+            richHolidayShort: richHolidayShort,
             richHeaderLong: richHeaderLong,
             richHeaderShort: richHeaderShort,
             richHeaderAbbrev: richHeaderAbbrev,

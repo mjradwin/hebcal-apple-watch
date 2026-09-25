@@ -97,10 +97,10 @@ struct HebcalRectangularView: View {
             .widgetAccentable()
             .lineLimit(1)
             .minimumScaleFactor(0.6)
-            if entry.holidayToday != nil {
+            if entry.richHoliday != nil {
                 ViewThatFits(in: .horizontal) {
-                    Text(entry.holidayToday!)
-                    Text(entry.holidayShort!)
+                    Text(entry.richHoliday!)
+                    Text(entry.richHolidayShort!)
                 }
                 .foregroundColor(.yellow)
                 .lineLimit(1)
@@ -117,7 +117,7 @@ struct HebcalRectangularView: View {
                         .minimumScaleFactor(0.6)
                         .foregroundColor(goldTint)
                 }
-            } else if entry.holidayToday == nil {
+            } else if entry.richHoliday == nil {
                 // Show the Torah icon before upcoming Shabbat holiday
                 HStack {
                     Image("torah-235339")
@@ -165,7 +165,7 @@ struct ParshaCircularView: View {
                     .minimumScaleFactor(0.5)
             }
             .widgetAccentable()
-        } else if entry.holidayToday != nil {
+        } else if entry.parshaShowsHoliday {
             // Today is itself a one-word holiday (e.g. "Y.K."): show just its
             // name, with no Torah icon (it isn't a Shabbat Torah reading).
             Text(parts.first ?? "")
@@ -259,8 +259,8 @@ struct ParshaWidgetEntryView: View {
             ParshaCircularView(entry: entry)
         case .accessoryInline:
             ViewThatFits(in: .horizontal) {
-                Text(entry.parshaPrefixed)
-                Text(entry.parshaForFallback)
+                Text(entry.parshaPrefixed) // "Parashat Ha’azinu", or "Yom Kippur" on a holiday
+                Text(entry.parshaShort)    // "Ha’azinu", or "Y.K."
             }
         default:
             Text(entry.parshaParts.first ?? "")
@@ -385,6 +385,27 @@ private func previewNoon(year: Int, month: Int, day: Int) -> Date {
     ParshaWidget()
 } timeline: {
     HebcalProvider.makeEntry(for: previewNoon(year: 2026, month: 9, day: 16))
+}
+
+// Shabbat Shuva on Shabbat itself: shows the weekly parsha (Ha'azinu),
+// not the special Shabbat name.
+#Preview("Parsha circular Shabbat Shuva", as: .accessoryCircular) {
+    ParshaWidget()
+} timeline: {
+    HebcalProvider.makeEntry(for: previewNoon(year: 2026, month: 9, day: 19))
+}
+
+#Preview("Shabbat Shuva — Inline", as: .accessoryInline) {
+    HebcalWidget()
+} timeline: {
+    HebcalProvider.makeEntry(for: previewNoon(year: 2026, month: 9, day: 19))
+}
+
+// Rosh Chodesh Kislev on a weekday (Wed Nov 11, 2026): shows the holiday.
+#Preview("Parsha circular Rosh Chodesh weekday", as: .accessoryCircular) {
+    ParshaWidget()
+} timeline: {
+    HebcalProvider.makeEntry(for: previewNoon(year: 2026, month: 11, day: 11))
 }
 
 #Preview("Parsha circular Erev Purim", as: .accessoryCircular) {

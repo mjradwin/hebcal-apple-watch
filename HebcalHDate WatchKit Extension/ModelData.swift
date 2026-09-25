@@ -406,11 +406,6 @@ final class ModelData: ObservableObject {
     private func parshaStr(hdate: HDate) -> String? {
         let parshaName = self.getParshaString(hdate: hdate, fallbackToHoliday: false, heNikud: false)
         return parshaName
-        /*
-        let parshaPrefix = parshaName != nil ? lookupTranslation(str: "Parashat", lang: lang) : nil
-        let parsha = parshaName != nil ? parshaPrefix! + " " + parshaName! : nil
-        return parsha
-        */
     }
 
     public func makeDateItem(date: Date, calendar: Calendar, showYear: Bool, forceParsha: Bool) -> DateItem {
